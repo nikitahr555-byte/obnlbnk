@@ -139,7 +139,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Добавляем таймаут и кэширование для карт
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Cards API timeout')), 15000);
+        setTimeout(() => reject(new Error('Cards API timeout')), 10000); // Уменьшили до 10 секунд
       });
       
       const cardsPromise = storage.getCardsByUserId(req.user.id);

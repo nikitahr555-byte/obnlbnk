@@ -21,11 +21,11 @@ const PostgresStore = pgSession(session);
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Настройка кэша для часто используемых запросов
-const cache = new NodeCache({ stdTTL: 300, checkperiod: 120 }); // 5 минут кэш для лучшей производительности
+const cache = new NodeCache({ stdTTL: 600, checkperiod: 120 }); // 10 минут кэш для максимальной производительности
 
 // Таймауты
 const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
-const DB_TIMEOUT = IS_VERCEL ? 8000 : 15000; // Уменьшили с 20s до 8s для Vercel
+const DB_TIMEOUT = IS_VERCEL ? 5000 : 15000; // Еще больше уменьшили до 5s для Vercel
 
 // Таймаут для операции
 async function withTimeout<T>(promise: Promise<T>, timeoutMs: number = DB_TIMEOUT): Promise<T> {
@@ -83,7 +83,7 @@ export class DatabaseStorage implements IStorage {
     });
   }
 
-  private async withRetry<T>(operation: () => Promise<T>, operationName: string, maxRetries = 3): Promise<T> {
+  private async withRetry<T>(operation: () => Promise<T>, operationName: string, maxRetries = 2): Promise<T> {
     let attempt = 0;
     while (attempt < maxRetries) {
       try {
@@ -111,7 +111,10 @@ export class DatabaseStorage implements IStorage {
       return u;
     }, 'getUser');
 
-    if (user) cache.set(cacheKey, user);
+    if (user) {
+      // Агрессивное кэширование пользователей на 20 минут
+      cache.set(cacheKey, user, 1200);
+    }
     return user;
   }
 
@@ -125,7 +128,11 @@ export class DatabaseStorage implements IStorage {
       return u;
     }, 'getUserByUsername');
 
-    if (user) cache.set(cacheKey, user);
+    if (user) {
+      // Кэшируем и по ID и по username для быстрого доступа
+      cache.set(cacheKey, user, 1200); // 20 минут
+      cache.set(`user_${user.id}`, user, 1200);
+    }
     return user;
   }
 

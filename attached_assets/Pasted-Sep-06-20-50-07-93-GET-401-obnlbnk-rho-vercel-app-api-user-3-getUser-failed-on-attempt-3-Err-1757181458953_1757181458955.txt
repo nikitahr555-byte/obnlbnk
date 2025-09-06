@@ -1,0 +1,359 @@
+Sep 06 20:50:07.93
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+3
+getUser failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:49:43.86
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+5
+getUser failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:49:10.05
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:49:09.36
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:48:45.72
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+9
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:48:29.54
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:48:29.27
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:48:25.33
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:48:05.69
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+9
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:47:49.41
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:47:49.20
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:47:46.64
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+9
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:47:00.78
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:47:00.78
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:47:00.52
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:46:56.41
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:45:51.61
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+9
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:45:35.43
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:45:35.42
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+6
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:45:35.16
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:45:32.21
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:45:20.09
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:19.76
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:19.45
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:19.13
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:18.81
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:17.75
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:17.17
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:16.83
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:16.50
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:16.13
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:15.79
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:45:15.33
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+2
+getCardsByUserId failed on attempt 2: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:44:35.96
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+14
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:107:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:44:35.95
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+18
+Ошибка получения карт: Error: Cards API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:142:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:44:35.93
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:44:34.24
+POST
+200
+obnlbnk-rho.vercel.app
+/api/login
+Sep 06 20:44:23.45
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+12
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 06 20:38:23.29
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+3
+getUserByUsername failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:37:56.81
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+3
+getUserByUsername failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:37:31.22
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+3
+getUserByUsername failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:37:17.20
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:32:08.19
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+3
+getUserByUsername failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:31:44.92
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:31:18.94
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+3
+getUserByUsername failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:31:12.03
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:29:47.02
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+3
+getUserByUsername failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:29:20.80
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+3
+getUserByUsername failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:29:14.40
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:29:10.34
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Authentication failed - isAuthenticated: false user: false
+Sep 06 20:28:50.85
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:28:48.01
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+3
+getUser failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:28:42.37
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+4
+getUser failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:28:40.85
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+8
+getUser failed on attempt 3: Error: Database operation timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:28:35.58
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+3
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:107:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:28:35.58
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:28:35.26
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
