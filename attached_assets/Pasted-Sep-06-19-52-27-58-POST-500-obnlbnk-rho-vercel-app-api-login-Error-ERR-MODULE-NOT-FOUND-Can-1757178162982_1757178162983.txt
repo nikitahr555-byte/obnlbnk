@@ -1,0 +1,24 @@
+Sep 06 19:52:27.58
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'node-cache' imported from /var/task/api/server/storage.js at packageResolve (node:internal/modules/esm/resolve:877:9) at moduleResolve (node:internal/modules/esm/resolve:950:18) at moduleResolveWithNodePath (node:internal/modules/esm/resolve:1192:14) at defaultResolve (node:internal/modules/esm/resolve:1235:79) at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:642:12) at #cachedDefaultResolve (node:internal/modules/esm/loader:591:25) at ModuleLoader.resolve (node:internal/modules/esm/loader:574:38) at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:236:38) at ModuleJob._link (node:internal/modules/esm/module_job:130:49) { code: 'ERR_MODULE_NOT_FOUND' } Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Sep 06 19:52:25.94
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'node-cache' imported from /var/task/api/server/storage.js at packageResolve (node:internal/modules/esm/resolve:877:9) at moduleResolve (node:internal/modules/esm/resolve:950:18) at moduleResolveWithNodePath (node:internal/modules/esm/resolve:1192:14) at defaultResolve (node:internal/modules/esm/resolve:1235:79) at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:642:12) at #cachedDefaultResolve (node:internal/modules/esm/loader:591:25) at ModuleLoader.resolve (node:internal/modules/esm/loader:574:38) at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:236:38) at ModuleJob._link (node:internal/modules/esm/module_job:130:49) { code: 'ERR_MODULE_NOT_FOUND' } Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Sep 06 19:52:10.14
+GET
+500
+obnlbnk-rho.vercel.app
+/api/user
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'node-cache' imported from /var/task/api/server/storage.js at packageResolve (node:internal/modules/esm/resolve:877:9) at moduleResolve (node:internal/modules/esm/resolve:950:18) at moduleResolveWithNodePath (node:internal/modules/esm/resolve:1192:14) at defaultResolve (node:internal/modules/esm/resolve:1235:79) at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:642:12) at #cachedDefaultResolve (node:internal/modules/esm/loader:591:25) at ModuleLoader.resolve (node:internal/modules/esm/loader:574:38) at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:236:38) at ModuleJob._link (node:internal/modules/esm/module_job:130:49) { code: 'ERR_MODULE_NOT_FOUND' } Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Sep 06 19:51:59.74
+GET
+500
+obnlbnk-cgzklzhf8-rabota197555-2326s-projects.vercel.app
+/api/user
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'node-cache' imported from /var/task/api/server/storage.js at packageResolve (node:internal/modules/esm/resolve:877:9) at moduleResolve (node:internal/modules/esm/resolve:950:18) at moduleResolveWithNodePath (node:internal/modules/esm/resolve:1192:14) at defaultResolve (node:internal/modules/esm/resolve:1235:79) at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:642:12) at #cachedDefaultResolve (node:internal/modules/esm/loader:591:25) at ModuleLoader.resolve (node:internal/modules/esm/loader:574:38) at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:236:38) at ModuleJob._link (node:internal/modules/esm/module_job:130:49) { code: 'ERR_MODULE_NOT_FOUND' } Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
