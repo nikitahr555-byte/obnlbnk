@@ -1,5 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
+import { neon } from '@neondatabase/serverless';
+import { drizzle as drizzleNeon } from 'drizzle-orm/neon-http';
 import * as schema from '../shared/schema.js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import path from 'path';
@@ -27,51 +29,62 @@ console.log('Connecting to PostgreSQL database...');
 // Определяем, запущено ли приложение на Vercel
 const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
 
-// Создаем единственный глобальный клиент подключения к PostgreSQL
-// Оптимизированные настройки для Vercel serverless
-export const client = postgres(databaseUrl, { 
-  ssl: { rejectUnauthorized: false }, // Принимаем самоподписанные сертификаты
-  max: IS_VERCEL ? 1 : 3, // На Vercel только 1 подключение, локально больше
-  idle_timeout: IS_VERCEL ? 10 : 30, // Увеличиваем idle_timeout для Vercel
-  connect_timeout: IS_VERCEL ? 15 : 30, // Уменьшаем connect_timeout для Vercel
-  max_lifetime: IS_VERCEL ? 300 : 600, // Увеличиваем lifetime для лучшей производительности
-  // Добавляем настройки для предотвращения таймаутов
-  prepare: false, // Отключаем prepared statements для лучшей совместимости
-  no_prepare: true, // Дополнительная защита от prepared statements
-  transform: {
-    undefined: null
-  },
-  
-  types: {
-    date: {
-      to: 1184,
-      from: [1082, 1083, 1114, 1184],
-      serialize: (date: Date) => date,
-      parse: (date: string) => date
-    }
-  },
-  
-  onnotice: () => {}, // Отключаем notices
-  
-  // Минимальные логи для предотвращения спама
-  debug: false,
-  
-  // Принудительно контролируем подключения
-  connection: {
-    application_name: IS_VERCEL ? 'vercel-serverless' : 'replit-dev'
-  }
-});
+// Создаем клиенты для разных окружений
+let client: any;
+let db: any;
 
-// Создаем экземпляр Drizzle ORM
-export const db = drizzle(client, { schema });
+if (IS_VERCEL) {
+  // Используем Neon serverless клиент для Vercel - НЕТ ОГРАНИЧЕНИЙ СОЕДИНЕНИЙ!
+  console.log('🚀 Используем Neon serverless клиент для Vercel');
+  const sql = neon(databaseUrl);
+  db = drizzleNeon(sql, { schema });
+  client = sql; // Для совместимости
+} else {
+  // Используем обычный postgres клиент для Replit/локальной разработки
+  console.log('🔧 Используем обычный postgres клиент для разработки');
+  client = postgres(databaseUrl, { 
+    ssl: { rejectUnauthorized: false },
+    max: 3, // Больше соединений для разработки
+    idle_timeout: 30,
+    connect_timeout: 30,
+    max_lifetime: 600,
+    prepare: false,
+    no_prepare: true,
+    transform: {
+      undefined: null
+    },
+    types: {
+      date: {
+        to: 1184,
+        from: [1082, 1083, 1114, 1184],
+        serialize: (date: Date) => date,
+        parse: (date: string) => date
+      }
+    },
+    onnotice: () => {},
+    debug: false,
+    connection: {
+      application_name: 'replit-dev'
+    }
+  });
+  db = drizzle(client, { schema });
+}
+
+// Экспортируем клиенты
+export { client, db };
 
 // Создаем таблицы в PostgreSQL базе данных
 async function createTablesIfNotExist() {
   try {
     console.log('Checking and creating database tables if needed...');
     
+    // Адаптируем запросы для разных клиентов
+    const executeSQL = IS_VERCEL 
+      ? (sql: string) => client(sql) // Neon serverless
+      : (sql: string) => client([sql] as any); // postgres.js
+    
     // Создаем таблицы с прямыми SQL запросами
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         username TEXT NOT NULL UNIQUE,
@@ -81,9 +94,9 @@ async function createTablesIfNotExist() {
         last_nft_generation TIMESTAMP,
         nft_generation_count INTEGER NOT NULL DEFAULT 0
       )
-    `;
+    `);
     
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS cards (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL,
@@ -99,9 +112,9 @@ async function createTablesIfNotExist() {
         eth_address TEXT,
         ton_address TEXT
       )
-    `;
+    `);
     
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS transactions (
         id SERIAL PRIMARY KEY,
         from_card_id INTEGER NOT NULL,
@@ -116,9 +129,9 @@ async function createTablesIfNotExist() {
         from_card_number TEXT NOT NULL,
         to_card_number TEXT
       )
-    `;
+    `);
     
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS exchange_rates (
         id SERIAL PRIMARY KEY,
         usd_to_uah TEXT NOT NULL,
@@ -126,19 +139,19 @@ async function createTablesIfNotExist() {
         eth_to_usd TEXT NOT NULL,
         updated_at TIMESTAMP NOT NULL DEFAULT NOW()
       )
-    `;
+    `);
     
     // Создаем таблицу для сессий если её нет
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS session (
         sid TEXT PRIMARY KEY,
         sess JSON NOT NULL,
         expire TIMESTAMP(6) NOT NULL
       )
-    `;
+    `);
 
     // Создаем NFT таблицы
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS nft_collections (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL REFERENCES users(id),
@@ -147,9 +160,9 @@ async function createTablesIfNotExist() {
         cover_image TEXT,
         created_at TIMESTAMP NOT NULL DEFAULT NOW()
       )
-    `;
+    `);
 
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS nfts (
         id SERIAL PRIMARY KEY,
         collection_id INTEGER NOT NULL REFERENCES nft_collections(id),
@@ -166,9 +179,9 @@ async function createTablesIfNotExist() {
         original_image_path TEXT,
         sort_order INTEGER
       )
-    `;
+    `);
 
-    await client`
+    await executeSQL(`
       CREATE TABLE IF NOT EXISTS nft_transfers (
         id SERIAL PRIMARY KEY,
         nft_id INTEGER NOT NULL REFERENCES nfts(id),
@@ -178,7 +191,7 @@ async function createTablesIfNotExist() {
         price TEXT DEFAULT '0',
         transferred_at TIMESTAMP NOT NULL DEFAULT NOW()
       )
-    `;
+    `);
     
     console.log('Database tables created or verified successfully');
     return true;
@@ -254,15 +267,15 @@ export async function initializeDatabase() {
     
     // Добавляем новые колонки для KICHCOIN если их нет (для существующих таблиц)
     try {
-      await client`
+      await executeSQL(`
         ALTER TABLE cards 
         ADD COLUMN IF NOT EXISTS kichcoin_balance TEXT NOT NULL DEFAULT '0'
-      `;
+      `);
       
-      await client`
+      await executeSQL(`
         ALTER TABLE cards 
         ADD COLUMN IF NOT EXISTS ton_address TEXT
-      `;
+      `);
       
       console.log('✅ KICHCOIN колонки успешно добавлены в базу данных');
     } catch (error) {
@@ -276,11 +289,17 @@ console.log('Database initialization completed successfully');
   }
 }
 
-// Функция для принудительного закрытия подключений на Vercel
+// Функция для принудительного закрытия подключений
 export async function closeConnectionsOnVercel() {
-  // ОТКЛЮЧАЕМ автоматическое закрытие - это создавало больше проблем
-  // Вместо этого полагаемся на настройки connection pooling
-  return;
+  if (!IS_VERCEL && client && typeof client.end === 'function') {
+    try {
+      await client.end();
+      console.log('✅ Database connections closed');
+    } catch (e) {
+      console.error('❌ Error closing database:', e);
+    }
+  }
+  // На Vercel с Neon serverless соединения управляются автоматически
 }
 
 // Handle graceful shutdown

@@ -1,0 +1,41 @@
+Sep 06 21:46:07.95
+POST
+401
+obnlbnk-rho.vercel.app
+/api/login
+3
+LocalStrategy DB error: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 06 21:46:03.64
+POST
+401
+obnlbnk-rho.vercel.app
+/api/login
+3
+LocalStrategy DB error: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 06 21:46:00.42
+POST
+401
+obnlbnk-rho.vercel.app
+/api/login
+6
+LocalStrategy DB error: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 06 21:45:36.13
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+12
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 06 21:43:15.56
+GET
+401
+obnlbnk-5bjkrn4ej-rabota197555-2326s-projects.vercel.app
+/api/user
+Sep 06 21:43:15.56
+GET
+401
+obnlbnk-5bjkrn4ej-rabota197555-2326s-projects.vercel.app
+/api/user
+12
+✅ Маршруты успешно зарегистрированы для Vercel
+No more logs to show 
