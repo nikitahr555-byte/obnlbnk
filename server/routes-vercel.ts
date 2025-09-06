@@ -25,7 +25,7 @@ import { generateValidAddress, validateCryptoAddress, getSeedPhraseForUser } fro
 import { hasBlockchainApiKeys } from './utils/blockchain.js';
 import { generateAddressesForUser, isValidMnemonic, getAddressesFromMnemonic } from './utils/seed-phrase.js';
 // import { generateNFTImage } from './utils/nft-generator.js'; // Исключено для Vercel
-import { db } from './db.js';
+import { db, withDatabaseTimeout } from './db.js';
 import { eq } from 'drizzle-orm';
 import { nfts, nftCollections } from '../shared/schema.js';
 import nftRoutes from './controllers/nft-controller.js';
@@ -242,19 +242,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ message: "Пользователь не авторизован" });
       }
 
-      // Добавляем таймаут для Vercel
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Transactions API timeout')), 10000);
-      });
-      
-      // Get all user's cards
-      const userCardsPromise = storage.getCardsByUserId(getUserId(req));
-      const userCards = await Promise.race([userCardsPromise, timeoutPromise]);
+      // Используем withDatabaseTimeout для безопасной работы с БД
+      const userCards = await withDatabaseTimeout(
+        storage.getCardsByUserId(getUserId(req)),
+        8000,
+        'Get user cards'
+      );
       const cardIds = userCards.map(card => card.id);
 
-      // Get all transactions related to user's cards
-      const transactionsPromise = storage.getTransactionsByCardIds(cardIds);
-      const transactions = await Promise.race([transactionsPromise, timeoutPromise]);
+      const transactions = await withDatabaseTimeout(
+        storage.getTransactionsByCardIds(cardIds),
+        8000,
+        'Get transactions'
+      );
 
       console.log(`💳 [VERCEL] Найдено транзакций: ${transactions.length} для пользователя ${req.user.id}`);
       res.setHeader('Cache-Control', 'private, max-age=30'); // 30 секунд кэш для транзакций
@@ -273,21 +273,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Добавляем HTTP кэширование для NFT коллекций
       res.setHeader('Cache-Control', 'public, max-age=600, s-maxage=600'); // 10 минут кэш
       
-      // Добавляем таймаут для Vercel
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('NFT API timeout')), 10000); // Уменьшили до 10 секунд
-      });
-      
-      const collectionsPromise = (async () => {
-        const collections = await db.select().from(nftCollections);
-        const collectionsWithNFTs = await Promise.all(collections.map(async (collection) => {
-          const collectionNFTs = await db.select().from(nfts).where(eq(nfts.collectionId, collection.id));
-          return { ...collection, nfts: collectionNFTs };
-        }));
-        return collectionsWithNFTs;
-      })();
-      
-      const collectionsWithNFTs = await Promise.race([collectionsPromise, timeoutPromise]);
+      // Используем withDatabaseTimeout для безопасности NFT операций
+      const collectionsWithNFTs = await withDatabaseTimeout(
+        (async () => {
+          const collections = await db.select().from(nftCollections);
+          const collectionsWithNFTs = await Promise.all(collections.map(async (collection) => {
+            const collectionNFTs = await db.select().from(nfts).where(eq(nfts.collectionId, collection.id));
+            return { ...collection, nfts: collectionNFTs };
+          }));
+          return collectionsWithNFTs;
+        })(),
+        8000,
+        'NFT collections fetch'
+      );
       res.status(200).json(collectionsWithNFTs);
     } catch (error) {
       console.error('Ошибка при получении коллекций NFT:', error);
@@ -307,10 +305,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Не указаны обязательные параметры перевода" });
       }
 
-      // Добавляем таймаут для Vercel (короче чем 60 секунд)
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Transfer timeout')), 30000); // 30 секунд для переводов
-      });
+      // Используем withDatabaseTimeout для безопасности переводов
 
       let result;
       if (transferType === 'crypto') {
@@ -325,13 +320,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
-        const transferPromise = storage.transferCrypto(
-          parseInt(fromCardId),
-          recipientAddress.trim(),
-          parseFloat(amount),
-          cryptoType as 'btc' | 'eth'
+        result = await withDatabaseTimeout(
+          storage.transferCrypto(
+            parseInt(fromCardId),
+            recipientAddress.trim(),
+            parseFloat(amount),
+            cryptoType as 'btc' | 'eth'
+          ),
+          25000,
+          'Crypto transfer'
         );
-        result = await Promise.race([transferPromise, timeoutPromise]);
       } else {
         // For fiat transfers, validate card number
         const cleanCardNumber = recipientAddress.replace(/\s+/g, '');
@@ -339,12 +337,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(400).json({ message: "Неверный формат номера карты" });
         }
 
-        const transferPromise = storage.transferMoney(
-          parseInt(fromCardId),
-          cleanCardNumber,
-          parseFloat(amount)
+        result = await withDatabaseTimeout(
+          storage.transferMoney(
+            parseInt(fromCardId),
+            cleanCardNumber,
+            parseFloat(amount)
+          ),
+          25000,
+          'Fiat transfer'
         );
-        result = await Promise.race([transferPromise, timeoutPromise]);
       }
 
       if (!result.success) {

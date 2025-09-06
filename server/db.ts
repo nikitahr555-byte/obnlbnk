@@ -30,10 +30,49 @@ console.log('Connecting to PostgreSQL database...');
 
 // ИСПРАВЛЕНО: Используем обычный postgres клиент для Supabase
 // Neon serverless предназначен только для Neon Database
-console.log('✅ Используем стандартный PostgreSQL клиент для Supabase');
-const sql = postgres(databaseUrl, { ssl: 'require' });
+console.log('✅ Используем стандартный PostgreSQL клиент для Supabase с connection pooling');
+
+// ИСПРАВЛЕНИЕ: Добавляем правильную конфигурацию connection pooling для Vercel/Serverless
+const sql = postgres(databaseUrl, { 
+  ssl: 'require',
+  max: 1,                    // Максимум 1 подключение в serverless окружении
+  idle_timeout: 20,          // 20 секунд ожидания перед закрытием соединения
+  connect_timeout: 10,       // Максимум 10 секунд на подключение
+  prepare: false,            // Отключаем prepared statements для serverless
+  connection: {
+    options: '--search_path=public'
+  }
+});
+
 const db = drizzle(sql, { schema });
 const client = sql; // Для совместимости
+
+// Добавляем обработчик для graceful shutdown
+const gracefulShutdown = () => {
+  console.log('🔄 Graceful shutdown initiated, closing database connections...');
+  sql.end({ timeout: 5 }).catch(console.error);
+};
+
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
+
+// Добавляем функцию-помощник для безопасных операций с timeout
+export async function withDatabaseTimeout<T>(
+  operation: Promise<T>, 
+  timeoutMs: number = 10000,
+  operationName: string = 'Database operation'
+): Promise<T> {
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => reject(new Error(`${operationName} timed out after ${timeoutMs}ms`)), timeoutMs);
+  });
+  
+  try {
+    return await Promise.race([operation, timeoutPromise]);
+  } catch (error) {
+    console.error(`❌ ${operationName} failed:`, error);
+    throw error;
+  }
+}
 
 // Экспортируем клиенты
 export { client, db };

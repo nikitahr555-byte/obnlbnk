@@ -1,0 +1,146 @@
+Sep 07 01:55:56.82
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:54.89
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+3
+DB error in auth middleware, using fallback: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:46.01
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:44.06
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+3
+DB error in auth middleware, using fallback: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:35.51
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:26.79
+GET
+200
+obnlbnk-rho.vercel.app
+/api/transactions
+6
+💳 [VERCEL] Найдено транзакций: 8 для пользователя 3
+Sep 07 01:55:26.79
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:21.67
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:55:19.75
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+3
+DB error in auth middleware, using fallback: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:17.17
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:15.45
+GET
+500
+obnlbnk-rho.vercel.app
+/api/nft/user
+8
+Ошибка при получении NFT пользователя: Error: Не удалось получить NFT пользователя: Max client connections reached at Module.getUserNFTs (/vercel/path0/api/server/services/bored-ape-nft-service.ts:595:11) at process.processTicksAndRejections (node:internal/process/task_queues:95:5) at async <anonymous> (/vercel/path0/api/server/controllers/nft-controller.ts:127:25)
+Sep 07 01:55:08.23
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:55:08.23
+GET
+200
+obnlbnk-rho.vercel.app
+/api/transactions
+11
+❌ [VERCEL] Transactions fetch error: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:54:47.99
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+6
+Ошибка получения курсов: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:54:47.99
+GET
+200
+obnlbnk-rho.vercel.app
+/api/news
+25
+DB error in auth middleware, using fallback: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:54:43.95
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:54:35.09
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:54:25.24
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+31
+Ошибка получения карт: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:54:23.04
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+6
+DB error in auth middleware, using fallback: PostgresError: Max client connections reached at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) { severity_local: 'FATAL', severity: 'FATAL', code: 'XX000' }
+Sep 07 01:53:34.81
+GET
+401
+obnlbnk-a7jfjdbg1-rabota197555-2326s-projects.vercel.app
+/api/user
+Sep 07 01:53:34.22
+GET
+401
+obnlbnk-a7jfjdbg1-rabota197555-2326s-projects.vercel.app
+/api/user
+17
+✅ Маршруты успешно зарегистрированы для Vercel
+No m
