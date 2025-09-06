@@ -380,8 +380,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async executeRawQuery(query: string) {
-    // ИСПРАВЛЕНИЕ: Используем правильный синтаксис для Neon serverless
-    return this.withRetry(() => client(query), 'executeRawQuery');
+    // ИСПРАВЛЕНИЕ: Используем обычный postgres клиент для Supabase
+    return this.withRetry(() => client.unsafe(query), 'executeRawQuery');
   }
 
   private generateCardNumber() { return Array.from({length:16},()=>Math.floor(Math.random()*10)).join(''); }

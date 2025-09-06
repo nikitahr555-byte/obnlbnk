@@ -24,14 +24,15 @@ if (!DATABASE_URL) {
 // Проверяем что DATABASE_URL не undefined
 const databaseUrl: string = DATABASE_URL;
 console.log('✅ Используем основной DATABASE_URL для подключения');
+console.log('📡 Database host:', databaseUrl.includes('supabase.com') ? 'Supabase' : databaseUrl.includes('neon.tech') ? 'Neon' : 'Other PostgreSQL');
 
 console.log('Connecting to PostgreSQL database...');
 
-// КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем Neon serverless везде!
-// Обычный postgres клиент создает слишком много соединений
-console.log('🆘 КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем Neon serverless везде!');
-const sql = neon(databaseUrl);
-const db = drizzleNeon(sql, { schema });
+// ИСПРАВЛЕНО: Используем обычный postgres клиент для Supabase
+// Neon serverless предназначен только для Neon Database
+console.log('✅ Используем стандартный PostgreSQL клиент для Supabase');
+const sql = postgres(databaseUrl, { ssl: 'require' });
+const db = drizzle(sql, { schema });
 const client = sql; // Для совместимости
 
 // Экспортируем клиенты
@@ -42,8 +43,8 @@ async function createTablesIfNotExist() {
   try {
     console.log('Checking and creating database tables if needed...');
     
-    // Используем Neon serverless везде
-    const executeSQL = (sql: string) => client(sql);
+    // Используем обычный postgres клиент
+    const executeSQL = async (query: string) => await client.unsafe(query);
     
     // Создаем таблицы с прямыми SQL запросами
     await executeSQL(`
