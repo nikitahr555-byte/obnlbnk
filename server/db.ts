@@ -62,7 +62,7 @@ process.on('SIGINT', gracefulShutdown);
 // Добавляем функцию-помощник для безопасных операций с timeout
 export async function withDatabaseTimeout<T>(
   operation: Promise<T>, 
-  timeoutMs: number = 30000,
+  timeoutMs: number = 50000, // УВЕЛИЧИЛИ до 50 секунд для Vercel
   operationName: string = 'Database operation'
 ): Promise<T> {
   const timeoutPromise = new Promise<never>((_, reject) => {
@@ -70,9 +70,12 @@ export async function withDatabaseTimeout<T>(
   });
   
   try {
-    return await Promise.race([operation, timeoutPromise]);
+    console.log(`🔄 [VERCEL] Начинаем ${operationName} с таймаутом ${timeoutMs}ms`);
+    const result = await Promise.race([operation, timeoutPromise]);
+    console.log(`✅ [VERCEL] ${operationName} завершена успешно`);
+    return result;
   } catch (error) {
-    console.error(`❌ ${operationName} failed:`, error);
+    console.error(`❌ [VERCEL] ${operationName} failed:`, error);
     
     // Если это ошибка подключения, пробуем переподключиться
     if (error instanceof Error && (
