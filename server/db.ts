@@ -97,10 +97,17 @@ async function createTablesIfNotExist() {
   try {
     console.log('Checking and creating database tables if needed...');
     
-    // Используем обычный postgres клиент
-    const executeSQL = async (query: string) => await client.unsafe(query);
+    // Используем обычный postgres клиент с короткими таймаутами для каждой операции
+    const executeSQL = async (query: string) => {
+      return await withDatabaseTimeout(
+        client.unsafe(query),
+        10000,
+        'Create table query'
+      );
+    };
     
-    // Создаем таблицы с прямыми SQL запросами
+    // Создаем основные таблицы по очереди, но быстро
+    console.log('Creating users table...');
     await executeSQL(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -113,6 +120,7 @@ async function createTablesIfNotExist() {
       )
     `);
     
+    console.log('Creating cards table...');
     await executeSQL(`
       CREATE TABLE IF NOT EXISTS cards (
         id SERIAL PRIMARY KEY,
@@ -131,6 +139,7 @@ async function createTablesIfNotExist() {
       )
     `);
     
+    console.log('Creating other essential tables...');
     await executeSQL(`
       CREATE TABLE IF NOT EXISTS transactions (
         id SERIAL PRIMARY KEY,
@@ -158,79 +167,51 @@ async function createTablesIfNotExist() {
       )
     `);
     
-    // Создаем таблицу для сессий если её нет
-    await executeSQL(`
-      CREATE TABLE IF NOT EXISTS session (
-        sid TEXT PRIMARY KEY,
-        sess JSON NOT NULL,
-        expire TIMESTAMP(6) NOT NULL
-      )
-    `);
+    // Создаем остальные таблицы в фоне (не блокируем запуск)
+    setTimeout(async () => {
+      try {
+        console.log('Creating NFT tables in background...');
+        
+        await executeSQL(`
+          CREATE TABLE IF NOT EXISTS nft_collections (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            description TEXT,
+            cover_image TEXT,
+            created_at TIMESTAMP NOT NULL DEFAULT NOW()
+          )
+        `);
 
-    // Создаем NFT таблицы
-    await executeSQL(`
-      CREATE TABLE IF NOT EXISTS nft_collections (
-        id SERIAL PRIMARY KEY,
-        user_id INTEGER NOT NULL REFERENCES users(id),
-        name TEXT NOT NULL,
-        description TEXT,
-        cover_image TEXT,
-        created_at TIMESTAMP NOT NULL DEFAULT NOW()
-      )
-    `);
-
-    await executeSQL(`
-      CREATE TABLE IF NOT EXISTS nfts (
-        id SERIAL PRIMARY KEY,
-        collection_id INTEGER NOT NULL REFERENCES nft_collections(id),
-        owner_id INTEGER NOT NULL REFERENCES users(id),
-        name TEXT NOT NULL,
-        description TEXT,
-        image_path TEXT NOT NULL,
-        attributes JSONB,
-        rarity TEXT NOT NULL DEFAULT 'common',
-        price TEXT DEFAULT '0',
-        for_sale BOOLEAN NOT NULL DEFAULT false,
-        minted_at TIMESTAMP NOT NULL DEFAULT NOW(),
-        token_id TEXT NOT NULL,
-        original_image_path TEXT,
-        sort_order INTEGER
-      )
-    `);
-
-    await executeSQL(`
-      CREATE TABLE IF NOT EXISTS nft_transfers (
-        id SERIAL PRIMARY KEY,
-        nft_id INTEGER NOT NULL REFERENCES nfts(id),
-        from_user_id INTEGER NOT NULL REFERENCES users(id),
-        to_user_id INTEGER NOT NULL REFERENCES users(id),
-        transfer_type TEXT NOT NULL,
-        price TEXT DEFAULT '0',
-        transferred_at TIMESTAMP NOT NULL DEFAULT NOW()
-      )
-    `);
+        await executeSQL(`
+          CREATE TABLE IF NOT EXISTS nfts (
+            id SERIAL PRIMARY KEY,
+            collection_id INTEGER NOT NULL,
+            owner_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            description TEXT,
+            image_path TEXT NOT NULL,
+            attributes JSONB,
+            rarity TEXT NOT NULL DEFAULT 'common',
+            price TEXT DEFAULT '0',
+            for_sale BOOLEAN NOT NULL DEFAULT false,
+            minted_at TIMESTAMP NOT NULL DEFAULT NOW(),
+            token_id TEXT NOT NULL,
+            original_image_path TEXT,
+            sort_order INTEGER
+          )
+        `);
+        
+        console.log('✅ NFT tables created successfully in background');
+      } catch (error) {
+        console.log('⚠️ NFT tables creation failed (background):', error);
+      }
+    }, 2000);
     
-    // Добавляем новые колонки для KICHCOIN если их нет (для существующих таблиц)
-    try {
-      await executeSQL(`
-        ALTER TABLE cards 
-        ADD COLUMN IF NOT EXISTS kichcoin_balance TEXT NOT NULL DEFAULT '0'
-      `);
-      
-      await executeSQL(`
-        ALTER TABLE cards 
-        ADD COLUMN IF NOT EXISTS ton_address TEXT
-      `);
-      
-      console.log('✅ KICHCOIN колонки успешно добавлены в базу данных');
-    } catch (error) {
-      console.log('⚠️ Ошибка при добавлении KICHCOIN колонок:', error);
-    }
-    
-    console.log('Database tables created or verified successfully');
+    console.log('✅ Essential database tables created successfully');
     return true;
   } catch (error) {
-    console.error('Error creating tables:', error);
+    console.error('❌ Error creating essential tables:', error);
     throw error;
   }
 }
@@ -335,6 +316,22 @@ process.on('SIGINT', async () => {
 async function initializeWithRetry() {
   try {
     console.log('Initializing database tables...');
+    
+    // Пробуем быстрое подключение с коротким таймаутом
+    const quickTest = await withDatabaseTimeout(
+      db.select().from(schema.users).limit(1),
+      5000,
+      'Quick database connection test'
+    ).catch(error => {
+      console.log('⚠️ Quick test failed, probably database is initializing...');
+      return null;
+    });
+    
+    if (quickTest !== null) {
+      console.log('✅ Database already initialized and ready');
+      return;
+    }
+    
     await initializeDatabase();
     console.log('Database initialized successfully');
   } catch (error) {
