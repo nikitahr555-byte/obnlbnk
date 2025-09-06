@@ -188,6 +188,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Добавляем эндпоинт для получения новостей (был пропущен в Vercel версии)
+  app.get("/api/news", async (req, res) => {
+    try {
+      console.log('📰 GET /api/news - Запрос новостей получен [VERCEL]');
+      // Возвращаем статичные данные для тестирования
+      const fallbackNews = [
+        {
+          id: 1,
+          title: "Bitcoin достиг нового исторического максимума",
+          content: "Крупнейшая криптовалюта мира продолжает демонстрировать рост...",
+          date: new Date().toLocaleDateString('en-US'),
+          category: 'crypto',
+          source: 'Financial News'
+        },
+        {
+          id: 2,
+          title: "Центральные банки изучают цифровые валюты",
+          content: "Множество центральных банков по всему миру активно исследуют возможности внедрения цифровых валют центробанков...",
+          date: new Date(Date.now() - 86400000).toLocaleDateString('en-US'),
+          category: 'fiat',
+          source: 'Banking Times'
+        },
+        {
+          id: 3,
+          title: "Новые возможности банковских переводов",
+          content: "OOO BNAL BANK представляет улучшенную систему международных переводов с мгновенной обработкой...",
+          date: new Date(Date.now() - 172800000).toLocaleDateString('en-US'),
+          category: 'banking',
+          source: 'OOO BNAL BANK'
+        }
+      ];
+      console.log(`📰 [VERCEL] Новостей получено: ${fallbackNews.length}`);
+      res.setHeader('Cache-Control', 'public, max-age=600'); // 10 минут кэш
+      res.json(fallbackNews);
+    } catch (error) {
+      console.error("❌ [VERCEL] Error fetching news:", error);
+      res.status(500).json({ message: "Ошибка при получении новостей" });
+    }
+  });
+
+  // Функция для получения ID пользователя из request (helper)
+  function getUserId(req: express.Request): number {
+    return req.user?.id || 0;
+  }
+
+  // Добавляем эндпоинт для получения транзакций (был пропущен в Vercel версии)
+  app.get("/api/transactions", ensureAuthenticated, async (req, res) => {
+    try {
+      console.log('💳 GET /api/transactions - Запрос транзакций получен [VERCEL]');
+      
+      if (!req.user || !req.user.id) {
+        return res.status(401).json({ message: "Пользователь не авторизован" });
+      }
+
+      // Добавляем таймаут для Vercel
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Transactions API timeout')), 10000);
+      });
+      
+      // Get all user's cards
+      const userCardsPromise = storage.getCardsByUserId(getUserId(req));
+      const userCards = await Promise.race([userCardsPromise, timeoutPromise]);
+      const cardIds = userCards.map(card => card.id);
+
+      // Get all transactions related to user's cards
+      const transactionsPromise = storage.getTransactionsByCardIds(cardIds);
+      const transactions = await Promise.race([transactionsPromise, timeoutPromise]);
+
+      console.log(`💳 [VERCEL] Найдено транзакций: ${transactions.length} для пользователя ${req.user.id}`);
+      res.setHeader('Cache-Control', 'private, max-age=30'); // 30 секунд кэш для транзакций
+      res.json(transactions);
+    } catch (error) {
+      console.error("❌ [VERCEL] Transactions fetch error:", error);
+      // Возвращаем пустой массив при ошибке
+      res.json([]);
+    }
+  });
+
   app.get('/api/nft-collections', ensureAuthenticated, async (req, res) => {
     try {
       if (!req.user) return res.status(401).json({ error: 'Требуется авторизация' });

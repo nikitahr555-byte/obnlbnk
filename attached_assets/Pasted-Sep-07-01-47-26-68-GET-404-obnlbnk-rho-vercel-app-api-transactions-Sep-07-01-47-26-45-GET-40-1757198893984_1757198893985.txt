@@ -1,0 +1,221 @@
+Sep 07 01:47:26.68
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:47:26.45
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:47:25.51
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:47:25.28
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 01:47:25.28
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:47:24.29
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: yijor60729D
+Sep 07 01:47:20.33
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:47:19.15
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:47:18.89
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: yijor60729D
+Sep 07 01:47:18.89
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 01:47:18.85
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 01:47:18.45
+POST
+200
+obnlbnk-rho.vercel.app
+/api/login
+Sep 07 01:47:16.33
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 01:47:13.97
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:47:12.81
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:47:11.36
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 01:47:07.64
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:47:05.06
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+19
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "cards" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:47:05.06
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:46:55.02
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:46:53.85
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:46:53.85
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 01:46:51.98
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:46:51.81
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 01:46:42.49
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:46:41.31
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 01:46:41.30
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:46:36.66
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:46:31.48
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:46:31.16
+POST
+504
+obnlbnk-rho.vercel.app
+/api/transfer
+10
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 07 01:46:26.24
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+5
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:46:20.80
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+5
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:46:15.36
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "nfts" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:46:09.93
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+21
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "exchange_rates" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:46:09.93
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "session" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:46:06.43
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+19
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "cards" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:45:19.81
+GET
+401
+obnlbnk-kda0rdmax-rabota197555-2326s-projects.vercel.app
+/api/user
+17
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 07 01:45:19.79
+GET
+401
+obnlbnk-kda0rdmax-rabota197555-2326s-projects.vercel.app
+/api/user
+No
