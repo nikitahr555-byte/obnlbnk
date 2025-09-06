@@ -296,6 +296,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Добавляем эндпоинт для переводов (был пропущен в Vercel версии)
+  app.post("/api/transfer", ensureAuthenticated, async (req, res) => {
+    try {
+      console.log('💸 POST /api/transfer - Запрос перевода получен [VERCEL]');
+      const { fromCardId, recipientAddress, amount, transferType, cryptoType } = req.body;
+
+      // Basic validation
+      if (!fromCardId || !recipientAddress || !amount) {
+        return res.status(400).json({ message: "Не указаны обязательные параметры перевода" });
+      }
+
+      // Добавляем таймаут для Vercel (короче чем 60 секунд)
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Transfer timeout')), 30000); // 30 секунд для переводов
+      });
+
+      let result;
+      if (transferType === 'crypto') {
+        if (!cryptoType) {
+          return res.status(400).json({ message: "Не указан тип криптовалюты" });
+        }
+
+        // Validate crypto address format
+        if (!validateCryptoAddress(recipientAddress, cryptoType)) {
+          return res.status(400).json({
+            message: `Неверный формат ${cryptoType.toUpperCase()} адреса`
+          });
+        }
+
+        const transferPromise = storage.transferCrypto(
+          parseInt(fromCardId),
+          recipientAddress.trim(),
+          parseFloat(amount),
+          cryptoType as 'btc' | 'eth'
+        );
+        result = await Promise.race([transferPromise, timeoutPromise]);
+      } else {
+        // For fiat transfers, validate card number
+        const cleanCardNumber = recipientAddress.replace(/\s+/g, '');
+        if (!/^\d{16}$/.test(cleanCardNumber)) {
+          return res.status(400).json({ message: "Неверный формат номера карты" });
+        }
+
+        const transferPromise = storage.transferMoney(
+          parseInt(fromCardId),
+          cleanCardNumber,
+          parseFloat(amount)
+        );
+        result = await Promise.race([transferPromise, timeoutPromise]);
+      }
+
+      if (!result.success) {
+        return res.status(400).json({ message: result.error });
+      }
+
+      console.log('✅ [VERCEL] Перевод успешно выполнен для пользователя:', req.user.id);
+      return res.json({
+        success: true,
+        message: "Перевод успешно выполнен",
+        transaction: result.transaction
+      });
+
+    } catch (error) {
+      console.error("❌ [VERCEL] Transfer error:", error);
+      res.status(500).json({
+        success: false,
+        message: error instanceof Error ? error.message : "Ошибка перевода"
+      });
+    }
+  });
+
   app.get("/api/crypto/seed-phrase", ensureAuthenticated, async (req, res) => {
     try {
       if (!req.user || !req.user.id) return res.status(401).json({ message: "Пользователь не авторизован" });
