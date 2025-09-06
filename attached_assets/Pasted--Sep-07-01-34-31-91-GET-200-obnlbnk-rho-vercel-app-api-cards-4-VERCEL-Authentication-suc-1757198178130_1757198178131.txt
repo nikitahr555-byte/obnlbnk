@@ -1,0 +1,152 @@
+
+Sep 07 01:34:31.91
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:34:26.72
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:34:21.54
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:34:19.95
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:34:14.77
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:34:13.57
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:34:08.38
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:34:07.20
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:34:02.00
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:34:00.82
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:33:55.64
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:33:54.44
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:33:49.25
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:33:48.07
+GET
+404
+obnlbnk-rho.vercel.app
+/api/transactions
+Sep 07 01:33:48.07
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:33:41.66
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:33:40.48
+GET
+404
+obnlbnk-rho.vercel.app
+/api/news
+Sep 07 01:33:40.48
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 01:33:39.39
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 01:33:33.95
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+15
+Database initialized successfully
+Sep 07 01:33:33.95
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+6
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "exchange_rates" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:33:33.93
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "cards" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:33:32.52
+POST
+200
+obnlbnk-rho.vercel.app
+/api/login
+{ severity_local: 'NOTICE', severity: 'NOTICE', code: '42P07', message: 'relation "users" already exists, skipping', file: 'parse_utilcmd.c', line: '207', routine: 'transformCreateStmt' }
+Sep 07 01:33:17.46
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+17
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 07 01:32:20.24
+GET
+401
+obnlbnk-pt4ypwxa6-rabota197555-2326s-projects.vercel.app
+/api/user
+17
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 07 01:32:20.20
+GET
+401
+obnlbnk-pt4ypwxa6-rabota197555-2326s-projects.vercel.app
+/api/user
+No more logs

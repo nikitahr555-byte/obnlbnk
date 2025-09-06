@@ -464,6 +464,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Регистрируем маршруты для статуса NFT сервера
   app.use('/api/nft-server', nftServerController);
   
+  // Добавляем обработчик который логирует ВСЕ запросы к API (должен быть ДО маршрутов)
+  app.use('/api', (req, res, next) => {
+    console.log(`🔍 API запрос: ${req.method} ${req.originalUrl} - IP: ${req.ip}`);
+    next();
+  });
+  
   // Добавляем синоним для /api/nft/collections для совместимости с рендер-версией
   app.get('/api/nft-collections', ensureAuthenticated, async (req, res) => {
     try {
@@ -893,12 +899,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Transactions fetch error:", error);
       res.status(500).json({ message: "Ошибка при получении транзакций" });
     }
-  });
-
-  // Добавляем обработчик который логирует ВСЕ запросы к API
-  app.use('/api', (req, res, next) => {
-    console.log(`🔍 API запрос: ${req.method} ${req.originalUrl} - IP: ${req.ip}`);
-    next();
   });
 
   // Тестовый роут для проверки
