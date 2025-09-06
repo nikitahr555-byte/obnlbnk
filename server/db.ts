@@ -26,49 +26,12 @@ const databaseUrl: string = DATABASE_URL;
 
 console.log('Connecting to PostgreSQL database...');
 
-// Определяем, запущено ли приложение на Vercel
-const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
-
-// Создаем клиенты для разных окружений
-let client: any;
-let db: any;
-
-if (IS_VERCEL) {
-  // Используем Neon serverless клиент для Vercel - НЕТ ОГРАНИЧЕНИЙ СОЕДИНЕНИЙ!
-  console.log('🚀 Используем Neon serverless клиент для Vercel');
-  const sql = neon(databaseUrl);
-  db = drizzleNeon(sql, { schema });
-  client = sql; // Для совместимости
-} else {
-  // Используем обычный postgres клиент для Replit/локальной разработки
-  console.log('🔧 Используем обычный postgres клиент для разработки');
-  client = postgres(databaseUrl, { 
-    ssl: { rejectUnauthorized: false },
-    max: 3, // Больше соединений для разработки
-    idle_timeout: 30,
-    connect_timeout: 30,
-    max_lifetime: 600,
-    prepare: false,
-    no_prepare: true,
-    transform: {
-      undefined: null
-    },
-    types: {
-      date: {
-        to: 1184,
-        from: [1082, 1083, 1114, 1184],
-        serialize: (date: Date) => date,
-        parse: (date: string) => date
-      }
-    },
-    onnotice: () => {},
-    debug: false,
-    connection: {
-      application_name: 'replit-dev'
-    }
-  });
-  db = drizzle(client, { schema });
-}
+// КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем Neon serverless везде!
+// Обычный postgres клиент создает слишком много соединений
+console.log('🆘 КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем Neon serverless везде!');
+const sql = neon(databaseUrl);
+const db = drizzleNeon(sql, { schema });
+const client = sql; // Для совместимости
 
 // Экспортируем клиенты
 export { client, db };
@@ -78,10 +41,8 @@ async function createTablesIfNotExist() {
   try {
     console.log('Checking and creating database tables if needed...');
     
-    // Адаптируем запросы для разных клиентов
-    const executeSQL = IS_VERCEL 
-      ? (sql: string) => client(sql) // Neon serverless
-      : (sql: string) => client.unsafe(sql); // postgres.js с unsafe для прямого SQL
+    // Используем Neon serverless везде
+    const executeSQL = (sql: string) => client(sql);
     
     // Создаем таблицы с прямыми SQL запросами
     await executeSQL(`
@@ -291,15 +252,8 @@ export async function initializeDatabase() {
 
 // Функция для принудительного закрытия подключений
 export async function closeConnectionsOnVercel() {
-  if (!IS_VERCEL && client && typeof client.end === 'function') {
-    try {
-      await client.end();
-      console.log('✅ Database connections closed');
-    } catch (e) {
-      console.error('❌ Error closing database:', e);
-    }
-  }
-  // На Vercel с Neon serverless соединения управляются автоматически
+  // Neon serverless соединения управляются автоматически
+  console.log('✅ Используем serverless - соединения закрываются автоматически');
 }
 
 // Handle graceful shutdown

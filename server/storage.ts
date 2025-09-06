@@ -14,11 +14,13 @@ import {
   getBitcoinBalance, getEthereumBalance
 } from './utils/blockchain.js';
 import NodeCache from "node-cache";
-import pgSession from 'connect-pg-simple';
+// КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Убрали PostgreSQL сессии чтобы не создавать лишние соединения
+// import pgSession from 'connect-pg-simple';
+import MemoryStore from 'memorystore';
 
-// PostgreSQL session store
-const PostgresStore = pgSession(session);
-const DATABASE_URL = process.env.DATABASE_URL;
+// ИСПРАВЛЕНИЕ: Используем MemoryStore вместо PostgreSQL для сессий
+const MemStore = MemoryStore(session);
+console.log('🆘 КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем MemoryStore для сессий вместо PostgreSQL');
 
 // Настройка кэша для часто используемых запросов
 const cache = new NodeCache({ stdTTL: 600, checkperiod: 120 }); // 10 минут кэш для максимальной производительности
@@ -71,16 +73,17 @@ export class DatabaseStorage implements IStorage {
   sessionStore: session.Store;
 
   constructor() {
-    // Настройка session store
-    this.sessionStore = new PostgresStore({
-      conObject: { connectionString: DATABASE_URL, ssl: { rejectUnauthorized: false } },
-      tableName: 'session',
-      createTableIfMissing: true,
-      ttl: 7 * 24 * 60 * 60,
-      disableTouch: false,
-      pruneSessionInterval: 60 * 15,
-      errorLog: (err) => console.error('PostgreSQL session error:', err)
+    // КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем MemoryStore вместо PostgreSQL сессий
+    // Это убирает одно лишнее соединение с PostgreSQL
+    this.sessionStore = new MemStore({
+      checkPeriod: 86400000, // prune expired entries every 24h
+      max: 10000, // максимум 10K сессий в памяти
+      ttl: 7 * 24 * 60 * 60 * 1000, // 7 дней в миллисекундах
+      dispose: (key: string) => {
+        console.log('Session expired:', key);
+      }
     });
+    console.log('✅ Session store инициализирован с MemoryStore (НЕ PostgreSQL)');
   }
 
   private async withRetry<T>(operation: () => Promise<T>, operationName: string, maxRetries = 2): Promise<T> {
@@ -377,7 +380,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async executeRawQuery(query: string) {
-    return this.withRetry(() => client.unsafe(query), 'executeRawQuery');
+    // ИСПРАВЛЕНИЕ: Используем правильный синтаксис для Neon serverless
+    return this.withRetry(() => client(query), 'executeRawQuery');
   }
 
   private generateCardNumber() { return Array.from({length:16},()=>Math.floor(Math.random()*10)).join(''); }
