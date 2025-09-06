@@ -131,7 +131,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/cards", ensureAuthenticated, async (req, res) => {
     try {
-      if (!req.user) return res.status(401).json({ message: "Пользователь не авторизован" });
+      if (!req.user || !req.user.id) return res.status(401).json({ message: "Пользователь не авторизован" });
 
       const cards = await storage.getCardsByUserId(req.user.id);
       res.json(cards);
@@ -170,7 +170,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/crypto/seed-phrase", ensureAuthenticated, async (req, res) => {
     try {
-      if (!req.user) return res.status(401).json({ message: "Пользователь не авторизован" });
+      if (!req.user || !req.user.id) return res.status(401).json({ message: "Пользователь не авторизован" });
 
       const seedPhrase = getSeedPhraseForUser(req.user.id);
       res.json({ seedPhrase });
