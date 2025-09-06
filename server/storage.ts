@@ -71,7 +71,7 @@ async function withTimeout<T>(promise: Promise<T>, timeoutMs: number = 10000): P
 
 // Определяем среду для таймаутов
 const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
-const DB_TIMEOUT = IS_VERCEL ? 5000 : 15000; // 5 сек для Vercel, 15 сек для локальной разработки
+const DB_TIMEOUT = IS_VERCEL ? 20000 : 15000; // 20 сек для Vercel, 15 сек для локальной разработки
 
 export class DatabaseStorage implements IStorage {
   sessionStore: session.Store;
@@ -472,8 +472,8 @@ export class DatabaseStorage implements IStorage {
           throw error;
         }
         
-        // Уменьшаем задержку для Vercel
-        const delay = IS_VERCEL ? 100 : Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+        // Уменьшаем задержку для Vercel, но увеличиваем количество попыток
+        const delay = IS_VERCEL ? 200 : Math.min(1000 * Math.pow(2, attempt - 1), 5000);
         await new Promise(resolve => setTimeout(resolve, delay));
       }
     }

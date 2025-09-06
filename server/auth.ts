@@ -65,14 +65,10 @@ export function setupAuth(app: Express) {
   const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
   
   if (IS_VERCEL) {
-    console.log('🔧 Vercel detected: using cookie-only authentication without session store');
+    console.log('🔧 Vercel detected: using minimal authentication without session warnings');
     
-    // Создаем пустую сессию store которая ничего не делает
-    class NoopStore extends MemoryStore {
-      constructor() {
-        super();
-      }
-      
+    // Создаем полностью пустую store без наследования от MemoryStore
+    class SilentStore {
       all(callback: (err?: any, obj?: any) => void): void {
         callback(null, {});
       }
@@ -90,8 +86,8 @@ export function setupAuth(app: Express) {
       }
       
       get(sid: string, callback: (err: any, session?: any) => void): void {
-        // Возвращаем минимальную сессию для passport
-        callback(null, { cookie: { maxAge: 1000 } });
+        // Возвращаем минимальную сессию только для passport
+        callback(null, { cookie: { maxAge: 1000, path: '/', httpOnly: true } });
       }
       
       set(sid: string, session: any, callback?: (err?: any) => void): void {
@@ -107,15 +103,15 @@ export function setupAuth(app: Express) {
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
-      store: new NoopStore(), // Пустая store без предупреждений
+      store: new SilentStore() as any, // Полностью тихая store
       cookie: {
         secure: true, // HTTPS на Vercel
         sameSite: 'lax',
-        maxAge: 1000, // Очень короткая жизнь сессии - 1 секунда
+        maxAge: 86400000, // 24 часа
         path: '/',
         httpOnly: true
       },
-      name: 'temp.sid'
+      name: 'auth.sid'
     }));
   } else {
     // На локальном/Replit используем PostgreSQL session store
