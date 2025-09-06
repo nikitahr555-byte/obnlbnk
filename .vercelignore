@@ -1,0 +1,86 @@
+# =========================
+# Базовое
+# =========================
+node_modules
+.git
+*.log
+.cache/
+.DS_Store
+.vscode/
+*.swp
+*.swo
+
+# =========================
+# Env и конфиги
+# =========================
+.env.local
+.env.development
+tsconfig.tsbuildinfo
+
+# =========================
+# Документация и скрипты
+# =========================
+*.md
+README.md
+*.sh
+*.sql
+BACKUP_RESTORE_INSTRUCTIONS.md
+DATABASE_BACKUP_RESTORE.md
+DATABASE_INSTRUCTIONS.md
+RENDER_DEPLOYMENT_GUIDE.md
+VERCEL_DEPLOYMENT_GUIDE.md
+
+# =========================
+# Базы и бэкапы
+# =========================
+sqlite.db
+data/
+backup/
+compiled/
+
+# =========================
+# Генераторы и утилиты (не нужны в продакшне API)
+# =========================
+add-*.js
+add-*.cjs
+check-*.js
+clean-*.js
+clean-*.cjs
+import-*.js
+export-*.js
+backup-*.js
+convert-*.js
+create-*.js
+activate-*.js
+auto-*.js
+batch-*.js
+deep-*.js
+complete-*.js
+
+# =========================
+# Ассеты (тяжёлые NFT картинки)
+# =========================
+bored_ape_nft/
+mutant_ape_nft/
+bayc_official_nft/
+nft_assets/
+client/public/assets/nft/
+
+# =========================
+# Mobile (React Native)
+# =========================
+android/
+ios/
+app.json
+eas.json
+
+# =========================
+# Не используемые файлы сервера
+# =========================
+server-replit.ts
+server/index.ts
+
+# =========================
+# ⚠️ НЕ игнорируем client/src и server/services/bored-ape-nft-service.ts
+# потому что они нужны для билда и рантайма
+# =========================

@@ -1,0 +1,49 @@
+{
+  "version": 2,
+  "buildCommand": "node build-fallback.js",
+  "outputDirectory": "dist/public",
+  "installCommand": "npm install",
+  "functions": {
+    "api/index.ts": {
+      "runtime": "@vercel/node@3.0.23",
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/webhook/(.*)",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/ws",
+      "destination": "/api/index.ts"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-Requested-With, Content-Type, Authorization"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "VERCEL": "1"
+  }
+}
