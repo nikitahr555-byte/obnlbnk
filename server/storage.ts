@@ -285,8 +285,9 @@ export class DatabaseStorage implements IStorage {
     if (cached) return cached;
 
     const rates = await this.withRetry(() => db.select().from(exchangeRates).orderBy(desc(exchangeRates.updatedAt)).limit(1), 'getLatestExchangeRates');
-    if (rates) cache.set('rates', rates);
-    return rates;
+    const [firstRate] = rates;
+    if (firstRate) cache.set('rates', firstRate);
+    return firstRate;
   }
 
   async updateExchangeRates(rates: { usdToUah: number; btcToUsd: number; ethToUsd: number }): Promise<ExchangeRate> {
