@@ -1,0 +1,116 @@
+Sep 07 02:04:55.83
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:66:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:04:55.66
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:04:49.69
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:66:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:04:36.52
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:66:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:04:36.34
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:04:24.32
+GET
+200
+obnlbnk-rho.vercel.app
+/api/crypto/seed-phrase
+6
+Failed to generate Ethereum address from mnemonic: TypeError: HDWallet.fromPrivateKey is not a function at getEthereumAddressFromMnemonic (/vercel/path0/api/server/utils/seed-phrase.ts:72:29) at getAddressesFromMnemonic (/vercel/path0/api/server/utils/seed-phrase.ts:90:22) at process.processTicksAndRejections (node:internal/process/task_queues:95:5) at async generateAddressesForUser (/vercel/path0/api/server/utils/seed-phrase.ts:122:38) at async getSeedPhraseForUser (/vercel/path0/api/server/utils/crypto.ts:77:24)
+Sep 07 02:04:14.65
+GET
+---
+obnlbnk-rho.vercel.app
+/api/nft/user
+3
+[Bored Ape NFT Service] Получение NFT для пользователя с ID: 3
+Sep 07 02:04:13.29
+GET
+200
+obnlbnk-rho.vercel.app
+/api/transactions
+8
+❌ [VERCEL] Transactions fetch error: Error: Get user cards timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:66:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:04:07.89
+GET
+---
+obnlbnk-rho.vercel.app
+/api/cards
+27
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:66:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:04:07.89
+GET
+200
+obnlbnk-rho.vercel.app
+/api/transactions
+6
+💳 [VERCEL] Найдено транзакций: 8 для пользователя 3
+Sep 07 02:04:03.12
+GET
+200
+obnlbnk-rho.vercel.app
+/api/news
+2
+📰 [VERCEL] Новостей получено: 3
+Sep 07 02:04:03.12
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:04:02.17
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:03:56.27
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:03:56.27
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:03:54.51
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+3
+Database initialization failed: Error: write CONNECT_TIMEOUT aws-1-eu-north-1.pooler.supabase.com:6543 at connectTimedOut (file:///var/task/api/node_modules/postgres/src/connection.js:257:20) at Timeout.done [as _onTimeout] (file:///var/task/api/node_modules/postgres/src/connection.js:1039:8) at listOnTimeout (node:internal/timers:583:11) at process.processTimers (node:internal/timers:519:7) { code: 'CONNECT_TIMEOUT', errno: 'CONNECT_TIMEOUT', address: 'aws-1-eu-north-1.pooler.supabase.com', port: 6543 }
+Sep 07 02:03:31.73
+GET
+401
+obnlbnk-kksw3jw27-rabota197555-2326s-projects.vercel.app
+/api/user
+Sep 07 02:03:29.94
+GET
+401
+obnlbnk-kksw3jw27-rabota197555-2326s-projects.vercel.app
+/api/user
+17
+✅ Маршруты успешно зарегистрированы для Vercel
