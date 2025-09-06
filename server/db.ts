@@ -14,7 +14,7 @@ console.log('Using PostgreSQL database');
 const IS_RENDER = process.env.RENDER === 'true';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-// Получаем DATABASE_URL из переменных окружения
+// Получаем DATABASE_URL из переменных окружения  
 const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!DATABASE_URL) {
@@ -23,6 +23,7 @@ if (!DATABASE_URL) {
 
 // Проверяем что DATABASE_URL не undefined
 const databaseUrl: string = DATABASE_URL;
+console.log('✅ Используем основной DATABASE_URL для подключения');
 
 console.log('Connecting to PostgreSQL database...');
 
