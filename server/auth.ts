@@ -124,16 +124,16 @@ export function setupAuth(app: Express) {
 
   // Login
   app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", async (err, user) => {
+    passport.authenticate("local", async (err: any, user: any, info: any) => {
       if (err) return res.status(500).json({ message: "Ошибка сервера" });
-      if (!user) return res.status(401).json({ message: "Неверные данные" });
+      if (!user) return res.status(401).json({ message: info?.message || "Неверные данные" });
 
       if (IS_VERCEL) {
         const token = Buffer.from(JSON.stringify({ id: user.id, username: user.username, timestamp: Date.now() })).toString("base64");
         res.cookie("user_data", token, { httpOnly: true, secure: true, maxAge: 7*24*60*60*1000, sameSite: "lax" });
         return res.json(user);
       } else {
-        req.logIn(user, loginErr => {
+        req.logIn(user, (loginErr: any) => {
           if (loginErr) return res.status(500).json({ message: "Ошибка сессии" });
           res.json(user);
         });
