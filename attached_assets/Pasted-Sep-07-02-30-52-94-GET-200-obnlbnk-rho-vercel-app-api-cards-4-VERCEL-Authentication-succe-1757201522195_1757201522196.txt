@@ -1,0 +1,738 @@
+Sep 07 02:30:52.94
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:47.76
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:42.57
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:37.37
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:32.16
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:26.97
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:21.74
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:16.70
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:30:16.51
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:11.51
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:30:11.31
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:30:10.44
+POST
+400
+obnlbnk-rho.vercel.app
+/api/transfer
+5
+💸 POST /api/transfer - Запрос перевода получен [VERCEL]
+Sep 07 02:30:07.95
+POST
+400
+obnlbnk-rho.vercel.app
+/api/transfer
+5
+💸 POST /api/transfer - Запрос перевода получен [VERCEL]
+Sep 07 02:30:06.33
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:30:06.11
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:59.48
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+5
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:29:57.90
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+21
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:54.31
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:29:52.67
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:49.13
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:29:48.95
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:29:47.47
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:42.28
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:37.07
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:31.85
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:26.64
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:22.47
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:29:22.14
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:22.10
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:22.05
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:22.01
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.95
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.91
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.87
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.83
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.67
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.67
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.63
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.62
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.59
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.58
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.54
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.53
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.50
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.48
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.46
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:21.45
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.41
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.40
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.37
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.35
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.31
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.31
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.27
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.27
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.23
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.22
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.19
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.17
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.15
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.13
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.10
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:21.08
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:19.26
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:29:16.28
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:11.10
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:07.27
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:29:05.93
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:29:00.76
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:28:57.57
+POST
+504
+obnlbnk-rho.vercel.app
+/api/cards/generate
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 07 02:28:55.58
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:28:52.41
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:28:50.39
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:28:45.21
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:28:38.79
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:28:38.62
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: KICH
+Sep 07 02:28:38.61
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:28:36.89
+POST
+201
+obnlbnk-rho.vercel.app
+/api/register
+Sep 07 02:28:14.74
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:28:14.60
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:28:11.97
+POST
+200
+obnlbnk-rho.vercel.app
+/api/logout
+17
+✅ Database already initialized and ready
+Sep 07 02:28:01.42
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:28:01.42
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:28:01.22
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:27:47.30
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:27:41.99
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:27:31.00
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:27:28.79
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:27:15.59
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:27:15.24
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:27:10.90
+GET
+200
+obnlbnk-rho.vercel.app
+/api/crypto/seed-phrase
+5
+Failed to generate Bitcoin address from mnemonic: ReferenceError: require is not defined at getBitcoinAddressFromMnemonic (/vercel/path0/api/server/utils/seed-phrase.ts:40:17) at getAddressesFromMnemonic (/vercel/path0/api/server/utils/seed-phrase.ts:87:28) at generateAddressesForUser (/vercel/path0/api/server/utils/seed-phrase.ts:120:44) at getSeedPhraseForUser (/vercel/path0/api/server/utils/crypto.ts:77:30) at <anonymous> (/vercel/path0/api/server/routes-vercel.ts:373:26) at Layer.handle [as handle_request] (/var/task/api/node_modules/express/lib/router/layer.js:95:5) at next (/var/task/api/node_modules/express/lib/router/route.js:149:13) at ensureAuthenticated (/vercel/path0/api/server/routes-vercel.ts:49:14) at Layer.handle [as handle_request] (/var/task/api/node_modules/express/lib/router/layer.js:95:5) at next (/var/task/api/node_modules/express/lib/router/route.js:149:13)
+Sep 07 02:27:09.59
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:27:05.92
+GET
+504
+obnlbnk-rho.vercel.app
+/api/nft/user
+8
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 07 02:27:02.76
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+30
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:27:02.75
+GET
+200
+obnlbnk-rho.vercel.app
+/api/transactions
+6
+💳 [VERCEL] Найдено транзакций: 8 для пользователя 3
+Sep 07 02:26:59.42
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:58.20
+GET
+304
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:26:58.20
+GET
+200
+obnlbnk-rho.vercel.app
+/api/news
+2
+📰 [VERCEL] Новостей получено: 3
+Sep 07 02:26:56.86
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:51.64
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:46.44
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:41.24
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:41.24
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:26:41.04
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:37.49
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+17
+✅ Database already initialized and ready
+Sep 07 02:26:31.33
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:20.51
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:26:00.93
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:25:20.10
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:25:06.77
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:24:44.74
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:24:33.87
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:24:23.27
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:24:20.38
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 07 02:24:09.69
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+21
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 07 02:23:50.68
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+12
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:23:25.07
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+14
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:23:19.51
+GET
+401
+obnlbnk-m17h074m9-rabota197555-2326s-projects.vercel.app
+/api/user
+Sep 07 02:23:19.22
+GET
+401
+obnlbnk-m17h074m9-rabota197555-2326s-projects.vercel.app
+/api/user
+16
+✅ Маршруты успешно зарегистрированы для Vercel
