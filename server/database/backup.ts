@@ -180,8 +180,8 @@ export async function importDatabase() {
 export function scheduleBackups() {
   const BACKUP_INTERVAL = 24 * 60 * 60 * 1000; // 24 часа
 
-  // Создаем первый бэкап при запуске
-  exportDatabase().catch(console.error);
+  // ОТКЛЮЧЕНО: Не создаем бэкап при запуске чтобы избежать проблем с соединением
+  console.log('📦 Backup scheduling initialized (startup backup disabled for stability)');
 
   // Планируем регулярные бэкапы
   setInterval(async () => {
