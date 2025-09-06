@@ -104,7 +104,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Добавляем таймаут для Vercel
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('API timeout')), 15000); // 15 сек для Vercel
+        setTimeout(() => reject(new Error('API timeout')), 10000); // Уменьшили до 10 секунд
       });
       
       const ratesPromise = storage.getLatestExchangeRates();
@@ -163,7 +163,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Добавляем таймаут для Vercel
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('NFT API timeout')), 15000);
+        setTimeout(() => reject(new Error('NFT API timeout')), 10000); // Уменьшили до 10 секунд
       });
       
       const collectionsPromise = (async () => {

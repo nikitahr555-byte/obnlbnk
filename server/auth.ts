@@ -40,18 +40,26 @@ export function setupAuth(app: Express) {
   // Passport init (без MemoryStore для Vercel)
   app.use(passport.initialize());
 
-  // Middleware: проверка cookie и установка req.user для Vercel
+  // Middleware: проверка cookie и установка req.user для Vercel с fallback
   app.use(async (req, res, next) => {
     if (IS_VERCEL && !req.user && req.cookies?.user_data) {
       try {
         const userData = JSON.parse(Buffer.from(req.cookies.user_data, 'base64').toString());
         // Токен валиден 7 дней
         if (Date.now() - userData.timestamp < 7 * 24 * 60 * 60 * 1000) {
-          const user = await storage.getUser(userData.id);
-          if (user && user.username === userData.username) {
-            req.user = user;
-          } else {
-            res.clearCookie('user_data');
+          try {
+            const user = await storage.getUser(userData.id);
+            if (user && user.username === userData.username) {
+              req.user = user;
+            } else {
+              res.clearCookie('user_data');
+            }
+          } catch (dbError) {
+            console.error('DB error in auth middleware, using fallback:', dbError);
+            // Fallback: используем данные из cookie без проверки БД
+            if (userData.id && userData.username) {
+              req.user = { id: userData.id, username: userData.username };
+            }
           }
         } else {
           res.clearCookie('user_data');
@@ -63,18 +71,20 @@ export function setupAuth(app: Express) {
     next();
   });
 
-  // LocalStrategy
+  // LocalStrategy с улучшенной обработкой ошибок
   passport.use(new LocalStrategy(async (username, password, done) => {
     try {
       const user = await storage.getUserByUsername(username);
-      if (!user) return done(null, false);
+      if (!user) return done(null, false, { message: 'Неверные учетные данные' });
 
       const valid = await comparePasswords(password, user.password);
-      if (!valid) return done(null, false);
+      if (!valid) return done(null, false, { message: 'Неверные учетные данные' });
 
       return done(null, user);
     } catch (err) {
-      return done(err);
+      console.error('LocalStrategy DB error:', err);
+      // Возвращаем более понятную ошибку пользователю
+      return done(null, false, { message: 'Временные проблемы с сервером. Попробуйте позже.' });
     }
   }));
 
