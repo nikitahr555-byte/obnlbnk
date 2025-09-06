@@ -158,6 +158,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       if (!req.user) return res.status(401).json({ error: 'Требуется авторизация' });
 
+      // Добавляем HTTP кэширование для NFT коллекций
+      res.setHeader('Cache-Control', 'public, max-age=600, s-maxage=600'); // 10 минут кэш
+      
       // Добавляем таймаут для Vercel
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => reject(new Error('NFT API timeout')), 15000);
