@@ -27,7 +27,7 @@ const cache = new NodeCache({ stdTTL: 600, checkperiod: 120 }); // 10 минут
 
 // Таймауты
 const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
-const DB_TIMEOUT = IS_VERCEL ? 5000 : 15000; // Еще больше уменьшили до 5s для Vercel
+const DB_TIMEOUT = IS_VERCEL ? 25000 : 15000; // Увеличили до 25s для Vercel для решения timeout проблем
 
 // Таймаут для операции
 async function withTimeout<T>(promise: Promise<T>, timeoutMs: number = DB_TIMEOUT): Promise<T> {
@@ -86,17 +86,20 @@ export class DatabaseStorage implements IStorage {
     console.log('✅ Session store инициализирован с MemoryStore (НЕ PostgreSQL)');
   }
 
-  private async withRetry<T>(operation: () => Promise<T>, operationName: string, maxRetries = 2): Promise<T> {
+  private async withRetry<T>(operation: () => Promise<T>, operationName: string, maxRetries = 3): Promise<T> {
     let attempt = 0;
     while (attempt < maxRetries) {
       try {
         return await withTimeout(operation());
       } catch (err) {
         attempt++;
-        console.error(`${operationName} failed on attempt ${attempt}:`, err);
-        if (attempt >= maxRetries) throw err;
-        // Уменьшили задержки для Vercel
-        const delay = IS_VERCEL ? Math.min(100 * attempt, 500) : Math.min(1000 * 2 ** (attempt - 1), 5000);
+        console.error(`❌ [VERCEL] ${operationName} failed on attempt ${attempt}:`, err);
+        if (attempt >= maxRetries) {
+          console.error(`💥 [VERCEL] ${operationName} exhausted all ${maxRetries} retries, throwing error`);
+          throw err;
+        }
+        // Увеличили задержки для стабильности в Vercel
+        const delay = IS_VERCEL ? Math.min(500 * attempt, 2000) : Math.min(1000 * 2 ** (attempt - 1), 5000);
         await new Promise(res => setTimeout(res, delay));
       }
     }

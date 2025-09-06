@@ -607,30 +607,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Получение карт пользователя
   app.get("/api/cards", ensureAuthenticated, async (req, res) => {
     try {
-      // В middleware ensureAuthenticated мы уже проверили что req.user существует
-      const cards = await storage.getCardsByUserId(getUserId(req));
+      const userId = getUserId(req);
+      console.log(`✅ [VERCEL] Authentication successful for user: ${req.user?.username || 'unknown'}`);
+      
+      // Добавляем дополнительный timeout на уровне роута
+      const cardsPromise = storage.getCardsByUserId(userId);
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error(`User cards fetch timed out after 8000ms`)), 8000);
+      });
+      
+      const cards = await Promise.race([cardsPromise, timeoutPromise]);
+      console.log(`💳 [VERCEL] Успешно получены карты для пользователя ${userId}: ${cards.length} карт`);
       res.json(cards);
     } catch (error) {
-      console.error("Cards fetch error:", error);
-      // Fallback: возвращаем базовые карты если база недоступна
-      const fallbackCards = [
-        {
-          id: 1,
-          userId: req.user!.id!,
-          type: "virtual",
-          number: "5555 5555 5555 5555",
-          expiry: "12/28",
-          cvv: "123",
-          balance: "1000.00",
-          btcBalance: "0.001",
-          ethBalance: "0.01",
-          kichcoinBalance: "100",
-          btcAddress: null,
-          ethAddress: null,
-          tonAddress: null
-        }
-      ];
-      res.json(fallbackCards);
+      console.error("Ошибка получения карт:", error);
+      
+      // Возвращаем ошибку с подробностями для отладки, но не показываем критические данные
+      if (error instanceof Error && error.message.includes('timed out')) {
+        console.error(`❌ [VERCEL] Cards fetch error: ${error.message}`);
+        res.status(500).json({ 
+          error: "Превышено время ожидания получения карт. Попробуйте позже.",
+          code: "TIMEOUT_ERROR"
+        });
+      } else {
+        console.error(`❌ [VERCEL] Database error: ${error}`);
+        res.status(500).json({ 
+          error: "Ошибка при получении карт. Попробуйте позже.",
+          code: "DATABASE_ERROR"
+        });
+      }
     }
   });
 

@@ -4,7 +4,6 @@
  */
 import * as bip39 from 'bip39';
 import * as bitcoin from 'bitcoinjs-lib';
-import HDWallet from 'ethereumjs-wallet';
 import { ethers } from 'ethers';
 // @ts-ignore
 import HDKey from 'hdkey';
@@ -68,12 +67,11 @@ export function getEthereumAddressFromMnemonic(mnemonic: string): string {
     const hdkey = HDKey.fromMasterSeed(seed);
     const childKey = hdkey.derive("m/44'/60'/0'/0/0");
     
-    // Создаем кошелек из приватного ключа
-    const wallet = HDWallet.fromPrivateKey(Buffer.from(childKey.privateKey));
-    const address = `0x${wallet.getAddress().toString('hex')}`;
+    // Создаем Ethereum адрес напрямую из приватного ключа
+    const privateKey = Buffer.from(childKey.privateKey).toString('hex');
+    const wallet = new ethers.Wallet(privateKey);
     
-    // Форматируем адрес в правильном регистре (чексумма)
-    return ethers.getAddress(address);
+    return wallet.address;
   } catch (error) {
     console.error('Failed to generate Ethereum address from mnemonic:', error);
     return '';

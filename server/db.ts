@@ -36,12 +36,15 @@ console.log('✅ Используем стандартный PostgreSQL клие
 const sql = postgres(databaseUrl, { 
   ssl: 'require',
   max: 1,                    // Максимум 1 подключение в serverless окружении
-  idle_timeout: 20,          // 20 секунд ожидания перед закрытием соединения
-  connect_timeout: 10,       // Максимум 10 секунд на подключение
+  idle_timeout: 5,           // Уменьшаем idle timeout до 5 секунд
+  connect_timeout: 30,       // Увеличиваем connect timeout до 30 секунд
   prepare: false,            // Отключаем prepared statements для serverless
   connection: {
+    application_name: 'ooo-bnal-bank',
     options: '--search_path=public'
-  }
+  },
+  transform: undefined,       // Отключаем трансформации для лучшей производительности
+  fetch_types: false         // Отключаем fetch types для serverless окружения
 });
 
 const db = drizzle(sql, { schema });
@@ -59,7 +62,7 @@ process.on('SIGINT', gracefulShutdown);
 // Добавляем функцию-помощник для безопасных операций с timeout
 export async function withDatabaseTimeout<T>(
   operation: Promise<T>, 
-  timeoutMs: number = 10000,
+  timeoutMs: number = 30000,
   operationName: string = 'Database operation'
 ): Promise<T> {
   const timeoutPromise = new Promise<never>((_, reject) => {
@@ -70,6 +73,18 @@ export async function withDatabaseTimeout<T>(
     return await Promise.race([operation, timeoutPromise]);
   } catch (error) {
     console.error(`❌ ${operationName} failed:`, error);
+    
+    // Если это ошибка подключения, пробуем переподключиться
+    if (error instanceof Error && (
+      error.message.includes('CONNECT_TIMEOUT') ||
+      error.message.includes('connection') ||
+      error.message.includes('timeout')
+    )) {
+      console.log('🔄 Attempting to reconnect to database...');
+      // Даем базе немного времени на восстановление
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
     throw error;
   }
 }
