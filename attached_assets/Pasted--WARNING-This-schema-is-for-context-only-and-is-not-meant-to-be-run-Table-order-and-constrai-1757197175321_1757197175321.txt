@@ -1,0 +1,100 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+CREATE TABLE public.cards (
+  id integer NOT NULL DEFAULT nextval('cards_id_seq'::regclass),
+  user_id integer NOT NULL,
+  type text NOT NULL,
+  number text NOT NULL,
+  expiry text NOT NULL,
+  cvv text NOT NULL,
+  balance numeric NOT NULL DEFAULT '0'::numeric,
+  btc_balance numeric NOT NULL DEFAULT '0'::numeric,
+  eth_balance numeric NOT NULL DEFAULT '0'::numeric,
+  btc_address text,
+  eth_address text,
+  kichcoin_balance text NOT NULL DEFAULT '0'::text,
+  ton_address text,
+  CONSTRAINT cards_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.exchange_rates (
+  id integer NOT NULL DEFAULT nextval('exchange_rates_id_seq'::regclass),
+  usd_to_uah numeric NOT NULL,
+  btc_to_usd numeric NOT NULL,
+  eth_to_usd numeric NOT NULL,
+  updated_at timestamp without time zone NOT NULL DEFAULT now(),
+  CONSTRAINT exchange_rates_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.nft_collections (
+  id integer NOT NULL DEFAULT nextval('nft_collections_id_seq'::regclass),
+  user_id integer NOT NULL,
+  name text NOT NULL,
+  description text,
+  cover_image text,
+  created_at timestamp without time zone NOT NULL DEFAULT now(),
+  CONSTRAINT nft_collections_pkey PRIMARY KEY (id),
+  CONSTRAINT nft_collections_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id)
+);
+CREATE TABLE public.nft_transfers (
+  id integer NOT NULL DEFAULT nextval('nft_transfers_id_seq'::regclass),
+  nft_id integer NOT NULL,
+  from_user_id integer NOT NULL,
+  to_user_id integer NOT NULL,
+  transfer_type text NOT NULL,
+  price text DEFAULT '0'::text,
+  transferred_at timestamp without time zone NOT NULL DEFAULT now(),
+  CONSTRAINT nft_transfers_pkey PRIMARY KEY (id),
+  CONSTRAINT nft_transfers_from_user_id_fkey FOREIGN KEY (from_user_id) REFERENCES public.users(id),
+  CONSTRAINT nft_transfers_to_user_id_fkey FOREIGN KEY (to_user_id) REFERENCES public.users(id),
+  CONSTRAINT nft_transfers_nft_id_fkey FOREIGN KEY (nft_id) REFERENCES public.nfts(id)
+);
+CREATE TABLE public.nfts (
+  id integer NOT NULL DEFAULT nextval('nfts_id_seq'::regclass),
+  collection_id integer NOT NULL,
+  owner_id integer NOT NULL,
+  name text NOT NULL,
+  description text,
+  image_path text NOT NULL,
+  attributes jsonb,
+  rarity text NOT NULL DEFAULT 'common'::text,
+  price text DEFAULT '0'::text,
+  for_sale boolean NOT NULL DEFAULT false,
+  minted_at timestamp without time zone NOT NULL DEFAULT now(),
+  token_id text NOT NULL,
+  original_image_path text,
+  sort_order integer,
+  CONSTRAINT nfts_pkey PRIMARY KEY (id),
+  CONSTRAINT nfts_collection_id_fkey FOREIGN KEY (collection_id) REFERENCES public.nft_collections(id),
+  CONSTRAINT nfts_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES public.users(id)
+);
+CREATE TABLE public.session (
+  sid character varying NOT NULL,
+  sess json NOT NULL,
+  expire timestamp without time zone NOT NULL,
+  CONSTRAINT session_pkey PRIMARY KEY (sid)
+);
+CREATE TABLE public.transactions (
+  id integer NOT NULL DEFAULT nextval('transactions_id_seq'::regclass),
+  from_card_id integer NOT NULL,
+  to_card_id integer,
+  amount numeric NOT NULL,
+  converted_amount numeric NOT NULL,
+  type text NOT NULL,
+  wallet text,
+  status text NOT NULL,
+  created_at timestamp without time zone NOT NULL DEFAULT now(),
+  description text NOT NULL DEFAULT ''::text,
+  from_card_number text NOT NULL,
+  to_card_number text,
+  CONSTRAINT transactions_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.users (
+  id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+  username text NOT NULL UNIQUE,
+  password text NOT NULL,
+  is_regulator boolean NOT NULL DEFAULT false,
+  regulator_balance numeric NOT NULL DEFAULT '0'::numeric,
+  last_nft_generation timestamp without time zone,
+  nft_generation_count integer NOT NULL DEFAULT 0,
+  CONSTRAINT users_pkey PRIMARY KEY (id)
+);
