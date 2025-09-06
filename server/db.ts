@@ -81,7 +81,7 @@ async function createTablesIfNotExist() {
     // Адаптируем запросы для разных клиентов
     const executeSQL = IS_VERCEL 
       ? (sql: string) => client(sql) // Neon serverless
-      : (sql: string) => client([sql] as any); // postgres.js
+      : (sql: string) => client.unsafe(sql); // postgres.js с unsafe для прямого SQL
     
     // Создаем таблицы с прямыми SQL запросами
     await executeSQL(`
@@ -193,6 +193,23 @@ async function createTablesIfNotExist() {
       )
     `);
     
+    // Добавляем новые колонки для KICHCOIN если их нет (для существующих таблиц)
+    try {
+      await executeSQL(`
+        ALTER TABLE cards 
+        ADD COLUMN IF NOT EXISTS kichcoin_balance TEXT NOT NULL DEFAULT '0'
+      `);
+      
+      await executeSQL(`
+        ALTER TABLE cards 
+        ADD COLUMN IF NOT EXISTS ton_address TEXT
+      `);
+      
+      console.log('✅ KICHCOIN колонки успешно добавлены в базу данных');
+    } catch (error) {
+      console.log('⚠️ Ошибка при добавлении KICHCOIN колонок:', error);
+    }
+    
     console.log('Database tables created or verified successfully');
     return true;
   } catch (error) {
@@ -264,25 +281,8 @@ export async function initializeDatabase() {
     
     // Проверяем содержимое базы
     await logDatabaseContent();
-    
-    // Добавляем новые колонки для KICHCOIN если их нет (для существующих таблиц)
-    try {
-      await executeSQL(`
-        ALTER TABLE cards 
-        ADD COLUMN IF NOT EXISTS kichcoin_balance TEXT NOT NULL DEFAULT '0'
-      `);
-      
-      await executeSQL(`
-        ALTER TABLE cards 
-        ADD COLUMN IF NOT EXISTS ton_address TEXT
-      `);
-      
-      console.log('✅ KICHCOIN колонки успешно добавлены в базу данных');
-    } catch (error) {
-      console.log('⚠️ Ошибка при добавлении KICHCOIN колонок:', error);
-    }
 
-console.log('Database initialization completed successfully');
+    console.log('Database initialization completed successfully');
   } catch (error) {
     console.error('Database initialization failed:', error);
     throw error;
@@ -306,7 +306,7 @@ export async function closeConnectionsOnVercel() {
 process.on('SIGTERM', async () => {
   console.log('Received SIGTERM. Closing database connection...');
   try {
-    await client.end();
+    await closeConnectionsOnVercel();
   } catch (e) {
     console.error('Error closing database:', e);
   }
@@ -315,7 +315,7 @@ process.on('SIGTERM', async () => {
 process.on('SIGINT', async () => {
   console.log('Received SIGINT. Closing database connection...');
   try {
-    await client.end();
+    await closeConnectionsOnVercel();
   } catch (e) {
     console.error('Error closing database:', e);
   }
