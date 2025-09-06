@@ -102,13 +102,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300'); // 5 минут кэш
       res.setHeader('ETag', `"rates-${Math.floor(Date.now() / 300000)}"`); // ETag основан на 5-минутных интервалах
       
-      // Добавляем таймаут для Vercel
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('API timeout')), 10000); // Уменьшили до 10 секунд
-      });
-      
-      const ratesPromise = storage.getLatestExchangeRates();
-      const rates = await Promise.race([ratesPromise, timeoutPromise]);
+      // Используем withDatabaseTimeout для безопасности
+      const rates = await withDatabaseTimeout(
+        storage.getLatestExchangeRates(),
+        8000,
+        'Exchange rates fetch'
+      );
       
       if (!rates) {
         // Возвращаем дефолтные курсы если база недоступна
@@ -137,13 +136,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       if (!req.user || !req.user.id) return res.status(401).json({ message: "Пользователь не авторизован" });
 
-      // Добавляем таймаут и кэширование для карт
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Cards API timeout')), 10000); // Уменьшили до 10 секунд
-      });
-      
-      const cardsPromise = storage.getCardsByUserId(req.user.id);
-      const cards = await Promise.race([cardsPromise, timeoutPromise]);
+      // Используем withDatabaseTimeout для безопасности получения карт
+      const cards = await withDatabaseTimeout(
+        storage.getCardsByUserId(req.user.id),
+        8000,
+        'User cards fetch'
+      );
       
       // Кэширование HTTP response
       res.setHeader('Cache-Control', 'private, max-age=60'); // 1 минута кэш для карт
