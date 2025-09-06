@@ -21,11 +21,11 @@ const PostgresStore = pgSession(session);
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Настройка кэша для часто используемых запросов
-const cache = new NodeCache({ stdTTL: 30, checkperiod: 60 });
+const cache = new NodeCache({ stdTTL: 300, checkperiod: 120 }); // 5 минут кэш для лучшей производительности
 
 // Таймауты
 const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
-const DB_TIMEOUT = IS_VERCEL ? 20000 : 15000;
+const DB_TIMEOUT = IS_VERCEL ? 8000 : 15000; // Уменьшили с 20s до 8s для Vercel
 
 // Таймаут для операции
 async function withTimeout<T>(promise: Promise<T>, timeoutMs: number = DB_TIMEOUT): Promise<T> {
@@ -92,7 +92,8 @@ export class DatabaseStorage implements IStorage {
         attempt++;
         console.error(`${operationName} failed on attempt ${attempt}:`, err);
         if (attempt >= maxRetries) throw err;
-        const delay = IS_VERCEL ? 200 : Math.min(1000 * 2 ** (attempt - 1), 5000);
+        // Уменьшили задержки для Vercel
+        const delay = IS_VERCEL ? Math.min(100 * attempt, 500) : Math.min(1000 * 2 ** (attempt - 1), 5000);
         await new Promise(res => setTimeout(res, delay));
       }
     }
@@ -286,7 +287,10 @@ export class DatabaseStorage implements IStorage {
 
     const rates = await this.withRetry(() => db.select().from(exchangeRates).orderBy(desc(exchangeRates.updatedAt)).limit(1), 'getLatestExchangeRates');
     const [firstRate] = rates;
-    if (firstRate) cache.set('rates', firstRate);
+    if (firstRate) {
+      // Кэшируем на 10 минут для курсов валют
+      cache.set('rates', firstRate, 600);
+    }
     return firstRate;
   }
 

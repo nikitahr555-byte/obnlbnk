@@ -98,9 +98,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Основные API endpoints
   app.get("/api/rates", async (req, res) => {
     try {
+      // Добавляем HTTP кэширование для уменьшения нагрузки
+      res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300'); // 5 минут кэш
+      res.setHeader('ETag', `"rates-${Math.floor(Date.now() / 300000)}"`); // ETag основан на 5-минутных интервалах
+      
       // Добавляем таймаут для Vercel
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('API timeout')), 25000); // 25 сек для Vercel
+        setTimeout(() => reject(new Error('API timeout')), 15000); // 15 сек для Vercel
       });
       
       const ratesPromise = storage.getLatestExchangeRates();
@@ -133,7 +137,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       if (!req.user || !req.user.id) return res.status(401).json({ message: "Пользователь не авторизован" });
 
-      const cards = await storage.getCardsByUserId(req.user.id);
+      // Добавляем таймаут и кэширование для карт
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Cards API timeout')), 15000);
+      });
+      
+      const cardsPromise = storage.getCardsByUserId(req.user.id);
+      const cards = await Promise.race([cardsPromise, timeoutPromise]);
+      
+      // Кэширование HTTP response
+      res.setHeader('Cache-Control', 'private, max-age=60'); // 1 минута кэш для карт
       res.json(cards);
     } catch (error) {
       console.error("Ошибка получения карт:", error);
@@ -147,7 +160,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Добавляем таймаут для Vercel
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('NFT API timeout')), 25000);
+        setTimeout(() => reject(new Error('NFT API timeout')), 15000);
       });
       
       const collectionsPromise = (async () => {

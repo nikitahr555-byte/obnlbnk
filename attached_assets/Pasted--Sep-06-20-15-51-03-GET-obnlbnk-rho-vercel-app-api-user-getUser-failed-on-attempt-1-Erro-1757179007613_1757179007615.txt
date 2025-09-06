@@ -1,0 +1,412 @@
+
+Sep 06 20:15:51.03
+GET
+---
+obnlbnk-rho.vercel.app
+/api/user
+getUser failed on attempt 1: Error: Database operation timed out after 20000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:15:39.79
+GET
+---
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+6
+getCardsByUserId failed on attempt 2: Error: Database operation timed out after 20000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:33:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:15:34.39
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:15:30.79
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+2
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:103:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:15:30.62
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:30.43
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:30.26
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:30.04
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:29.86
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:29.65
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:29.47
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:29.29
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:29.19
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:15:29.12
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:28.95
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:28.32
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:28.13
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:27.91
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:27.66
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:27.49
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:24.01
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:15:23.24
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:23.24
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:23.24
+GET
+---
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+14
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:103:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:15:22.70
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:15:20.55
+POST
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/transfer
+9
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:15:18.67
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:15:13.47
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:15:08.23
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:15:02.69
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:14:55.47
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+12
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 06 20:14:35.45
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/news
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:14:30.69
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/transactions
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:14:27.25
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:14:16.98
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:13:41.90
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+19
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:13:27.08
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:13:16.98
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:13:02.74
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 06 20:12:39.70
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+7
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:12:26.92
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:12:01.74
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+2
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:103:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:11:53.51
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+12
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 06 20:11:53.51
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+Sep 06 20:11:53.51
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+2
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:103:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:11:38.50
+GET
+504
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+7
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:11:33.04
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/cards
+4
+✅ [VERCEL] Authentication successful for user: regulator
+Sep 06 20:11:33.03
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/rates
+14
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:103:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:11:31.39
+GET
+200
+obnlbnk-git-main-rabota197555-2326s-projects.vercel.app
+/api/user
+Sep 06 20:10:39.15
+GET
+504
+obnlbnk-rho.vercel.app
+/api/rates
+3
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:10:14.04
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 06 20:10:13.95
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+2
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:103:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:09:47.40
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+2
+Ошибка получения курсов: Error: API timeout at Timeout._onTimeout (/vercel/path0/api/server/routes-vercel.ts:103:33) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 06 20:09:47.06
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+3
+Database initialized successfully
+Sep 06 20:09:46.81
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:09:46.62
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Cards count: 42
+Sep 06 20:09:46.45
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+2
+Users count: 17
+Sep 06 20:09:46.26
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+2
+Testing database connection...
+Sep 06 20:09:46.09
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:09:45.90
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:09:45.73
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:09:45.54
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:09:44.99
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+Sep 06 20:09:44.99
+GET
+504
+obnlbnk-rho.vercel.app
+/api/cards
+19
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 06 20:09:43.09
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+12
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 06 20:08:47.33
+GET
+401
+obnlbnk-kl76iexpq-rabota197555-2326s-projects.vercel.app
+/api/user
+Sep 06 20:08:46.76
+GET
+401
+obnlbnk-kl76iexpq-rabota197555-2326s-projects.vercel.app
+/api/user
+12
+✅ Маршруты успешно зарегистрированы для Vercel
+No more log
