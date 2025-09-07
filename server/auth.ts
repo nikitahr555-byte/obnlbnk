@@ -93,23 +93,9 @@ export function setupAuth(app: Express) {
     } catch (err) {
       console.error('LocalStrategy DB error:', err);
       
-      // КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Fallback для демо доступа при проблемах с БД
-      if (username === 'demo' && password === 'demo') {
-        const fallbackUser = {
-          id: 999,
-          username: 'demo',
-          password: 'demo',
-          is_regulator: false,
-          regulator_balance: '0',
-          nft_generation_count: 0,
-          last_nft_generation: null
-        };
-        console.log('🚨 Используем fallback авторизацию для demo пользователя');
-        return done(null, fallbackUser);
-      }
       
       // Возвращаем более понятную ошибку пользователю
-      return done(null, false, { message: 'Временные проблемы с сервером. Попробуйте позже.' });
+      return done(null, false, { message: 'Проблемы с базой данных. Проверьте подключение.' });
     }
   }));
 
