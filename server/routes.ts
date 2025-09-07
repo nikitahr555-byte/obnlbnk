@@ -1958,12 +1958,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`🔧 [VERCEL] Начинаем исправление криптоадресов...`);
 
       // Получаем все криптокарты без адресов
-      const cardsWithoutAddresses = await client`
+      const cardsWithoutAddresses = await storage.executeRawQuery(`
         SELECT id, user_id, type, btc_address, eth_address, number 
         FROM cards 
         WHERE type = 'crypto' 
         AND (btc_address IS NULL OR eth_address IS NULL OR btc_address = '' OR eth_address = '')
-      `;
+      `);
 
       console.log(`📋 [VERCEL] Найдено ${cardsWithoutAddresses.length} карт без криптоадресов`);
 
@@ -2010,11 +2010,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
 
           // Обновляем карту в базе данных
-          await client`
+          await storage.executeRawQuery(`
             UPDATE cards 
-            SET btc_address = ${btcAddress}, eth_address = ${ethAddress}
+            SET btc_address = '${btcAddress}', eth_address = '${ethAddress}'
             WHERE id = ${card.id}
-          `;
+          `);
 
           console.log(`💾 [VERCEL] Карта ${card.id} обновлена успешно`);
           
