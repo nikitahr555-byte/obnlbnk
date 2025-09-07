@@ -461,14 +461,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           const btcAddress = await generateBtcAddress(userData.id);
           const ethAddress = await generateEthAddress(userData.id);
           
+          console.log(`🔑 [VERCEL] Сгенерированные адреса - BTC: ${btcAddress}, ETH: ${ethAddress}`);
+          
           // Создаем виртуальную карту
-          await db`INSERT INTO cards (user_id, type, number, expiry, cvv, balance, btc_balance, eth_balance, kichcoin_balance, btc_address, eth_address, ton_address) 
-                   VALUES (${userData.id}, 'virtual', '4149499344018888', '12/28', '123', '1000.00', '0.00000000', '0.00000000', '100.00000000', NULL, NULL, NULL)`;
+          const virtualCard = await db`INSERT INTO cards (user_id, type, number, expiry, cvv, balance, btc_balance, eth_balance, kichcoin_balance, btc_address, eth_address, ton_address) 
+                   VALUES (${userData.id}, 'virtual', '4149499344018888', '12/28', '123', '1000.00', '0.00000000', '0.00000000', '100.00000000', NULL, NULL, NULL)
+                   RETURNING *`;
+          
+          console.log(`💳 [VERCEL] Создана виртуальная карта:`, virtualCard);
           
           // Создаем криптокарту с адресами
-          await db`INSERT INTO cards (user_id, type, number, expiry, cvv, balance, btc_balance, eth_balance, kichcoin_balance, btc_address, eth_address, ton_address)
-                   VALUES (${userData.id}, 'crypto', '4149499344017777', '12/28', '456', '0.00', '0.00100000', '0.01000000', '50.00000000', ${btcAddress}, ${ethAddress}, 'EQC8eLIsQ4QLssWiJ_lqxShW1w7T1G11cfh-gFSRnMze64HI')`;
+          const cryptoCard = await db`INSERT INTO cards (user_id, type, number, expiry, cvv, balance, btc_balance, eth_balance, kichcoin_balance, btc_address, eth_address, ton_address)
+                   VALUES (${userData.id}, 'crypto', '4149499344017777', '12/28', '456', '0.00', '0.00100000', '0.01000000', '50.00000000', ${btcAddress}, ${ethAddress}, 'EQC8eLIsQ4QLssWiJ_lqxShW1w7T1G11cfh-gFSRnMze64HI')
+                   RETURNING *`;
           
+          console.log(`🔐 [VERCEL] Создана криптокарта:`, cryptoCard);
           console.log(`✅ [VERCEL] Созданы карты с BTC: ${btcAddress} и ETH: ${ethAddress}`);
           
           // Получаем созданные карты
@@ -712,7 +719,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // Создаем запись о транзакции
         const transactionResult = await db`
           INSERT INTO transactions (from_card_id, to_card_id, amount, converted_amount, type, wallet, status, description, from_card_number, to_card_number, created_at)
-          VALUES (${fromCard.id}, NULL, ${amount}, ${amount}, ${type}, ${recipientAddress}, 'completed', 'Перевод через веб-приложение', ${fromCard.number}, ${recipientAddress}, ${new Date()})
+          VALUES (${fromCard.id}, NULL, ${amount}, ${amount}, ${actualType}, ${recipientAddress}, 'completed', 'Перевод через веб-приложение', ${fromCard.number}, ${recipientAddress}, ${new Date()})
           RETURNING *
         `;
 
