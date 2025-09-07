@@ -122,9 +122,12 @@ function generateNFTDescription(rarity: string): string {
 }
 
 // Auth middleware to ensure session is valid
-// Функция для получения ID пользователя с fallback
+// Функция для получения ID пользователя
 function getUserId(req: express.Request): number {
-  return req.user?.id || 999; // fallback ID для демо режима
+  if (!req.user?.id) {
+    throw new Error('Пользователь не авторизован');
+  }
+  return req.user.id;
 }
 
 function ensureAuthenticated(req: express.Request, res: express.Response, next: express.NextFunction) {

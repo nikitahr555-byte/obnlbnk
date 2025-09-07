@@ -36,12 +36,9 @@ console.log('✅ Используем стандартный PostgreSQL клие
 const IS_VERCEL = process.env.VERCEL === '1';
 const sql = postgres(databaseUrl, { 
   ssl: 'require',
-  max: IS_VERCEL ? 1 : 5,    // 1 подключение для Vercel, 5 для других платформ
+  max: IS_VERCEL ? 1 : 3,    // 1 подключение для Vercel, 3 для других платформ
   idle_timeout: IS_VERCEL ? 5 : 20,  // Быстрое закрытие на Vercel
-  connect_timeout: IS_VERCEL ? 5 : 10, // Быстрое подключение на Vercel
-  max: 1,                    // Максимум 1 подключение в serverless окружении
-  idle_timeout: 5,           // Уменьшаем idle timeout до 5 секунд
-  connect_timeout: 30,       // Увеличиваем connect timeout до 30 секунд
+  connect_timeout: IS_VERCEL ? 10 : 30, // Увеличиваем connect timeout
   prepare: false,            // Отключаем prepared statements для serverless
   transform: {
     undefined: null          // Преобразуем undefined в null для PostgreSQL
@@ -51,7 +48,6 @@ const sql = postgres(databaseUrl, {
     application_name: 'ooo-bnal-bank',
     options: '--search_path=public'
   },
-  transform: undefined,       // Отключаем трансформации для лучшей производительности
   fetch_types: false         // Отключаем fetch types для serverless окружения
 });
 
@@ -140,8 +136,8 @@ async function createTablesIfNotExist() {
     const executeSQL = async (query: string) => {
       return await withDatabaseTimeout(
         client.unsafe(query),
-        10000,
-        'Create table query'
+        'Create table query',
+        10000
       );
     };
     
@@ -369,8 +365,8 @@ async function initializeWithRetry() {
     // Пробуем быстрое подключение с коротким таймаутом
     const quickTest = await withDatabaseTimeout(
       db.select().from(schema.users).limit(1),
-      5000,
-      'Quick database connection test'
+      'Quick database connection test',
+      5000
     ).catch(error => {
       console.log('⚠️ Quick test failed, probably database is initializing...');
       return null;
