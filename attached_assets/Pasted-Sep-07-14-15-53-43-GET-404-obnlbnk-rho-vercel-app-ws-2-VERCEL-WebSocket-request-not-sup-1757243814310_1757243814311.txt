@@ -1,0 +1,252 @@
+Sep 07 14:15:53.43
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:53.14
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:52.89
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:52.63
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:52.37
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:52.11
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:51.82
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:51.56
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:51.30
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:50.99
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:50.65
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:50.38
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:50.10
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:49.82
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:49.56
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:49.28
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:48.90
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:48.60
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:48.20
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:47.85
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:47.41
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:46.94
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:46.36
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:45.89
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:45.57
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:45.20
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:44.93
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:44.67
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:44.41
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:44.16
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:43.92
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:43.65
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:15:43.40
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 14:13:31.44
+GET
+401
+obnlbnk-rho.vercel.app
+/api/nft/user
+🚀 [VERCEL] GET /api/nft/user
+Sep 07 14:09:56.37
+GET
+401
+obnlbnk-or7chvyu8-rabota197555-2326s-projects.vercel.app
+/api/user
+5
+❌ [VERCEL] No auth cookie found
+Sep 07 14:09:56.09
+GET
+401
+obnlbnk-or7chvyu8-rabota197555-2326s-projects.vercel.app
+/api/user
+10
+❌ [VERCEL] No auth cookie found
+No more logs t
