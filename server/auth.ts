@@ -60,11 +60,9 @@ export function setupAuth(app: Express) {
               res.clearCookie('user_data');
             }
           } catch (dbError) {
-            console.error('DB error in auth middleware, using fallback:', dbError);
-            // Fallback: используем данные из cookie без проверки БД
-            if (userData.id && userData.username) {
-              req.user = { id: userData.id, username: userData.username };
-            }
+            console.error('DB error in auth middleware:', dbError);
+            // Очищаем cookie если не можем проверить пользователя в БД
+            res.clearCookie('user_data');
           }
         } else {
           res.clearCookie('user_data');
@@ -92,9 +90,6 @@ export function setupAuth(app: Express) {
       return done(null, user);
     } catch (err) {
       console.error('LocalStrategy DB error:', err);
-      
-      
-      // Возвращаем более понятную ошибку пользователю
       return done(null, false, { message: 'Проблемы с базой данных. Проверьте подключение.' });
     }
   }));
