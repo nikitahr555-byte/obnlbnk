@@ -1,0 +1,50 @@
+Sep 07 13:59:35.08
+POST
+500
+obnlbnk-rho.vercel.app
+/api/transfer
+9
+❌ [VERCEL] Transfer error: PostgresError: duplicate key value violates unique constraint "transactions_pkey" at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:720:43) { severity_local: 'ERROR', severity: 'ERROR', code: '23505', detail: 'Key (id)=(2) already exists.', schema_name: 'public', table_name: 'transactions', constraint_name: 'transactions_pkey', file: 'nbtinsert.c', line: '666', routine: '_bt_check_unique' }
+Sep 07 13:59:33.13
+POST
+500
+obnlbnk-rho.vercel.app
+/api/transfer
+9
+❌ [VERCEL] Transfer error: PostgresError: duplicate key value violates unique constraint "transactions_pkey" at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:720:43) { severity_local: 'ERROR', severity: 'ERROR', code: '23505', detail: 'Key (id)=(1) already exists.', schema_name: 'public', table_name: 'transactions', constraint_name: 'transactions_pkey', file: 'nbtinsert.c', line: '666', routine: '_bt_check_unique' }
+Sep 07 13:59:27.53
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:58:48.71
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:58:48.46
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:58:24.48
+GET
+401
+obnlbnk-fmk1atona-rabota197555-2326s-projects.vercel.app
+/api/user
+10
+❌ [VERCEL] No auth cookie found
+Sep 07 13:58:24.48
+GET
+401
+obnlbnk-fmk1atona-rabota197555-2326s-projects.vercel.app
+/api/user
+5
+❌ [VERCEL] No auth cookie found
+No more logs to show
