@@ -499,7 +499,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.log(`🔑 [VERCEL] Generating seed phrase for user: ${userData.username}`);
 
         // Генерируем seed фразу на основе userId
-        const crypto = require('crypto');
+        const { createHash } = await import('crypto');
         const userId = userData.id;
         
         // Создаем детерминированную seed фразу
@@ -509,7 +509,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           'acoustic', 'acquire', 'across', 'act', 'action', 'actor', 'actress', 'actual'
         ];
         
-        const hash = crypto.createHash('sha256').update(`seed-${userId}-salt`).digest('hex');
+        const hash = createHash('sha256').update(`seed-${userId}-salt`).digest('hex');
         const seedPhrase = [];
         
         for (let i = 0; i < 12; i++) {
