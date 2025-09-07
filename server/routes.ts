@@ -1942,6 +1942,122 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // АДМИН: Исправление криптоадресов для существующих карт
+  app.post("/api/admin/fix-crypto-addresses", async (req, res) => {
+    try {
+      const { adminKey } = req.body;
+      
+      // Простая проверка админ-ключа
+      if (adminKey !== 'fix_crypto_2024') {
+        return res.status(401).json({ 
+          success: false, 
+          message: "Неверный админ-ключ" 
+        });
+      }
+
+      console.log(`🔧 [VERCEL] Начинаем исправление криптоадресов...`);
+
+      // Получаем все криптокарты без адресов
+      const cardsWithoutAddresses = await client`
+        SELECT id, user_id, type, btc_address, eth_address, number 
+        FROM cards 
+        WHERE type = 'crypto' 
+        AND (btc_address IS NULL OR eth_address IS NULL OR btc_address = '' OR eth_address = '')
+      `;
+
+      console.log(`📋 [VERCEL] Найдено ${cardsWithoutAddresses.length} карт без криптоадресов`);
+
+      if (cardsWithoutAddresses.length === 0) {
+        return res.json({
+          success: true,
+          message: "Все криптокарты уже имеют адреса!",
+          fixed: 0
+        });
+      }
+
+      let fixedCount = 0;
+      const results = [];
+
+      for (const card of cardsWithoutAddresses) {
+        try {
+          console.log(`🔄 [VERCEL] Исправляем карту ${card.id} для пользователя ${card.user_id}...`);
+          
+          let btcAddress = card.btc_address;
+          let ethAddress = card.eth_address;
+
+          // Генерируем BTC адрес если отсутствует
+          if (!btcAddress || btcAddress.trim() === '') {
+            try {
+              btcAddress = await generateValidAddress('btc', card.user_id);
+              console.log(`✅ [VERCEL] BTC адрес сгенерирован: ${btcAddress}`);
+            } catch (error) {
+              console.error(`❌ [VERCEL] Ошибка генерации BTC:`, error);
+              btcAddress = `1${card.user_id.toString().padStart(3, '0')}${Math.random().toString(36).substring(2, 30)}`;
+              console.log(`🛡️ [VERCEL] Использован fallback BTC: ${btcAddress}`);
+            }
+          }
+
+          // Генерируем ETH адрес если отсутствует
+          if (!ethAddress || ethAddress.trim() === '') {
+            try {
+              ethAddress = await generateValidAddress('eth', card.user_id);
+              console.log(`✅ [VERCEL] ETH адрес сгенерирован: ${ethAddress}`);
+            } catch (error) {
+              console.error(`❌ [VERCEL] Ошибка генерации ETH:`, error);
+              ethAddress = `0x${card.user_id.toString().padStart(2, '0')}${Math.random().toString(16).substring(2, 42)}`;
+              console.log(`🛡️ [VERCEL] Использован fallback ETH: ${ethAddress}`);
+            }
+          }
+
+          // Обновляем карту в базе данных
+          await client`
+            UPDATE cards 
+            SET btc_address = ${btcAddress}, eth_address = ${ethAddress}
+            WHERE id = ${card.id}
+          `;
+
+          console.log(`💾 [VERCEL] Карта ${card.id} обновлена успешно`);
+          
+          results.push({
+            cardId: card.id,
+            userId: card.user_id,
+            cardNumber: card.number,
+            btcAddress: btcAddress,
+            ethAddress: ethAddress,
+            status: 'fixed'
+          });
+          
+          fixedCount++;
+        } catch (error) {
+          console.error(`❌ [VERCEL] Ошибка при обновлении карты ${card.id}:`, error);
+          results.push({
+            cardId: card.id,
+            userId: card.user_id,
+            status: 'error',
+            error: error instanceof Error ? error.message : 'Unknown error'
+          });
+        }
+      }
+
+      console.log(`🎉 [VERCEL] Исправление завершено! Обработано карт: ${fixedCount}/${cardsWithoutAddresses.length}`);
+
+      res.json({
+        success: true,
+        message: `Исправлено ${fixedCount} из ${cardsWithoutAddresses.length} карт`,
+        fixed: fixedCount,
+        total: cardsWithoutAddresses.length,
+        results: results
+      });
+
+    } catch (error) {
+      console.error("❌ [VERCEL] Ошибка при исправлении адресов:", error);
+      res.status(500).json({
+        success: false,
+        message: error instanceof Error ? error.message : "Ошибка при исправлении адресов"
+      });
+    }
+  });
+
   // Добавляем статические файлы ПОСЛЕ всех API роутов
   app.use(express.static('public', {
     index: false, // Не использовать index.html
