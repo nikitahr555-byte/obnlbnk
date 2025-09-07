@@ -382,7 +382,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         // Получаем карты пользователя
         const cards = await Promise.race([
-          db`SELECT * FROM cards WHERE user_id = ${userData.id} ORDER BY created_at DESC`,
+          db`SELECT * FROM cards WHERE user_id = ${userData.id} ORDER BY id DESC`,
           new Promise((_, reject) => setTimeout(() => reject(new Error('Cards query timeout')), 8000))
         ]);
         
@@ -412,7 +412,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         // Получаем транзакции пользователя
         const transactions = await Promise.race([
-          db`SELECT * FROM transactions WHERE user_id = ${userData.id} ORDER BY created_at DESC LIMIT 50`,
+          db`SELECT DISTINCT t.* FROM transactions t 
+             LEFT JOIN cards c1 ON t.from_card_id = c1.id 
+             LEFT JOIN cards c2 ON t.to_card_id = c2.id 
+             WHERE c1.user_id = ${userData.id} OR c2.user_id = ${userData.id} 
+             ORDER BY t.created_at DESC LIMIT 50`,
           new Promise((_, reject) => setTimeout(() => reject(new Error('Transactions query timeout')), 8000))
         ]);
         
