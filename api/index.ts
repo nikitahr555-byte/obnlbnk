@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { neon } from '@neondatabase/serverless';
+import postgres from 'postgres';
 import bcrypt from 'bcryptjs';
 
 // Кэшированное подключение к БД
@@ -9,12 +9,25 @@ function initDatabase() {
   if (!sql && process.env.DATABASE_URL) {
     try {
       console.log('🔌 [VERCEL] Initializing database connection...');
-      // Логируем только часть URL для безопасности
-      const urlParts = process.env.DATABASE_URL.split('@');
-      const dbHost = urlParts.length > 1 ? urlParts[1].split('/')[0] : 'unknown';
-      console.log(`🔌 [VERCEL] Database host: ${dbHost}`);
       
-      sql = neon(process.env.DATABASE_URL);
+      // Определяем тип БД по URL
+      const isSupabase = process.env.DATABASE_URL.includes('supabase.com');
+      const isNeon = process.env.DATABASE_URL.includes('neon.tech');
+      
+      console.log(`🔌 [VERCEL] Database type: ${isSupabase ? 'Supabase' : isNeon ? 'Neon' : 'PostgreSQL'}`);
+      
+      // Для Supabase используем обычный postgres клиент
+      sql = postgres(process.env.DATABASE_URL, {
+        ssl: 'require',
+        max: 1,
+        idle_timeout: 5,
+        connect_timeout: 10,
+        prepare: false,
+        transform: {
+          undefined: null
+        }
+      });
+      
       console.log('✅ [VERCEL] Database connection initialized');
     } catch (error) {
       console.error('❌ [VERCEL] Database initialization failed:', error);
@@ -22,19 +35,6 @@ function initDatabase() {
     }
   }
   return sql;
-}
-
-// Проверка подключения к БД
-async function testDatabaseConnection(db: any) {
-  try {
-    console.log('🔍 [VERCEL] Testing database connection...');
-    await db`SELECT 1 as test`;
-    console.log('✅ [VERCEL] Database connection test successful');
-    return true;
-  } catch (error) {
-    console.error('❌ [VERCEL] Database connection test failed:', error);
-    return false;
-  }
 }
 
 // Основной обработчик для Vercel
@@ -54,15 +54,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const url = req.url || '';
 
-    // Health check endpoint - не требует БД
+    // Health check endpoint
     if (url.includes('/api/health')) {
       const hasDbUrl = !!process.env.DATABASE_URL;
-      const dbUrlLength = process.env.DATABASE_URL ? process.env.DATABASE_URL.length : 0;
+      const isSupabase = process.env.DATABASE_URL?.includes('supabase.com') || false;
+      const isNeon = process.env.DATABASE_URL?.includes('neon.tech') || false;
       
       return res.json({
         status: 'ok',
         database_url_present: hasDbUrl,
-        database_url_length: dbUrlLength,
+        database_type: isSupabase ? 'Supabase' : isNeon ? 'Neon' : 'PostgreSQL',
         timestamp: new Date().toISOString(),
         environment: 'vercel'
       });
@@ -85,7 +86,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // LOGIN - с упрощенной проверкой БД
+    // LOGIN - реальная проверка через БД
     if (url.includes('/api/login') && req.method === 'POST') {
       try {
         const { username, password } = req.body;
@@ -95,7 +96,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(400).json({ message: 'Требуется имя пользователя и пароль' });
         }
 
-        // Ищем пользователя в БД БЕЗ предварительного тестирования подключения
+        // Ищем пользователя в БД
         console.log('🔍 [VERCEL] Searching for user in database...');
         const users = await Promise.race([
           db`SELECT id, username, password, is_regulator FROM users WHERE username = ${username}`,
@@ -137,15 +138,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         
       } catch (error) {
         console.error('❌ [VERCEL] Login error:', error);
-        
-        // Если это ошибка 404 от Neon, значит проблема с DATABASE_URL
-        if (error instanceof Error && error.message.includes('404')) {
-          return res.status(500).json({ 
-            message: 'База данных недоступна. Проверьте настройки подключения.',
-            debug: 'Database not found (404) - check DATABASE_URL in Vercel environment variables'
-          });
-        }
-        
         return res.status(500).json({ 
           message: 'Ошибка при входе в систему',
           debug: error instanceof Error ? error.message : 'Unknown error'
@@ -181,7 +173,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(401).json({ message: 'Токен истек' });
         }
 
-        // Проверяем пользователя в БД (с коротким timeout)
+        // Проверяем пользователя в БД
         const users = await Promise.race([
           db`SELECT id, username, is_regulator FROM users WHERE id = ${userData.id} AND username = ${userData.username}`,
           new Promise((_, reject) => setTimeout(() => reject(new Error('User check timeout')), 8000))
@@ -259,6 +251,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           debug: error instanceof Error ? error.message : 'Unknown error'
         });
       }
+    }
+
+    // Простые эндпоинты которые не требуют сложной логики
+    if (url.includes('/api/rates') && req.method === 'GET') {
+      console.log('💱 [VERCEL] Exchange rates request');
+      return res.json({
+        usdToUah: 41.0,
+        btcToUsd: 100000,
+        ethToUsd: 4000,
+        timestamp: new Date().toISOString()
+      });
     }
 
     // Для остальных API путей - требуем авторизации
