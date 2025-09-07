@@ -1,0 +1,134 @@
+Sep 07 13:15:52.89
+POST
+401
+obnlbnk-rho.vercel.app
+/api/transfer
+🚀 [VERCEL] POST /api/transfer
+Sep 07 13:15:51.71
+POST
+401
+obnlbnk-rho.vercel.app
+/api/transfer
+🚀 [VERCEL] POST /api/transfer
+Sep 07 13:15:36.03
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+5
+❌ [VERCEL] No auth cookie found
+Sep 07 13:15:33.22
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:32.96
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:32.70
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:32.43
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:32.22
+POST
+401
+obnlbnk-rho.vercel.app
+/api/transfer
+🚀 [VERCEL] POST /api/transfer
+Sep 07 13:15:32.18
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:31.86
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:31.61
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:31.36
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:31.11
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:30.92
+POST
+401
+obnlbnk-rho.vercel.app
+/api/transfer
+🚀 [VERCEL] POST /api/transfer
+Sep 07 13:15:30.85
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:15:23.33
+POST
+401
+obnlbnk-rho.vercel.app
+/api/transfer
+🚀 [VERCEL] POST /api/transfer
+Sep 07 13:15:21.97
+POST
+401
+obnlbnk-rho.vercel.app
+/api/transfer
+🚀 [VERCEL] POST /api/transfer
+Sep 07 13:14:44.43
+GET
+401
+obnlbnk-rho.vercel.app
+/api/news
+🚀 [VERCEL] GET /api/news
+Sep 07 13:14:30.34
+GET
+401
+obnlbnk-9cx2th61z-rabota197555-2326s-projects.vercel.app
+/api/user
+5
+❌ [VERCEL] No auth cookie found
+Sep 07 13:14:30.33
+GET
+401
+obnlbnk-9cx2th61z-rabota197555-2326s-projects.vercel.app
+/api/user
+5
+❌ [VERCEL] No auth cookie found
+No more l

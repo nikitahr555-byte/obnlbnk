@@ -541,6 +541,125 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    // NEWS - новости
+    if (url.includes('/api/news') && req.method === 'GET') {
+      try {
+        console.log('📰 [VERCEL] News request');
+        const userData = extractUserFromCookie(req);
+        
+        if (!userData) {
+          console.log('❌ [VERCEL] No auth cookie for news request');
+          return res.status(401).json({ message: 'Необходима авторизация' });
+        }
+
+        console.log(`📰 [VERCEL] Getting news for user: ${userData.username}`);
+
+        // Возвращаем статичные новости для демонстрации
+        const news = [
+          {
+            id: 1,
+            title: "Новое обновление системы",
+            content: "Мы улучшили безопасность и производительность нашей банковской системы",
+            date: new Date().toISOString(),
+            type: "update"
+          },
+          {
+            id: 2,
+            title: "Изменения в курсах криптовалют",
+            content: "Bitcoin и Ethereum показывают стабильный рост на мировых биржах",
+            date: new Date(Date.now() - 86400000).toISOString(),
+            type: "market"
+          },
+          {
+            id: 3,
+            title: "NFT маркетплейс доступен",
+            content: "Теперь вы можете торговать NFT прямо в нашем приложении",
+            date: new Date(Date.now() - 172800000).toISOString(),
+            type: "feature"
+          }
+        ];
+
+        return res.json(news);
+        
+      } catch (error) {
+        console.error('❌ [VERCEL] News error:', error);
+        return res.status(500).json({ 
+          message: 'Ошибка при получении новостей',
+          debug: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+    }
+
+    // TRANSFER - переводы средств
+    if (url.includes('/api/transfer') && req.method === 'POST') {
+      try {
+        console.log('💸 [VERCEL] Transfer request');
+        const userData = extractUserFromCookie(req);
+        
+        if (!userData) {
+          console.log('❌ [VERCEL] No auth cookie for transfer request');
+          return res.status(401).json({ message: 'Необходима авторизация' });
+        }
+
+        const { fromCardId, recipientAddress, amount, type } = req.body;
+        console.log(`💸 [VERCEL] Transfer request: ${amount} from card ${fromCardId} to ${recipientAddress} (${type})`);
+
+        // Простая валидация
+        if (!fromCardId || !recipientAddress || !amount || !type) {
+          return res.status(400).json({ message: 'Недостаточно данных для перевода' });
+        }
+
+        // Получаем карту отправителя
+        const fromCards = await Promise.race([
+          db`SELECT * FROM cards WHERE id = ${parseInt(fromCardId)} AND user_id = ${userData.id}`,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Card query timeout')), 8000))
+        ]);
+
+        if (!Array.isArray(fromCards) || fromCards.length === 0) {
+          return res.status(400).json({ message: 'Карта отправителя не найдена' });
+        }
+
+        const fromCard = fromCards[0];
+        console.log(`💳 [VERCEL] From card: ${fromCard.number}, balance: ${fromCard.balance}`);
+
+        // Проверяем баланс (упрощенно)
+        const transferAmount = parseFloat(amount);
+        const currentBalance = parseFloat(fromCard.balance);
+        
+        if (currentBalance < transferAmount) {
+          return res.status(400).json({ message: 'Недостаточно средств на карте' });
+        }
+
+        // Имитируем успешный перевод (для демонстрации)
+        const newBalance = (currentBalance - transferAmount).toFixed(2);
+        
+        // Обновляем баланс
+        await db`UPDATE cards SET balance = ${newBalance} WHERE id = ${fromCard.id}`;
+
+        // Создаем запись о транзакции
+        const transactionResult = await db`
+          INSERT INTO transactions (from_card_id, to_card_id, amount, converted_amount, type, wallet, status, description, from_card_number, to_card_number, created_at)
+          VALUES (${fromCard.id}, NULL, ${amount}, ${amount}, ${type}, ${recipientAddress}, 'completed', 'Перевод через веб-приложение', ${fromCard.number}, ${recipientAddress}, ${new Date()})
+          RETURNING *
+        `;
+
+        console.log(`✅ [VERCEL] Transfer completed, new balance: ${newBalance}`);
+        
+        return res.json({
+          success: true,
+          transaction: transactionResult[0],
+          newBalance: newBalance
+        });
+        
+      } catch (error) {
+        console.error('❌ [VERCEL] Transfer error:', error);
+        return res.status(500).json({ 
+          message: 'Ошибка при выполнении перевода',
+          debug: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+    }
+
     // Exchange Rates - курсы валют
     if (url.includes('/api/rates') && req.method === 'GET') {
       console.log('💱 [VERCEL] Exchange rates request');
