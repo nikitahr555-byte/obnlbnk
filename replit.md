@@ -4,6 +4,18 @@
 
 This is a comprehensive digital banking platform for OOO BNAL BANK that includes traditional banking services integrated with modern NFT marketplace functionality. The system provides user authentication, card management (virtual and crypto cards), transaction processing, exchange rate management, and a fully featured NFT marketplace with support for major collections like Bored Ape Yacht Club and Mutant Ape Yacht Club.
 
+## Recent Changes
+
+**December 7, 2025 - Critical Vercel Deployment Fixes:**
+- ✅ Fixed database connection configuration for Vercel serverless environment
+- ✅ Improved connection pooling with retry logic and proper timeouts
+- ✅ Fixed currency exchange rates service with automatic updates
+- ✅ Implemented comprehensive translation system for Russian/English
+- ✅ Fixed seed phrase functionality to prevent crashes and card disappearing
+- ✅ Enhanced session management for serverless deployments
+- ✅ Added exponential backoff retry logic for database operations
+- ✅ Improved error handling across all components
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
