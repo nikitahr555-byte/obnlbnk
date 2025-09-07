@@ -1,0 +1,823 @@
+Sep 07 12:48:45.27
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:41:05.47
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:05.21
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:04.96
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:04.71
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:04.45
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:04.16
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:03.91
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:03.66
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:03.41
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:03.16
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:02.89
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:02.64
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:02.39
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:02.12
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:01.87
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:01.61
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:01.36
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:01.10
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:00.84
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:00.58
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:00.31
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:41:00.03
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:59.77
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:59.53
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:59.27
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:59.02
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:58.77
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:58.52
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:58.27
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:58.01
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:57.76
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:57.50
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:57.25
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:56.98
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:56.72
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:56.47
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:56.22
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:55.96
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:55.71
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:55.44
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:55.19
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:54.92
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:54.67
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:54.40
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:54.15
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:53.90
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:53.64
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:53.38
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:53.11
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:52.84
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:52.59
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:52.35
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:52.10
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:51.85
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:51.59
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:51.33
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:51.08
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:50.83
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:50.57
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:50.32
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:50.07
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:49.81
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:49.56
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:49.29
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:49.04
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:48.78
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:48.52
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:48.27
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:48.02
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:47.77
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:47.48
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:47.22
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:46.97
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:46.72
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:46.45
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:46.09
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:45.84
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:45.58
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:45.35
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:45.09
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:44.83
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:44.58
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:44.34
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:44.08
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:43.81
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:43.55
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:43.29
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:43.04
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:42.75
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:42.35
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:41.96
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:41.51
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:41.06
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:40:40.45
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:37:37.20
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:37:32.02
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:37:26.75
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:37:21.49
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:37:16.31
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:37:11.12
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:37:05.94
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:36:49.93
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:49.66
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:49.38
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:49.12
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:48.86
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:48.60
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:48.34
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:48.08
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:47.83
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:47.29
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+❓ [VERCEL] Unhandled route: GET /ws
+Sep 07 12:36:45.69
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+3
+❌ [VERCEL] No auth cookie found
+Sep 07 12:36:42.82
+POST
+401
+obnlbnk-rho.vercel.app
+/api/cards/generate
+🚀 [VERCEL] POST /api/cards/generate
+Sep 07 12:36:41.35
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+6
+✅ [VERCEL] Database connection initialized
+Sep 07 12:36:36.17
+GET
+401
+obnlbnk-rho.vercel.app
+/api/cards
+🚀 [VERCEL] GET /api/cards
+Sep 07 12:36:29.33
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+3
+❌ [VERCEL] No auth cookie found
+Sep 07 12:36:24.28
+GET
+401
+obnlbnk-fn1y0yfgg-rabota197555-2326s-projects.vercel.app
+/api/user
+3
+❌ [VERCEL] No auth cookie found
+Sep 07 12:36:23.33
+GET
+401
+obnlbnk-fn1y0yfgg-rabota197555-2326s-projects.vercel.app
+/api/user
+8
+❌ [VERCEL] No auth cookie found

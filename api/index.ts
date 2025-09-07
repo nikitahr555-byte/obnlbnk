@@ -38,6 +38,30 @@ async function verifyPassword(supplied: string, stored: string): Promise<boolean
   }
 }
 
+// Извлечение пользователя из cookie
+function extractUserFromCookie(req: VercelRequest): any {
+  try {
+    const cookies = req.headers.cookie || '';
+    const userDataMatch = cookies.match(/user_data=([^;]+)/);
+    
+    if (!userDataMatch) {
+      return null;
+    }
+
+    const userData = JSON.parse(Buffer.from(userDataMatch[1], 'base64').toString());
+    
+    // Проверяем срок действия токена (7 дней)
+    if (Date.now() - userData.timestamp > 7 * 24 * 60 * 60 * 1000) {
+      return null;
+    }
+
+    return userData;
+  } catch (error) {
+    console.error('❌ [VERCEL] Cookie extraction error:', error);
+    return null;
+  }
+}
+
 function initDatabase() {
   if (!sql && process.env.DATABASE_URL) {
     try {
@@ -306,22 +330,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (url.includes('/api/user') && req.method === 'GET') {
       try {
         console.log('👤 [VERCEL] User check request');
-        const cookies = req.headers.cookie || '';
-        const userDataMatch = cookies.match(/user_data=([^;]+)/);
+        const userData = extractUserFromCookie(req);
         
-        if (!userDataMatch) {
+        if (!userData) {
           console.log('❌ [VERCEL] No auth cookie found');
           return res.status(401).json({ message: 'Не авторизован' });
         }
 
-        const userData = JSON.parse(Buffer.from(userDataMatch[1], 'base64').toString());
         console.log(`🔍 [VERCEL] Checking user: ${userData.username}`);
-        
-        // Проверяем срок действия токена (7 дней)
-        if (Date.now() - userData.timestamp > 7 * 24 * 60 * 60 * 1000) {
-          console.log('❌ [VERCEL] Token expired');
-          return res.status(401).json({ message: 'Токен истек' });
-        }
 
         // Проверяем пользователя в БД
         const users = await Promise.race([
@@ -351,7 +367,106 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // Простые эндпоинты которые не требуют сложной логики
+    // CARDS - получение карт пользователя
+    if (url.includes('/api/cards') && req.method === 'GET') {
+      try {
+        console.log('💳 [VERCEL] Cards request');
+        const userData = extractUserFromCookie(req);
+        
+        if (!userData) {
+          console.log('❌ [VERCEL] No auth cookie for cards request');
+          return res.status(401).json({ message: 'Необходима авторизация' });
+        }
+
+        console.log(`🔍 [VERCEL] Getting cards for user: ${userData.username}`);
+
+        // Получаем карты пользователя
+        const cards = await Promise.race([
+          db`SELECT * FROM cards WHERE user_id = ${userData.id} ORDER BY created_at DESC`,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Cards query timeout')), 8000))
+        ]);
+        
+        console.log(`📊 [VERCEL] Found ${Array.isArray(cards) ? cards.length : 0} cards for user`);
+        return res.json(cards || []);
+        
+      } catch (error) {
+        console.error('❌ [VERCEL] Cards error:', error);
+        return res.status(500).json({ 
+          message: 'Ошибка при получении карт',
+          debug: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+    }
+
+    // TRANSACTIONS - получение транзакций пользователя
+    if (url.includes('/api/transactions') && req.method === 'GET') {
+      try {
+        console.log('📊 [VERCEL] Transactions request');
+        const userData = extractUserFromCookie(req);
+        
+        if (!userData) {
+          return res.status(401).json({ message: 'Необходима авторизация' });
+        }
+
+        console.log(`🔍 [VERCEL] Getting transactions for user: ${userData.username}`);
+
+        // Получаем транзакции пользователя
+        const transactions = await Promise.race([
+          db`SELECT * FROM transactions WHERE user_id = ${userData.id} ORDER BY created_at DESC LIMIT 50`,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Transactions query timeout')), 8000))
+        ]);
+        
+        console.log(`📊 [VERCEL] Found ${Array.isArray(transactions) ? transactions.length : 0} transactions for user`);
+        return res.json(transactions || []);
+        
+      } catch (error) {
+        console.error('❌ [VERCEL] Transactions error:', error);
+        return res.status(500).json({ 
+          message: 'Ошибка при получении транзакций',
+          debug: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+    }
+
+    // NFT Collections - получение NFT коллекций
+    if (url.includes('/api/nft/collections') && req.method === 'GET') {
+      try {
+        console.log('🎨 [VERCEL] NFT Collections request');
+        
+        // Возвращаем базовые коллекции
+        const collections = [
+          {
+            id: 1,
+            name: 'Bored Ape Yacht Club',
+            slug: 'bored_ape_yacht_club',
+            description: 'Коллекция уникальных цифровых обезьян',
+            floor_price: '10.5',
+            total_items: 10000,
+            image_url: '/api/nft/image/bored_ape_yacht_club/1'
+          },
+          {
+            id: 2,
+            name: 'Mutant Ape Yacht Club',
+            slug: 'mutant_ape_yacht_club',
+            description: 'Мутантские обезьяны из BAYC',
+            floor_price: '5.2',
+            total_items: 20000,
+            image_url: '/api/nft/image/mutant_ape_yacht_club/1'
+          }
+        ];
+        
+        return res.json(collections);
+        
+      } catch (error) {
+        console.error('❌ [VERCEL] NFT Collections error:', error);
+        return res.status(500).json({ 
+          message: 'Ошибка при получении NFT коллекций',
+          debug: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+    }
+
+    // Exchange Rates - курсы валют
     if (url.includes('/api/rates') && req.method === 'GET') {
       console.log('💱 [VERCEL] Exchange rates request');
       return res.json({
@@ -360,6 +475,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ethToUsd: 4000,
         timestamp: new Date().toISOString()
       });
+    }
+
+    // WebSocket endpoint (не поддерживается в Vercel)
+    if (url.includes('/ws')) {
+      console.log('🔌 [VERCEL] WebSocket request (not supported)');
+      return res.status(404).json({ message: 'WebSocket не поддерживается в Vercel' });
     }
 
     // Для остальных API путей - требуем авторизации
