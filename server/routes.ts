@@ -642,6 +642,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("❌ [VERCEL] Ошибка получения карт:", error);
       
+      const userId = getUserId(req);
+      
       // FALLBACK: Если база недоступна, возвращаем заглушки
       const fallbackCards = [
         {
