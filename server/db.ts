@@ -32,13 +32,18 @@ console.log('Connecting to PostgreSQL database...');
 // Neon serverless предназначен только для Neon Database
 console.log('✅ Используем стандартный PostgreSQL клиент для Supabase с connection pooling');
 
-// ИСПРАВЛЕНИЕ: Добавляем правильную конфигурацию connection pooling для Vercel/Serverless
+// ИСПРАВЛЕНИЕ: Улучшенная конфигурация для Vercel Serverless
+const IS_VERCEL = process.env.VERCEL === '1';
 const sql = postgres(databaseUrl, { 
   ssl: 'require',
-  max: 1,                    // Максимум 1 подключение в serverless окружении
-  idle_timeout: 20,          // 20 секунд ожидания перед закрытием соединения
-  connect_timeout: 10,       // Максимум 10 секунд на подключение
+  max: IS_VERCEL ? 1 : 5,    // 1 подключение для Vercel, 5 для других платформ
+  idle_timeout: IS_VERCEL ? 5 : 20,  // Быстрое закрытие на Vercel
+  connect_timeout: IS_VERCEL ? 5 : 10, // Быстрое подключение на Vercel
   prepare: false,            // Отключаем prepared statements для serverless
+  transform: {
+    undefined: null          // Преобразуем undefined в null для PostgreSQL
+  },
+  onnotice: () => {},        // Отключаем уведомления для производительности
   connection: {
     options: '--search_path=public'
   }
@@ -59,7 +64,7 @@ process.on('SIGINT', gracefulShutdown);
 // Добавляем функцию-помощник для безопасных операций с timeout
 export async function withDatabaseTimeout<T>(
   operation: Promise<T>, 
-  timeoutMs: number = 10000,
+  timeoutMs: number = IS_VERCEL ? 5000 : 10000,
   operationName: string = 'Database operation'
 ): Promise<T> {
   const timeoutPromise = new Promise<never>((_, reject) => {
@@ -72,6 +77,34 @@ export async function withDatabaseTimeout<T>(
     console.error(`❌ ${operationName} failed:`, error);
     throw error;
   }
+}
+
+// Функция для retry операций БД с exponential backoff
+export async function withDatabaseRetry<T>(
+  operation: () => Promise<T>,
+  maxRetries: number = IS_VERCEL ? 2 : 3,
+  operationName: string = 'Database operation'
+): Promise<T> {
+  let lastError: Error;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await withDatabaseTimeout(operation(), undefined, operationName);
+    } catch (error) {
+      lastError = error as Error;
+      console.warn(`⚠️ ${operationName} attempt ${attempt}/${maxRetries} failed:`, error);
+      
+      if (attempt === maxRetries) {
+        break;
+      }
+      
+      // Exponential backoff: 100ms, 200ms, 400ms...
+      const delay = Math.min(100 * Math.pow(2, attempt - 1), 2000);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+  
+  throw new Error(`${operationName} failed after ${maxRetries} attempts: ${lastError!.message}`);
 }
 
 // Экспортируем клиенты
@@ -293,8 +326,18 @@ export async function initializeDatabase() {
 
 // Функция для принудительного закрытия подключений
 export async function closeConnectionsOnVercel() {
-  // Neon serverless соединения управляются автоматически
-  console.log('✅ Используем serverless - соединения закрываются автоматически');
+  if (IS_VERCEL) {
+    try {
+      console.log('🔄 Закрываем подключения для Vercel serverless...');
+      // Принудительно закрываем подключения на Vercel
+      await sql.end({ timeout: 2 });
+      console.log('✅ Подключения к БД успешно закрыты');
+    } catch (error) {
+      console.warn('⚠️ Ошибка при закрытии подключений (это нормально для serverless):', error);
+    }
+  } else {
+    console.log('✅ Не Vercel - соединения управляются автоматически');
+  }
 }
 
 // Handle graceful shutdown
