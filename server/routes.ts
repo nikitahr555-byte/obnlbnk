@@ -171,8 +171,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   });
   
-  // Временно отключаем автоматическое обновление курсов из-за проблем с БД
-  // startRateUpdates(httpServer, '/ws');
+  // ИСПРАВЛЕНО: Включаем автоматическое обновление курсов с улучшенной обработкой ошибок
+  try {
+    startRateUpdates(httpServer, '/ws');
+    console.log('✅ Сервис обновления курсов запущен');
+  } catch (error) {
+    console.warn('⚠️ Не удалось запустить сервис обновления курсов:', error);
+  }
   
   // Делаем папку с NFT доступной как статический контент
   // Статические пути для NFT ресурсов

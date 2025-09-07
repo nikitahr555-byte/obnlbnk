@@ -3,6 +3,7 @@ import { WebSocket, WebSocketServer } from 'ws';
 import { parse } from 'url';
 import { IncomingMessage } from 'http';
 import type { Server } from 'http';
+import { withDatabaseRetry } from './db.js';
 
 const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
 const UPDATE_INTERVAL = 30000; // 30 секунд
@@ -66,14 +67,24 @@ export function startRateUpdates(server: Server, path: string = '/ws') {
 
 async function fetchRates() {
   try {
+    // Проверяем кэш (5 минут)
     if (lastSuccessfulRates && Date.now() - lastSuccessfulRates.timestamp < 300000) {
-      await storage.updateExchangeRates({
-        usdToUah: parseFloat(lastSuccessfulRates.usdToUah),
-        btcToUsd: parseFloat(lastSuccessfulRates.btcToUsd),
-        ethToUsd: parseFloat(lastSuccessfulRates.ethToUsd)
-      });
-      broadcastRates(lastSuccessfulRates);
-      return;
+      try {
+        await withDatabaseRetry(
+          () => storage.updateExchangeRates({
+            usdToUah: parseFloat(lastSuccessfulRates!.usdToUah),
+            btcToUsd: parseFloat(lastSuccessfulRates!.btcToUsd),
+            ethToUsd: parseFloat(lastSuccessfulRates!.ethToUsd)
+          }),
+          3,
+          'Update cached exchange rates'
+        );
+        broadcastRates(lastSuccessfulRates);
+        return;
+      } catch (dbError) {
+        console.warn('⚠️ Ошибка обновления кэшированных курсов в БД:', dbError);
+        // Продолжаем получать новые курсы
+      }
     }
 
     console.log("Получаем курсы с альтернативного источника...");
@@ -122,38 +133,71 @@ async function fetchRates() {
       timestamp: Date.now()
     };
 
-    await storage.updateExchangeRates({
-      usdToUah: parseFloat(rates.usdToUah),
-      btcToUsd: parseFloat(rates.btcToUsd),
-      ethToUsd: parseFloat(rates.ethToUsd)
-    });
+    // Сохраняем курсы в базу с retry логикой
+    try {
+      await withDatabaseRetry(
+        () => storage.updateExchangeRates({
+          usdToUah: parseFloat(rates.usdToUah),
+          btcToUsd: parseFloat(rates.btcToUsd),
+          ethToUsd: parseFloat(rates.ethToUsd)
+        }),
+        3,
+        'Update exchange rates'
+      );
+      
+      lastSuccessfulRates = rates;
+      broadcastRates(rates);
 
-    lastSuccessfulRates = rates;
-    broadcastRates(rates);
-
-    console.log("Курсы валют успешно обновлены:", {
-      usdToUah: usdToUah,
-      btcToUsd: btcToUsd,
-      ethToUsd: ethToUsd
-    });
-    
-    console.log(`Текущие курсы для конвертации:
-      1 USD = ${usdToUah} UAH
-      1 BTC = ${btcToUsd} USD = ${btcToUsd * usdToUah} UAH
-      1 ETH = ${ethToUsd} USD = ${ethToUsd * usdToUah} UAH`);
-  } catch (error) {
-    console.error("Ошибка обновления курсов:", error);
-
-    if (lastSuccessfulRates) {
-      console.log("Используем кэшированные курсы из-за ошибки API");
-      await storage.updateExchangeRates({
-        usdToUah: parseFloat(lastSuccessfulRates.usdToUah),
-        btcToUsd: parseFloat(lastSuccessfulRates.btcToUsd),
-        ethToUsd: parseFloat(lastSuccessfulRates.ethToUsd)
+      console.log("✅ Курсы валют успешно обновлены:", {
+        usdToUah: usdToUah,
+        btcToUsd: btcToUsd,
+        ethToUsd: ethToUsd
       });
-      broadcastRates(lastSuccessfulRates);
+      
+      console.log(`Текущие курсы для конвертации:
+        1 USD = ${usdToUah} UAH
+        1 BTC = ${btcToUsd} USD = ${btcToUsd * usdToUah} UAH
+        1 ETH = ${ethToUsd} USD = ${ethToUsd * usdToUah} UAH`);
+        
+    } catch (dbError) {
+      console.error("❌ Ошибка сохранения курсов в БД:", dbError);
+      
+      // Все равно кэшируем курсы и рассылаем клиентам
+      lastSuccessfulRates = rates;
+      broadcastRates(rates);
+      
+      console.log("⚠️ Курсы обновлены только в памяти (БД недоступна):", {
+        usdToUah: usdToUah,
+        btcToUsd: btcToUsd,
+        ethToUsd: ethToUsd
+      });
     }
 
-    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+  } catch (error) {
+    console.error("❌ Ошибка получения курсов валют:", error);
+    
+    // Если у нас есть кэшированные курсы, используем их
+    if (lastSuccessfulRates) {
+      console.log("🔄 Используем последние успешные курсы");
+      broadcastRates(lastSuccessfulRates);
+      
+      // Пытаемся обновить в БД кэшированные курсы
+      try {
+        await withDatabaseRetry(
+          () => storage.updateExchangeRates({
+            usdToUah: parseFloat(lastSuccessfulRates!.usdToUah),
+            btcToUsd: parseFloat(lastSuccessfulRates!.btcToUsd),
+            ethToUsd: parseFloat(lastSuccessfulRates!.ethToUsd)
+          }),
+          2,
+          'Update cached rates fallback'
+        );
+      } catch (fallbackError) {
+        console.warn("⚠️ Не удалось обновить кэшированные курсы в БД:", fallbackError);
+      }
+    }
+    
+    // Повторная попытка через минуту
+    setTimeout(fetchRates, RETRY_DELAY);
   }
 }
