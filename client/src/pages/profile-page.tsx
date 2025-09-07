@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import { useTranslation } from "@/hooks/use-translation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,16 +38,15 @@ import { SeedPhraseDisplay } from "@/components/seed-phrase";
 export default function ProfilePage() {
   const { user, logoutMutation } = useAuth();
   const { toast } = useToast();
+  const { language, setLanguage: setTranslationLanguage, t } = useTranslation();
   const [notifications, setNotifications] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
-  const [language, setLanguage] = useState("ru");
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   // Load initial settings
   useEffect(() => {
     setNotifications(localStorage.getItem('notifications') === 'true');
     setSoundEnabled(localStorage.getItem('soundEnabled') === 'true');
-    setLanguage(localStorage.getItem('language') || 'ru');
     const theme = localStorage.getItem('theme') || 'dark';
     setIsDarkMode(theme === 'dark');
   }, []);
@@ -92,11 +92,9 @@ export default function ProfilePage() {
           break;
 
         case 'language':
-          localStorage.setItem('language', value);
-          setLanguage(value);
-          document.documentElement.setAttribute('lang', value);
+          setTranslationLanguage(value);
           toast({
-            title: value === 'ru' ? "Язык изменен" : "Language changed",
+            title: t('languageChanged'),
             description: value === 'ru' ? "Приложение теперь на русском языке" : "Application is now in English"
           });
           break;

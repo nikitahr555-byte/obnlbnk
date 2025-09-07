@@ -16,6 +16,7 @@ import TelegramMusicPlayer from "./components/telegram-music-player"; // Имп�
 
 import { ProtectedRoute } from "./lib/protected-route";
 import { AuthProvider } from "./components/auth-provider";
+import { TranslationProvider } from "./hooks/use-translation";
 import BottomNav from "@/components/bottom-nav";
 import { useLocation } from "wouter";
 import React, { useEffect } from 'react';
@@ -59,13 +60,15 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <div id="app-root" className="min-h-screen bg-background">
-          <Router />
-          <TelegramMusicPlayer />
-          <Toaster />
-        </div>
-      </AuthProvider>
+      <TranslationProvider>
+        <AuthProvider>
+          <div id="app-root" className="min-h-screen bg-background">
+            <Router />
+            <TelegramMusicPlayer />
+            <Toaster />
+          </div>
+        </AuthProvider>
+      </TranslationProvider>
     </QueryClientProvider>
   );
 }
