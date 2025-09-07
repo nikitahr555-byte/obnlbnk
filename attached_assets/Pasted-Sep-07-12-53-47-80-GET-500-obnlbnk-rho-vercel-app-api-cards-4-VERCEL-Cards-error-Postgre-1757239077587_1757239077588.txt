@@ -1,0 +1,113 @@
+Sep 07 12:53:47.80
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:43.52
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:41.23
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:38.95
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:34.62
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:32.73
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:28.34
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:24.06
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:21.77
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:20.47
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:17.88
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:13.59
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:11.30
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:09.99
+GET
+500
+obnlbnk-rho.vercel.app
+/api/cards
+4
+❌ [VERCEL] Cards error: PostgresError: column "created_at" does not exist at ErrorResponse (file:///var/task/api/node_modules/postgres/src/connection.js:794:26) at handle (file:///var/task/api/node_modules/postgres/src/connection.js:480:6) at TLSSocket.data (file:///var/task/api/node_modules/postgres/src/connection.js:315:9) at TLSSocket.emit (node:events:524:28) at addChunk (node:internal/streams/readable:561:12) at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) at Readable.push (node:internal/streams/readable:392:5) at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17) at cachedError (file:///var/task/api/node_modules/postgres/src/query.js:170:23) at new Query (file:///var/task/api/node_modules/postgres/src/query.js:36:24) at sql (file:///var/task/api/node_modules/postgres/src/index.js:112:11) at Object.handler (/vercel/path0/api/index.ts:385:13) { severity_local: 'ERROR', severity: 'ERROR', code: '42703', position: '49', file: 'parse_relation.c', line: '3716', routine: 'errorMissingColumn' }
+Sep 07 12:53:06.91
+GET
+401
+obnlbnk-exuqwdwr3-rabota197555-2326s-projects.vercel.app
+/api/user
+3
+❌ [VERCEL] No auth cookie found
+Sep 07 12:53:06.89
+GET
+401
+obnlbnk-exuqwdwr3-rabota197555-2326s-projects.vercel.app
+/api/user
+3
+❌ [VERCEL] No auth cookie found
+No more
