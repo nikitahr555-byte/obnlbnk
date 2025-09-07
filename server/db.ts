@@ -70,9 +70,8 @@ process.on('SIGINT', gracefulShutdown);
 // Добавляем функцию-помощник для безопасных операций с timeout
 export async function withDatabaseTimeout<T>(
   operation: Promise<T>, 
-  timeoutMs: number = IS_VERCEL ? 5000 : 10000,
-  timeoutMs: number = 50000, // УВЕЛИЧИЛИ до 50 секунд для Vercel
-  operationName: string = 'Database operation'
+  operationName: string = 'Database operation',
+  timeoutMs: number = IS_VERCEL ? 50000 : 10000 // УВЕЛИЧИЛИ до 50 секунд для Vercel
 ): Promise<T> {
   const timeoutPromise = new Promise<never>((_, reject) => {
     setTimeout(() => reject(new Error(`${operationName} timed out after ${timeoutMs}ms`)), timeoutMs);
@@ -111,7 +110,7 @@ export async function withDatabaseRetry<T>(
   
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      return await withDatabaseTimeout(operation(), undefined, operationName);
+      return await withDatabaseTimeout(operation(), operationName);
     } catch (error) {
       lastError = error as Error;
       console.warn(`⚠️ ${operationName} attempt ${attempt}/${maxRetries} failed:`, error);
