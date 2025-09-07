@@ -3,6 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Express } from "express";
 import cookieParser from "cookie-parser";
 import { storage } from "./storage.js";
+import { withDatabaseRetry } from "./db.js";
 import { User as SelectUser, newUserRegistrationSchema } from "../shared/schema.js";
 import { ZodError } from "zod";
 import { scrypt, timingSafeEqual } from "crypto";
@@ -48,7 +49,11 @@ export function setupAuth(app: Express) {
         // Токен валиден 7 дней
         if (Date.now() - userData.timestamp < 7 * 24 * 60 * 60 * 1000) {
           try {
-            const user = await storage.getUser(userData.id);
+            const user = await withDatabaseRetry(
+              () => storage.getUser(userData.id),
+              2,
+              'Auth middleware user lookup'
+            );
             if (user && user.username === userData.username) {
               req.user = user;
             } else {
@@ -74,7 +79,11 @@ export function setupAuth(app: Express) {
   // LocalStrategy с улучшенной обработкой ошибок и fallback механизмом
   passport.use(new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await storage.getUserByUsername(username);
+      const user = await withDatabaseRetry(
+        () => storage.getUserByUsername(username),
+        3,
+        'LocalStrategy user lookup'
+      );
       if (!user) return done(null, false, { message: 'Неверные учетные данные' });
 
       const valid = await comparePasswords(password, user.password);
