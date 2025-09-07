@@ -445,21 +445,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           console.log(`💳 [VERCEL] Создаем дефолтные карты с криптоадресами для пользователя ${userData.id}`);
           
           // Генерируем криптоадреса
-          const generateBtcAddress = (userId: number) => {
-            const crypto = require('crypto');
-            const seed = crypto.createHash('sha256').update(`btc-${userId}-salt`).digest('hex');
+          const generateBtcAddress = async (userId: number) => {
+            const { createHash } = await import('crypto');
+            const seed = createHash('sha256').update(`btc-${userId}-salt`).digest('hex');
             return '1' + seed.substring(0, 33);
           };
           
-          const generateEthAddress = (userId: number) => {
-            const crypto = require('crypto');
-            const seed = crypto.createHash('sha256').update(`eth-${userId}-salt`).digest('hex');
+          const generateEthAddress = async (userId: number) => {
+            const { createHash } = await import('crypto');
+            const seed = createHash('sha256').update(`eth-${userId}-salt`).digest('hex');
             // Простая генерация ETH адреса без ethers для Vercel
             return '0x' + seed.substring(0, 40);
           };
           
-          const btcAddress = generateBtcAddress(userData.id);
-          const ethAddress = generateEthAddress(userData.id);
+          const btcAddress = await generateBtcAddress(userData.id);
+          const ethAddress = await generateEthAddress(userData.id);
           
           // Создаем виртуальную карту
           await db`INSERT INTO cards (user_id, type, number, expiry, cvv, balance, btc_balance, eth_balance, kichcoin_balance, btc_address, eth_address, ton_address) 
@@ -475,6 +475,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           const newCards = await db`SELECT * FROM cards WHERE user_id = ${userData.id} ORDER BY id DESC`;
           return res.json(newCards || []);
         }
+        
+        // Если карты уже есть, возвращаем их
+        return res.json(cards || []);
         
       } catch (error) {
         console.error('❌ [VERCEL] Cards error:', error);
