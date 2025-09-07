@@ -41,16 +41,35 @@ export function SeedPhraseDisplay() {
     setError(null);
     try {
       const response = await apiRequest('GET', '/api/crypto/seed-phrase');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: Сервер вернул ошибку`);
+      }
+      
       const data = await response.json();
+      
+      if (!data || !data.seedPhrase) {
+        throw new Error('Получены некорректные данные от сервера');
+      }
+      
       setData(data as SeedPhraseData);
+      console.log('✅ Seed phrase loaded successfully');
+      
     } catch (err) {
       console.error('Failed to fetch seed phrase:', err);
-      setError('Не удалось получить seed-фразу. Пожалуйста, попробуйте позже.');
-      toast({
-        title: "Ошибка",
-        description: err instanceof Error ? err.message : "Не удалось получить seed-фразу",
-        variant: "destructive"
-      });
+      const errorMessage = err instanceof Error ? err.message : "Не удалось получить seed-фразу";
+      setError(`Ошибка: ${errorMessage}`);
+      
+      // Не показываем toast если компонент размонтирован
+      try {
+        toast({
+          title: "Ошибка получения seed-фразы",
+          description: errorMessage,
+          variant: "destructive"
+        });
+      } catch (toastError) {
+        console.warn('Toast error (component unmounted?):', toastError);
+      }
     } finally {
       setLoading(false);
     }
