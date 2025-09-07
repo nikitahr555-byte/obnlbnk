@@ -670,12 +670,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(401).json({ message: 'Необходима авторизация' });
         }
 
-        const { fromCardId, recipientAddress, amount, type } = req.body;
-        console.log(`💸 [VERCEL] Transfer request: ${amount} from card ${fromCardId} to ${recipientAddress} (${type})`);
+        const { fromCardId, recipientAddress, amount, type, transferType, cryptoType } = req.body;
+        
+        // Поддерживаем разные названия поля типа для совместимости
+        const actualType = type || transferType || 'fiat';
+        
+        console.log(`💸 [VERCEL] Transfer request: ${amount} from card ${fromCardId} to ${recipientAddress} (type: ${actualType}, cryptoType: ${cryptoType})`);
 
         // Простая валидация
-        if (!fromCardId || !recipientAddress || !amount || !type) {
-          return res.status(400).json({ message: 'Недостаточно данных для перевода' });
+        if (!fromCardId || !recipientAddress || !amount) {
+          return res.status(400).json({ message: 'Недостаточно данных для перевода: fromCardId, recipientAddress и amount обязательны' });
         }
 
         // Получаем карту отправителя
