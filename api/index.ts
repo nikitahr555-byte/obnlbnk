@@ -42,19 +42,29 @@ async function verifyPassword(supplied: string, stored: string): Promise<boolean
 function extractUserFromCookie(req: VercelRequest): any {
   try {
     const cookies = req.headers.cookie || '';
+    console.log(`🍪 [VERCEL] Checking cookies: ${cookies ? cookies.substring(0, 100) + '...' : 'No cookies found'}`);
+    
     const userDataMatch = cookies.match(/user_data=([^;]+)/);
     
     if (!userDataMatch) {
+      console.log('❌ [VERCEL] No user_data cookie found');
       return null;
     }
 
+    console.log(`🍪 [VERCEL] Found user_data cookie, extracting data...`);
     const userData = JSON.parse(Buffer.from(userDataMatch[1], 'base64').toString());
     
     // Проверяем срок действия токена (7 дней)
-    if (Date.now() - userData.timestamp > 7 * 24 * 60 * 60 * 1000) {
+    const ageInMs = Date.now() - userData.timestamp;
+    const ageInHours = Math.floor(ageInMs / (1000 * 60 * 60));
+    console.log(`🕐 [VERCEL] Cookie age: ${ageInHours} hours`);
+    
+    if (ageInMs > 7 * 24 * 60 * 60 * 1000) {
+      console.log('⏰ [VERCEL] Cookie expired');
       return null;
     }
 
+    console.log(`✅ [VERCEL] Valid cookie found for user: ${userData.username}`);
     return userData;
   } catch (error) {
     console.error('❌ [VERCEL] Cookie extraction error:', error);
@@ -244,7 +254,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const userData = { id: user.id, username: user.username, timestamp: Date.now() };
         const token = Buffer.from(JSON.stringify(userData)).toString('base64');
         
-        res.setHeader('Set-Cookie', `user_data=${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=604800; Path=/`);
+        // Адаптируем cookie настройки для разных окружений
+        const isHttps = req.headers['x-forwarded-proto'] === 'https' || req.url?.startsWith('https://');
+        const cookieOptions = [
+          `user_data=${token}`,
+          'HttpOnly',
+          isHttps ? 'Secure' : '', // Secure только для HTTPS
+          'SameSite=Lax',
+          'Max-Age=604800',
+          'Path=/'
+        ].filter(Boolean).join('; ');
+        
+        console.log(`🍪 [VERCEL] Setting cookie with options: ${cookieOptions}`);
+        res.setHeader('Set-Cookie', cookieOptions);
         
         console.log(`✅ [VERCEL] Login successful for user: ${user.username}`);
         return res.json({
@@ -302,7 +324,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const userData = { id: user.id, username: user.username, timestamp: Date.now() };
         const token = Buffer.from(JSON.stringify(userData)).toString('base64');
         
-        res.setHeader('Set-Cookie', `user_data=${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=604800; Path=/`);
+        // Адаптируем cookie настройки для разных окружений
+        const isHttps = req.headers['x-forwarded-proto'] === 'https' || req.url?.startsWith('https://');
+        const cookieOptions = [
+          `user_data=${token}`,
+          'HttpOnly',
+          isHttps ? 'Secure' : '', // Secure только для HTTPS
+          'SameSite=Lax',
+          'Max-Age=604800',
+          'Path=/'
+        ].filter(Boolean).join('; ');
+        
+        console.log(`🍪 [VERCEL] Setting registration cookie with options: ${cookieOptions}`);
+        res.setHeader('Set-Cookie', cookieOptions);
         
         return res.status(201).json({
           id: user.id,
