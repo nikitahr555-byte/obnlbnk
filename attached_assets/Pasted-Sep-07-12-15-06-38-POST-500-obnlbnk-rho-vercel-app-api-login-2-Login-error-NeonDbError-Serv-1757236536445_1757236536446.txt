@@ -1,0 +1,40 @@
+Sep 07 12:15:06.38
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+2
+Login error: NeonDbError: Server error (HTTP status 404): Not Found at execute (/var/task/api/node_modules/@neondatabase/serverless/index.js:1544:29) at process.processTicksAndRejections (node:internal/process/task_queues:95:5) at async Object.handler (/vercel/path0/api/index.ts:47:23) at async r (/opt/rust/nodejs.js:2:15384) at async Server.<anonymous> (/opt/rust/nodejs.js:2:11409) at async Server.<anonymous> (/opt/rust/nodejs.js:16:7281) { code: null, sourceError: undefined }
+Sep 07 12:14:52.33
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+2
+Login error: NeonDbError: Server error (HTTP status 404): Not Found at execute (/var/task/api/node_modules/@neondatabase/serverless/index.js:1544:29) at process.processTicksAndRejections (node:internal/process/task_queues:95:5) at async Object.handler (/vercel/path0/api/index.ts:47:23) at async r (/opt/rust/nodejs.js:2:15384) at async Server.<anonymous> (/opt/rust/nodejs.js:2:11409) at async Server.<anonymous> (/opt/rust/nodejs.js:16:7281) { code: null, sourceError: undefined }
+Sep 07 12:14:50.70
+POST
+500
+obnlbnk-rho.vercel.app
+/api/login
+2
+Login error: NeonDbError: Server error (HTTP status 404): Not Found at execute (/var/task/api/node_modules/@neondatabase/serverless/index.js:1544:29) at process.processTicksAndRejections (node:internal/process/task_queues:95:5) at async Object.handler (/vercel/path0/api/index.ts:47:23) at async r (/opt/rust/nodejs.js:2:15384) at async Server.<anonymous> (/opt/rust/nodejs.js:2:11409) at async Server.<anonymous> (/opt/rust/nodejs.js:16:7281) { code: null, sourceError: undefined }
+Sep 07 12:14:25.90
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+🚀 [VERCEL] GET /api/user
+Sep 07 12:14:21.44
+GET
+401
+obnlbnk-2lhfsmesa-rabota197555-2326s-projects.vercel.app
+/api/user
+🚀 [VERCEL] GET /api/user
+Sep 07 12:14:21.36
+GET
+401
+obnlbnk-2lhfsmesa-rabota197555-2326s-projects.vercel.app
+/api/user
+🚀 [VERCEL] GET /api/user
+No more 
