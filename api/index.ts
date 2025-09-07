@@ -9,6 +9,11 @@ function initDatabase() {
   if (!sql && process.env.DATABASE_URL) {
     try {
       console.log('🔌 [VERCEL] Initializing database connection...');
+      // Логируем только часть URL для безопасности
+      const urlParts = process.env.DATABASE_URL.split('@');
+      const dbHost = urlParts.length > 1 ? urlParts[1].split('/')[0] : 'unknown';
+      console.log(`🔌 [VERCEL] Database host: ${dbHost}`);
+      
       sql = neon(process.env.DATABASE_URL);
       console.log('✅ [VERCEL] Database connection initialized');
     } catch (error) {
@@ -48,13 +53,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const url = req.url || '';
+
+    // Health check endpoint - не требует БД
+    if (url.includes('/api/health')) {
+      const hasDbUrl = !!process.env.DATABASE_URL;
+      const dbUrlLength = process.env.DATABASE_URL ? process.env.DATABASE_URL.length : 0;
+      
+      return res.json({
+        status: 'ok',
+        database_url_present: hasDbUrl,
+        database_url_length: dbUrlLength,
+        timestamp: new Date().toISOString(),
+        environment: 'vercel'
+      });
+    }
     
     // Проверяем наличие DATABASE_URL
     if (!process.env.DATABASE_URL) {
       console.error('❌ [VERCEL] DATABASE_URL not found in environment variables');
       return res.status(500).json({ 
         message: 'База данных не настроена. Обратитесь к администратору.',
-        debug: 'DATABASE_URL missing'
+        debug: 'DATABASE_URL missing from environment'
       });
     }
 
@@ -66,18 +85,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Тестируем подключение только для критических операций
-    if (req.method === 'POST' && (url.includes('/api/login') || url.includes('/api/register'))) {
-      const isConnected = await testDatabaseConnection(db);
-      if (!isConnected) {
-        return res.status(500).json({ 
-          message: 'База данных временно недоступна. Попробуйте позже.',
-          debug: 'Database connection test failed'
-        });
-      }
-    }
-
-    // LOGIN - реальная проверка через БД
+    // LOGIN - с упрощенной проверкой БД
     if (url.includes('/api/login') && req.method === 'POST') {
       try {
         const { username, password } = req.body;
@@ -87,11 +95,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(400).json({ message: 'Требуется имя пользователя и пароль' });
         }
 
-        // Ищем пользователя в БД с timeout
+        // Ищем пользователя в БД БЕЗ предварительного тестирования подключения
         console.log('🔍 [VERCEL] Searching for user in database...');
         const users = await Promise.race([
           db`SELECT id, username, password, is_regulator FROM users WHERE username = ${username}`,
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Database query timeout')), 10000))
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Database query timeout')), 15000))
         ]);
         
         console.log(`📊 [VERCEL] Found ${Array.isArray(users) ? users.length : 0} users`);
@@ -129,6 +137,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         
       } catch (error) {
         console.error('❌ [VERCEL] Login error:', error);
+        
+        // Если это ошибка 404 от Neon, значит проблема с DATABASE_URL
+        if (error instanceof Error && error.message.includes('404')) {
+          return res.status(500).json({ 
+            message: 'База данных недоступна. Проверьте настройки подключения.',
+            debug: 'Database not found (404) - check DATABASE_URL in Vercel environment variables'
+          });
+        }
+        
         return res.status(500).json({ 
           message: 'Ошибка при входе в систему',
           debug: error instanceof Error ? error.message : 'Unknown error'
@@ -167,7 +184,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // Проверяем пользователя в БД (с коротким timeout)
         const users = await Promise.race([
           db`SELECT id, username, is_regulator FROM users WHERE id = ${userData.id} AND username = ${userData.username}`,
-          new Promise((_, reject) => setTimeout(() => reject(new Error('User check timeout')), 5000))
+          new Promise((_, reject) => setTimeout(() => reject(new Error('User check timeout')), 8000))
         ]);
         
         if (!Array.isArray(users) || users.length === 0) {
@@ -242,15 +259,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           debug: error instanceof Error ? error.message : 'Unknown error'
         });
       }
-    }
-
-    // Health check endpoint
-    if (url.includes('/api/health')) {
-      return res.json({
-        status: 'ok',
-        database: !!process.env.DATABASE_URL,
-        timestamp: new Date().toISOString()
-      });
     }
 
     // Для остальных API путей - требуем авторизации
