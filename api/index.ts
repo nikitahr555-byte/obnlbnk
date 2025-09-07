@@ -1,9 +1,42 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import postgres from 'postgres';
 import bcrypt from 'bcryptjs';
+import { scrypt, timingSafeEqual } from 'crypto';
+import { promisify } from 'util';
 
 // Кэшированное подключение к БД
 let sql: any = null;
+
+// Асинхронная версия scrypt для проверки старых паролей
+const scryptAsync = promisify(scrypt);
+
+// Проверка пароля с поддержкой разных форматов хеширования
+async function verifyPassword(supplied: string, stored: string): Promise<boolean> {
+  try {
+    // Попробуем bcrypt (новый формат)
+    if (stored.startsWith('$2')) {
+      console.log('🔑 [VERCEL] Using bcrypt verification');
+      return await bcrypt.compare(supplied, stored);
+    }
+    
+    // Попробуем scrypt (старый формат с точкой)
+    if (stored.includes('.')) {
+      console.log('🔑 [VERCEL] Using scrypt verification');
+      const [hashed, salt] = stored.split('.');
+      const hashedBuf = Buffer.from(hashed, 'hex');
+      const suppliedBuf = (await scryptAsync(supplied, salt, 64)) as Buffer;
+      return timingSafeEqual(hashedBuf, suppliedBuf);
+    }
+    
+    // Простое сравнение (если пароль не хеширован)
+    console.log('🔑 [VERCEL] Using plain text comparison');
+    return supplied === stored;
+    
+  } catch (error) {
+    console.error('❌ [VERCEL] Password verification error:', error);
+    return false;
+  }
+}
 
 function initDatabase() {
   if (!sql && process.env.DATABASE_URL) {
@@ -63,8 +96,8 @@ async function testDatabaseConnection(db: any) {
       console.log(`👥 [VERCEL] Total users in database: ${userCount[0]?.count || 0}`);
       
       // Показываем несколько пользователей для диагностики
-      const sampleUsers = await db`SELECT username FROM users LIMIT 3`;
-      console.log(`📝 [VERCEL] Sample users:`, sampleUsers.map(u => u.username));
+      const sampleUsers = await db`SELECT username, LENGTH(password) as pass_len FROM users LIMIT 5`;
+      console.log(`📝 [VERCEL] Sample users:`, sampleUsers.map(u => `${u.username} (pass_len: ${u.pass_len})`));
     }
     
     return true;
@@ -132,7 +165,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // LOGIN - с расширенной диагностикой
+    // LOGIN - с улучшенной проверкой паролей
     if (url.includes('/api/login') && req.method === 'POST') {
       try {
         const { username, password } = req.body;
@@ -142,7 +175,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(400).json({ message: 'Требуется имя пользователя и пароль' });
         }
 
-        // Сначала проверим подключение и таблицы
+        // Сначала проверим подключение и таблицы для диагностики
         console.log('🔍 [VERCEL] Checking database connection and tables...');
         await testDatabaseConnection(db);
 
@@ -169,13 +202,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         const user = users[0];
         console.log(`✅ [VERCEL] User found: ${user.username}`);
+        console.log(`🔍 [VERCEL] Password format: ${user.password.startsWith('$2') ? 'bcrypt' : user.password.includes('.') ? 'scrypt' : 'plain'}`);
         
-        // Проверяем пароль
+        // Проверяем пароль с поддержкой разных форматов
         console.log('🔑 [VERCEL] Verifying password...');
-        const isValidPassword = await bcrypt.compare(password, user.password);
+        const isValidPassword = await verifyPassword(password, user.password);
         
         if (!isValidPassword) {
           console.log('❌ [VERCEL] Invalid password');
+          console.log(`🔍 [VERCEL] Password hash preview: ${user.password.substring(0, 20)}...`);
           return res.status(401).json({ message: 'Неверные учетные данные' });
         }
 
@@ -203,7 +238,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // REGISTER - создаем тестового пользователя если БД пуста
+    // REGISTER - создаем пользователя с bcrypt хешированием
     if (url.includes('/api/register') && req.method === 'POST') {
       try {
         const { username, password } = req.body;
@@ -224,8 +259,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(400).json({ message: 'Пользователь уже существует' });
         }
 
-        // Хешируем пароль
+        // Хешируем пароль используя bcrypt
+        console.log('🔑 [VERCEL] Hashing password with bcrypt...');
         const hashedPassword = await bcrypt.hash(password, 12);
+        console.log(`🔍 [VERCEL] Generated password hash: ${hashedPassword.substring(0, 20)}...`);
 
         // Создаем пользователя
         const newUser = await db`
