@@ -10,22 +10,23 @@ function initDatabase() {
     try {
       console.log('🔌 [VERCEL] Initializing database connection...');
       
-      // Определяем тип БД по URL
-      const isSupabase = process.env.DATABASE_URL.includes('supabase.com');
-      const isNeon = process.env.DATABASE_URL.includes('neon.tech');
-      
-      console.log(`🔌 [VERCEL] Database type: ${isSupabase ? 'Supabase' : isNeon ? 'Neon' : 'PostgreSQL'}`);
+      // Логируем детали подключения для диагностики
+      const url = new URL(process.env.DATABASE_URL);
+      console.log(`🔌 [VERCEL] Host: ${url.hostname}`);
+      console.log(`🔌 [VERCEL] Database: ${url.pathname.substring(1)}`);
+      console.log(`🔌 [VERCEL] Username: ${url.username}`);
       
       // Для Supabase используем обычный postgres клиент
       sql = postgres(process.env.DATABASE_URL, {
         ssl: 'require',
         max: 1,
-        idle_timeout: 5,
-        connect_timeout: 10,
+        idle_timeout: 20,
+        connect_timeout: 30,
         prepare: false,
         transform: {
           undefined: null
-        }
+        },
+        onnotice: () => {} // Отключаем уведомления
       });
       
       console.log('✅ [VERCEL] Database connection initialized');
@@ -35,6 +36,42 @@ function initDatabase() {
     }
   }
   return sql;
+}
+
+// Тест подключения с диагностикой
+async function testDatabaseConnection(db: any) {
+  try {
+    console.log('🔍 [VERCEL] Testing database connection and checking tables...');
+    
+    // Проверяем подключение
+    await db`SELECT 1 as test`;
+    console.log('✅ [VERCEL] Basic connection successful');
+    
+    // Проверяем существование таблицы users
+    const tableExists = await db`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'users'
+      );
+    `;
+    console.log(`🔍 [VERCEL] Users table exists: ${tableExists[0]?.exists || false}`);
+    
+    if (tableExists[0]?.exists) {
+      // Считаем количество пользователей
+      const userCount = await db`SELECT COUNT(*) as count FROM users`;
+      console.log(`👥 [VERCEL] Total users in database: ${userCount[0]?.count || 0}`);
+      
+      // Показываем несколько пользователей для диагностики
+      const sampleUsers = await db`SELECT username FROM users LIMIT 3`;
+      console.log(`📝 [VERCEL] Sample users:`, sampleUsers.map(u => u.username));
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('❌ [VERCEL] Database test failed:', error);
+    return false;
+  }
 }
 
 // Основной обработчик для Vercel
@@ -57,13 +94,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Health check endpoint
     if (url.includes('/api/health')) {
       const hasDbUrl = !!process.env.DATABASE_URL;
-      const isSupabase = process.env.DATABASE_URL?.includes('supabase.com') || false;
-      const isNeon = process.env.DATABASE_URL?.includes('neon.tech') || false;
+      const db = initDatabase();
+      let dbStatus = 'not_initialized';
+      
+      if (db) {
+        try {
+          const isConnected = await testDatabaseConnection(db);
+          dbStatus = isConnected ? 'connected' : 'connection_failed';
+        } catch (error) {
+          dbStatus = 'test_failed';
+        }
+      }
       
       return res.json({
         status: 'ok',
         database_url_present: hasDbUrl,
-        database_type: isSupabase ? 'Supabase' : isNeon ? 'Neon' : 'PostgreSQL',
+        database_status: dbStatus,
         timestamp: new Date().toISOString(),
         environment: 'vercel'
       });
@@ -86,7 +132,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // LOGIN - реальная проверка через БД
+    // LOGIN - с расширенной диагностикой
     if (url.includes('/api/login') && req.method === 'POST') {
       try {
         const { username, password } = req.body;
@@ -95,6 +141,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (!username || !password) {
           return res.status(400).json({ message: 'Требуется имя пользователя и пароль' });
         }
+
+        // Сначала проверим подключение и таблицы
+        console.log('🔍 [VERCEL] Checking database connection and tables...');
+        await testDatabaseConnection(db);
 
         // Ищем пользователя в БД
         console.log('🔍 [VERCEL] Searching for user in database...');
@@ -106,6 +156,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.log(`📊 [VERCEL] Found ${Array.isArray(users) ? users.length : 0} users`);
         
         if (!Array.isArray(users) || users.length === 0) {
+          // Дополнительная диагностика - проверяем все usernames в БД
+          try {
+            const allUsers = await db`SELECT username FROM users LIMIT 10`;
+            console.log(`🔍 [VERCEL] Available usernames:`, allUsers.map(u => u.username));
+          } catch (e) {
+            console.log(`❌ [VERCEL] Could not fetch usernames for debugging:`, e);
+          }
+          
           return res.status(401).json({ message: 'Неверные учетные данные' });
         }
 
@@ -140,6 +198,61 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.error('❌ [VERCEL] Login error:', error);
         return res.status(500).json({ 
           message: 'Ошибка при входе в систему',
+          debug: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+    }
+
+    // REGISTER - создаем тестового пользователя если БД пуста
+    if (url.includes('/api/register') && req.method === 'POST') {
+      try {
+        const { username, password } = req.body;
+        console.log(`📝 [VERCEL] Registration attempt for user: ${username}`);
+        
+        if (!username || !password) {
+          return res.status(400).json({ message: 'Требуется имя пользователя и пароль' });
+        }
+
+        // Диагностика БД перед регистрацией
+        await testDatabaseConnection(db);
+
+        // Проверяем существование пользователя
+        const existingUsers = await db`SELECT id FROM users WHERE username = ${username}`;
+        
+        if (existingUsers.length > 0) {
+          console.log('❌ [VERCEL] User already exists');
+          return res.status(400).json({ message: 'Пользователь уже существует' });
+        }
+
+        // Хешируем пароль
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        // Создаем пользователя
+        const newUser = await db`
+          INSERT INTO users (username, password, is_regulator, regulator_balance, nft_generation_count)
+          VALUES (${username}, ${hashedPassword}, false, '0', 0)
+          RETURNING id, username, is_regulator
+        `;
+
+        const user = newUser[0];
+        console.log(`✅ [VERCEL] User created: ${user.username}`);
+
+        // Устанавливаем cookie
+        const userData = { id: user.id, username: user.username, timestamp: Date.now() };
+        const token = Buffer.from(JSON.stringify(userData)).toString('base64');
+        
+        res.setHeader('Set-Cookie', `user_data=${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=604800; Path=/`);
+        
+        return res.status(201).json({
+          id: user.id,
+          username: user.username,
+          is_regulator: user.is_regulator || false
+        });
+        
+      } catch (error) {
+        console.error('❌ [VERCEL] Register error:', error);
+        return res.status(500).json({ 
+          message: 'Ошибка при регистрации',
           debug: error instanceof Error ? error.message : 'Unknown error'
         });
       }
@@ -196,58 +309,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.error('❌ [VERCEL] User check error:', error);
         return res.status(401).json({ 
           message: 'Ошибка авторизации',
-          debug: error instanceof Error ? error.message : 'Unknown error'
-        });
-      }
-    }
-
-    // REGISTER - регистрация нового пользователя
-    if (url.includes('/api/register') && req.method === 'POST') {
-      try {
-        const { username, password } = req.body;
-        console.log(`📝 [VERCEL] Registration attempt for user: ${username}`);
-        
-        if (!username || !password) {
-          return res.status(400).json({ message: 'Требуется имя пользователя и пароль' });
-        }
-
-        // Проверяем существование пользователя
-        const existingUsers = await db`SELECT id FROM users WHERE username = ${username}`;
-        
-        if (existingUsers.length > 0) {
-          console.log('❌ [VERCEL] User already exists');
-          return res.status(400).json({ message: 'Пользователь уже существует' });
-        }
-
-        // Хешируем пароль
-        const hashedPassword = await bcrypt.hash(password, 12);
-
-        // Создаем пользователя
-        const newUser = await db`
-          INSERT INTO users (username, password, is_regulator, regulator_balance, nft_generation_count)
-          VALUES (${username}, ${hashedPassword}, false, '0', 0)
-          RETURNING id, username, is_regulator
-        `;
-
-        const user = newUser[0];
-        console.log(`✅ [VERCEL] User created: ${user.username}`);
-
-        // Устанавливаем cookie
-        const userData = { id: user.id, username: user.username, timestamp: Date.now() };
-        const token = Buffer.from(JSON.stringify(userData)).toString('base64');
-        
-        res.setHeader('Set-Cookie', `user_data=${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=604800; Path=/`);
-        
-        return res.status(201).json({
-          id: user.id,
-          username: user.username,
-          is_regulator: user.is_regulator || false
-        });
-        
-      } catch (error) {
-        console.error('❌ [VERCEL] Register error:', error);
-        return res.status(500).json({ 
-          message: 'Ошибка при регистрации',
           debug: error instanceof Error ? error.message : 'Unknown error'
         });
       }
