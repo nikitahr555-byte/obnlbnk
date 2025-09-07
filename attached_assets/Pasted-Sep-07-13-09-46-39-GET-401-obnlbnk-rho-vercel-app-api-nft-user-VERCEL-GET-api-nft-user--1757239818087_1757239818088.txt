@@ -1,0 +1,144 @@
+Sep 07 13:09:46.39
+GET
+401
+obnlbnk-rho.vercel.app
+/api/nft/user
+🚀 [VERCEL] GET /api/nft/user
+Sep 07 13:09:46.32
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:46.06
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:39.92
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:39.64
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:39.39
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:39.10
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:38.82
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:38.57
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:38.30
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:38.03
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:37.78
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:37.52
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:37.27
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:37.01
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:36.34
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:36.02
+GET
+404
+obnlbnk-rho.vercel.app
+/ws
+2
+🔌 [VERCEL] WebSocket request (not supported)
+Sep 07 13:09:35.32
+GET
+401
+obnlbnk-rho.vercel.app
+/api/news
+🚀 [VERCEL] GET /api/news
+Sep 07 13:09:33.57
+POST
+401
+obnlbnk-rho.vercel.app
+/api/cards/generate
+🚀 [VERCEL] POST /api/cards/generate
+Sep 07 13:09:17.33
+GET
+401
+obnlbnk-4qtgyf2r7-rabota197555-2326s-projects.vercel.app
+/api/user
+5
+❌ [VERCEL] No auth cookie found
+Sep 07 13:09:17.21
+GET
+401
+obnlbnk-4qtgyf2r7-rabota197555-2326s-projects.vercel.app
+/api/user
+5
+❌ [VERCEL] No auth cookie found

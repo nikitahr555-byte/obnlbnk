@@ -421,6 +421,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ]);
         
         console.log(`📊 [VERCEL] Found ${Array.isArray(cards) ? cards.length : 0} cards for user`);
+        
+        // Если карт нет, создаем дефолтные с криптоадресами
+        if (!Array.isArray(cards) || cards.length === 0) {
+          console.log(`💳 [VERCEL] Создаем дефолтные карты с криптоадресами для пользователя ${userData.id}`);
+          
+          // Генерируем криптоадреса
+          const generateBtcAddress = (userId: number) => {
+            const crypto = require('crypto');
+            const seed = crypto.createHash('sha256').update(`btc-${userId}-salt`).digest('hex');
+            return '1' + seed.substring(0, 33);
+          };
+          
+          const generateEthAddress = (userId: number) => {
+            const crypto = require('crypto');
+            const seed = crypto.createHash('sha256').update(`eth-${userId}-salt`).digest('hex');
+            // Простая генерация ETH адреса без ethers для Vercel
+            return '0x' + seed.substring(0, 40);
+          };
+          
+          const btcAddress = generateBtcAddress(userData.id);
+          const ethAddress = generateEthAddress(userData.id);
+          
+          // Создаем виртуальную карту
+          await db`INSERT INTO cards (user_id, type, number, expiry, cvv, balance, btc_balance, eth_balance, kichcoin_balance, btc_address, eth_address, ton_address) 
+                   VALUES (${userData.id}, 'virtual', '4149499344018888', '12/28', '123', '1000.00', '0.00000000', '0.00000000', '100.00000000', NULL, NULL, NULL)`;
+          
+          // Создаем криптокарту с адресами
+          await db`INSERT INTO cards (user_id, type, number, expiry, cvv, balance, btc_balance, eth_balance, kichcoin_balance, btc_address, eth_address, ton_address)
+                   VALUES (${userData.id}, 'crypto', '4149499344017777', '12/28', '456', '0.00', '0.00100000', '0.01000000', '50.00000000', ${btcAddress}, ${ethAddress}, 'EQC8eLIsQ4QLssWiJ_lqxShW1w7T1G11cfh-gFSRnMze64HI')`;
+          
+          console.log(`✅ [VERCEL] Созданы карты с BTC: ${btcAddress} и ETH: ${ethAddress}`);
+          
+          // Получаем созданные карты
+          const newCards = await db`SELECT * FROM cards WHERE user_id = ${userData.id} ORDER BY id DESC`;
+          return res.json(newCards || []);
+        }
+        
         return res.json(cards || []);
         
       } catch (error) {
