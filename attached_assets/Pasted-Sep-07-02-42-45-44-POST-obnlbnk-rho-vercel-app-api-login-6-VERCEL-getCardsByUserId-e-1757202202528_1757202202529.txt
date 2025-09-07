@@ -1,0 +1,91 @@
+Sep 07 02:42:45.44
+POST
+---
+obnlbnk-rho.vercel.app
+/api/login
+6
+💥 [VERCEL] getCardsByUserId exhausted all 3 retries, throwing error
+Sep 07 02:42:43.64
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:41:56.24
+POST
+---
+obnlbnk-rho.vercel.app
+/api/login
+17
+Vercel Runtime Timeout Error: Task timed out after 60 seconds
+Sep 07 02:41:43.22
+GET
+401
+obnlbnk-rho.vercel.app
+/api/user
+❌ [VERCEL] getCardsByUserId failed on attempt 1: Error: Database operation timed out after 25000ms at Timeout._onTimeout (/vercel/path0/api/server/storage.ts:35:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:41:25.51
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+7
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:41:25.34
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+Sep 07 02:41:23.07
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:41:09.88
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+11
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:40:56.57
+GET
+200
+obnlbnk-rho.vercel.app
+/api/cards
+8
+Ошибка получения карт: Error: User cards fetch timed out after 8000ms at Timeout._onTimeout (/vercel/path0/api/server/db.ts:69:29) at listOnTimeout (node:internal/timers:581:17) at process.processTimers (node:internal/timers:519:7)
+Sep 07 02:40:56.57
+GET
+200
+obnlbnk-rho.vercel.app
+/api/rates
+4
+Creating other essential tables...
+Sep 07 02:40:56.50
+GET
+200
+obnlbnk-rho.vercel.app
+/ws
+📄 Возвращаем index.html для SPA роутинга: /ws
+Sep 07 02:40:54.73
+GET
+200
+obnlbnk-rho.vercel.app
+/api/user
+21
+Creating users table...
+Sep 07 02:39:36.83
+GET
+401
+obnlbnk-oe55dxl7b-rabota197555-2326s-projects.vercel.app
+/api/user
+16
+✅ Маршруты успешно зарегистрированы для Vercel
+Sep 07 02:39:36.81
+GET
+401
+obnlbnk-oe55dxl7b-rabota197555-2326s-projects.vercel.app
+/api/user
+No 

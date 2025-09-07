@@ -25,16 +25,47 @@ console.log('🆘 КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Использ�
 // Настройка кэша для часто используемых запросов
 const cache = new NodeCache({ stdTTL: 600, checkperiod: 120 }); // 10 минут кэш для максимальной производительности
 
-// Таймауты
+// РАДИКАЛЬНОЕ ИСПРАВЛЕНИЕ: Увеличиваем все таймауты для Vercel
 const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
-const DB_TIMEOUT = IS_VERCEL ? 5000 : 15000; // Еще больше уменьшили до 5s для Vercel
+const DB_TIMEOUT = IS_VERCEL ? 50000 : 15000; // УВЕЛИЧИЛИ до 50 секунд для Vercel
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000;
 
-// Таймаут для операции
+// Универсальная функция с ретраями и увеличенными таймаутами
+async function withRetryAndTimeout<T>(
+  operation: () => Promise<T>, 
+  operationName: string = 'Database operation',
+  maxRetries: number = MAX_RETRIES,
+  timeoutMs: number = DB_TIMEOUT
+): Promise<T> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error(`${operationName} timed out after ${timeoutMs}ms`)), timeoutMs);
+      });
+      
+      console.log(`🔄 [VERCEL] ${operationName} - попытка ${attempt}/${maxRetries}`);
+      const result = await Promise.race([operation(), timeoutPromise]);
+      console.log(`✅ [VERCEL] ${operationName} - успешно на попытке ${attempt}`);
+      return result;
+    } catch (error) {
+      console.error(`❌ [VERCEL] ${operationName} неудача на попытке ${attempt}:`, error);
+      
+      if (attempt === maxRetries) {
+        console.error(`💥 [VERCEL] ${operationName} исчерпаны все ${maxRetries} попытки, выбрасываем ошибку`);
+        throw error;
+      }
+      
+      console.log(`⏳ [VERCEL] Ждем ${RETRY_DELAY}ms перед следующей попыткой...`);
+      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * attempt)); // Экспоненциальный бэкофф
+    }
+  }
+  throw new Error(`Все попытки ${operationName} исчерпаны`);
+}
+
+// Обратная совместимость
 async function withTimeout<T>(promise: Promise<T>, timeoutMs: number = DB_TIMEOUT): Promise<T> {
-  const timeoutPromise = new Promise<never>((_, reject) => {
-    setTimeout(() => reject(new Error(`Database operation timed out after ${timeoutMs}ms`)), timeoutMs);
-  });
-  return Promise.race([promise, timeoutPromise]);
+  return withRetryAndTimeout(() => promise, 'Legacy operation', 1, timeoutMs);
 }
 
 export interface IStorage {
@@ -86,21 +117,8 @@ export class DatabaseStorage implements IStorage {
     console.log('✅ Session store инициализирован с MemoryStore (НЕ PostgreSQL)');
   }
 
-  private async withRetry<T>(operation: () => Promise<T>, operationName: string, maxRetries = 2): Promise<T> {
-    let attempt = 0;
-    while (attempt < maxRetries) {
-      try {
-        return await withTimeout(operation());
-      } catch (err) {
-        attempt++;
-        console.error(`${operationName} failed on attempt ${attempt}:`, err);
-        if (attempt >= maxRetries) throw err;
-        // Уменьшили задержки для Vercel
-        const delay = IS_VERCEL ? Math.min(100 * attempt, 500) : Math.min(1000 * 2 ** (attempt - 1), 5000);
-        await new Promise(res => setTimeout(res, delay));
-      }
-    }
-    throw new Error(`${operationName} failed after ${maxRetries} attempts`);
+  private async withRetry<T>(operation: () => Promise<T>, operationName: string, maxRetries = 3): Promise<T> {
+    return withRetryAndTimeout(operation, operationName, maxRetries);
   }
 
   // === Пользователи ===
