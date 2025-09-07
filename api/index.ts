@@ -254,19 +254,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const userData = { id: user.id, username: user.username, timestamp: Date.now() };
         const token = Buffer.from(JSON.stringify(userData)).toString('base64');
         
-        // Адаптируем cookie настройки для разных окружений
-        const isHttps = req.headers['x-forwarded-proto'] === 'https' || req.url?.startsWith('https://');
+        // Улучшенная логика установки куки для Vercel
+        const protocol = req.headers['x-forwarded-proto'] || (req.headers.host?.includes('vercel') ? 'https' : 'http');
+        const isHttps = protocol === 'https';
+        
+        console.log(`🔍 [VERCEL] Request details: host=${req.headers.host}, proto=${req.headers['x-forwarded-proto']}, isHttps=${isHttps}`);
+        
         const cookieOptions = [
           `user_data=${token}`,
           'HttpOnly',
-          isHttps ? 'Secure' : '', // Secure только для HTTPS
           'SameSite=Lax',
           'Max-Age=604800',
           'Path=/'
-        ].filter(Boolean).join('; ');
+        ];
         
-        console.log(`🍪 [VERCEL] Setting cookie with options: ${cookieOptions}`);
-        res.setHeader('Set-Cookie', cookieOptions);
+        // Добавляем Secure только если точно используем HTTPS
+        if (isHttps) {
+          cookieOptions.splice(2, 0, 'Secure');
+        }
+        
+        const cookieString = cookieOptions.join('; ');
+        console.log(`🍪 [VERCEL] Setting cookie: ${cookieString}`);
+        res.setHeader('Set-Cookie', cookieString);
         
         console.log(`✅ [VERCEL] Login successful for user: ${user.username}`);
         return res.json({
@@ -324,19 +333,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const userData = { id: user.id, username: user.username, timestamp: Date.now() };
         const token = Buffer.from(JSON.stringify(userData)).toString('base64');
         
-        // Адаптируем cookie настройки для разных окружений
-        const isHttps = req.headers['x-forwarded-proto'] === 'https' || req.url?.startsWith('https://');
+        // Улучшенная логика установки куки для Vercel
+        const protocol = req.headers['x-forwarded-proto'] || (req.headers.host?.includes('vercel') ? 'https' : 'http');
+        const isHttps = protocol === 'https';
+        
+        console.log(`🔍 [VERCEL] Registration cookie - host=${req.headers.host}, proto=${req.headers['x-forwarded-proto']}, isHttps=${isHttps}`);
+        
         const cookieOptions = [
           `user_data=${token}`,
           'HttpOnly',
-          isHttps ? 'Secure' : '', // Secure только для HTTPS
           'SameSite=Lax',
-          'Max-Age=604800',
+          'Max-Age=604800', 
           'Path=/'
-        ].filter(Boolean).join('; ');
+        ];
         
-        console.log(`🍪 [VERCEL] Setting registration cookie with options: ${cookieOptions}`);
-        res.setHeader('Set-Cookie', cookieOptions);
+        // Добавляем Secure только если точно используем HTTPS
+        if (isHttps) {
+          cookieOptions.splice(2, 0, 'Secure');
+        }
+        
+        const cookieString = cookieOptions.join('; ');
+        console.log(`🍪 [VERCEL] Setting registration cookie: ${cookieString}`);
+        res.setHeader('Set-Cookie', cookieString);
         
         return res.status(201).json({
           id: user.id,
@@ -458,12 +476,60 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.json(newCards || []);
         }
         
-        return res.json(cards || []);
-        
       } catch (error) {
         console.error('❌ [VERCEL] Cards error:', error);
         return res.status(500).json({ 
           message: 'Ошибка при получении карт',
+          debug: error instanceof Error ? error.message : 'Unknown error'
+        });
+      }
+    }
+
+    // CARDS GENERATE - генерация seed фразы для карт
+    if (url.includes('/api/cards/generate') && req.method === 'POST') {
+      try {
+        console.log('🔑 [VERCEL] Cards generate request');
+        const userData = extractUserFromCookie(req);
+        
+        if (!userData) {
+          console.log('❌ [VERCEL] No auth cookie for cards generate request');
+          return res.status(401).json({ message: 'Необходима авторизация' });
+        }
+
+        console.log(`🔑 [VERCEL] Generating seed phrase for user: ${userData.username}`);
+
+        // Генерируем seed фразу на основе userId
+        const crypto = require('crypto');
+        const userId = userData.id;
+        
+        // Создаем детерминированную seed фразу
+        const seedWords = [
+          'abandon', 'ability', 'able', 'about', 'above', 'absent', 'absorb', 'abstract',
+          'absurd', 'abuse', 'access', 'accident', 'account', 'accuse', 'achieve', 'acid',
+          'acoustic', 'acquire', 'across', 'act', 'action', 'actor', 'actress', 'actual'
+        ];
+        
+        const hash = crypto.createHash('sha256').update(`seed-${userId}-salt`).digest('hex');
+        const seedPhrase = [];
+        
+        for (let i = 0; i < 12; i++) {
+          const index = parseInt(hash.substring(i * 2, i * 2 + 2), 16) % seedWords.length;
+          seedPhrase.push(seedWords[index]);
+        }
+        
+        const mnemonic = seedPhrase.join(' ');
+        console.log(`✅ [VERCEL] Generated seed phrase for user ${userData.id}: ${mnemonic.substring(0, 20)}...`);
+
+        return res.json({
+          success: true,
+          seedPhrase: mnemonic,
+          message: 'Seed фраза успешно сгенерирована'
+        });
+        
+      } catch (error) {
+        console.error('❌ [VERCEL] Cards generate error:', error);
+        return res.status(500).json({ 
+          message: 'Ошибка при генерации seed фразы',
           debug: error instanceof Error ? error.message : 'Unknown error'
         });
       }
