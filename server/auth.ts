@@ -35,6 +35,13 @@ declare global {
 export function setupAuth(app: Express) {
   const IS_VERCEL = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
   const SESSION_SECRET = process.env.SESSION_SECRET || "default_secret";
+  
+  console.log(`🔧 [AUTH SETUP] Environment detection:`, {
+    VERCEL: process.env.VERCEL,
+    NODE_ENV: process.env.NODE_ENV,
+    IS_VERCEL: IS_VERCEL,
+    HOST: process.env.VERCEL_URL || 'localhost'
+  });
 
   app.use(cookieParser());
 

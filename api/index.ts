@@ -263,7 +263,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const cookieOptions = [
           `user_data=${token}`,
           'HttpOnly',
-          'SameSite=Lax',
+          'SameSite=None',
           'Max-Age=604800',
           'Path=/'
         ];
@@ -342,7 +342,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const cookieOptions = [
           `user_data=${token}`,
           'HttpOnly',
-          'SameSite=Lax',
+          'SameSite=None',
           'Max-Age=604800', 
           'Path=/'
         ];
@@ -374,7 +374,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // LOGOUT - очистка cookie
     if (url.includes('/api/logout') && req.method === 'POST') {
       console.log('🚪 [VERCEL] Logout request');
-      res.setHeader('Set-Cookie', 'user_data=; HttpOnly; Secure; SameSite=Lax; Max-Age=0; Path=/');
+      res.setHeader('Set-Cookie', 'user_data=; HttpOnly; Secure; SameSite=None; Max-Age=0; Path=/');
       return res.status(200).end();
     }
 
