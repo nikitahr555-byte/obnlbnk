@@ -6,6 +6,15 @@ This is a comprehensive digital banking platform for OOO BNAL BANK that includes
 
 ## Recent Changes
 
+**September 8, 2025 - Critical Crypto Address Generation Fixes:**
+- ✅ Fixed ETH address generation to correct 42-character format (was 66 characters)
+- ✅ Fixed BTC address generation to proper 33-character format 
+- ✅ Corrected seed-phrase module ETH address generation fallback
+- ✅ Updated /api/cards/generate endpoint to use proper crypto address generation
+- ✅ Enhanced card lookup to search by BTC and ETH addresses
+- ✅ Added proper address validation that matches generation format
+- ✅ Fixed all fallback generation methods across storage.ts and utils modules
+
 **December 7, 2025 - Critical Vercel Deployment Fixes:**
 - ✅ Fixed database connection configuration for Vercel serverless environment
 - ✅ Improved connection pooling with retry logic and proper timeouts
