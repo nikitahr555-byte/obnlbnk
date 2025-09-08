@@ -40,7 +40,7 @@ const handleExchange = async (formData: FormData, cards: Card[], toast: any) => 
       throw new Error('Криптовалютная карта не найдена. Пожалуйста, сгенерируйте карты заново.');
     }
 
-    if (!cryptoCard.btcBalance || !cryptoCard.ethBalance || !cryptoCard.btcAddress) {
+    if (!cryptoCard.btcAddress || !cryptoCard.ethAddress) {
       console.log('Invalid crypto card configuration:', cryptoCard); 
       throw new Error('Криптовалютный кошелек настроен неправильно. Обратитесь в поддержку.');
     }
