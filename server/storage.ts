@@ -410,10 +410,14 @@ export class DatabaseStorage implements IStorage {
         console.log(`✅ [VERCEL] ETH адрес создан: ${ethAddress}`);
       } catch (error) {
         console.error(`❌ [VERCEL] Ошибка генерации адресов:`, error);
-        // Fallback - простая генерация адресов
-        btcAddress = `1${userId.toString().padStart(3, '0')}${Math.random().toString(36).substring(2, 30)}`;
-        ethAddress = `0x${userId.toString().padStart(2, '0')}${Math.random().toString(16).substring(2, 42)}`;
-        console.log(`🛡️ [VERCEL] Использованы fallback адреса: BTC=${btcAddress}, ETH=${ethAddress}`);
+        // ИСПРАВЛЕНО: Fallback генерация правильной длины
+        const { createHash } = require('crypto');
+        const btcHash = createHash('sha256').update(`btc-${userId}-storage-fallback`).digest('hex');
+        const ethHash = createHash('sha256').update(`eth-${userId}-storage-fallback`).digest('hex');
+        
+        btcAddress = '1' + btcHash.substring(0, 32); // 33 символа общих
+        ethAddress = '0x' + ethHash.substring(0, 40); // 42 символа общих
+        console.log(`🛡️ [VERCEL] Использованы fallback адреса правильной длины: BTC=${btcAddress}, ETH=${ethAddress}`);
       }
 
       // ВОЗВРАЩАЕМ ОРИГИНАЛЬНУЮ ЛОГИКУ: создаем только 2 карты как раньше

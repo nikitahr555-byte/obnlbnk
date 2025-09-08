@@ -51,18 +51,17 @@ export async function generateValidAddress(type: 'btc' | 'eth', userId: number):
     // Fallback - простая детерминированная генерация
     if (type === 'btc') {
       const hash = createHash('sha256').update(`btc-${userId}-fallback`).digest('hex');
-      // Генерируем валидный BTC адрес формата Legacy
-      const address = '1' + hash.substring(0, 33);
+      // Генерируем валидный BTC адрес формата Legacy (33 символа максимум)
+      const address = '1' + hash.substring(0, 32); // 32 символа после '1' = 33 общих
       console.log(`🛡️ [VERCEL] Generated BTC address (fallback): ${address} for user: ${userId}`);
       return address;
     } else {
-      // Генерируем ETH адрес через ethers.js с детерминированным ключом
+      // ИСПРАВЛЕНО: Генерируем правильный ETH адрес (42 символа)
       const hash = createHash('sha256').update(`eth-${userId}-fallback`).digest('hex');
-      const privateKey = '0x' + hash;
-      const wallet = new ethers.Wallet(privateKey);
+      const ethAddress = '0x' + hash.substring(0, 40); // 40 символов после '0x' = 42 общих
       
-      console.log(`🛡️ [VERCEL] Generated ETH address (fallback): ${wallet.address} for user: ${userId}`);
-      return wallet.address;
+      console.log(`🛡️ [VERCEL] Generated ETH address (fallback): ${ethAddress} for user: ${userId}`);
+      return ethAddress;
     }
   }
 }

@@ -105,9 +105,9 @@ export function getEthereumAddressFromMnemonic(mnemonic: string): string {
   } catch (error) {
     console.error('Failed to generate Ethereum address from mnemonic:', error);
     
-    // Final fallback: Простой детерминированный адрес
+    // Final fallback: Простой детерминированный адрес (правильной длины)
     const hash = require('crypto').createHash('sha256').update(mnemonic).digest('hex');
-    const simpleAddress = '0x' + hash.substring(0, 40);
+    const simpleAddress = '0x' + hash.substring(0, 40); // Точно 40 символов hex
     console.log(`❌ Final fallback ETH address: ${simpleAddress}`);
     return simpleAddress;
   }
