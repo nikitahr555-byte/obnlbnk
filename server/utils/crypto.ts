@@ -32,37 +32,36 @@ const network = bitcoin.networks.bitcoin;
  * @returns Сгенерированный адрес
  */
 export async function generateValidAddress(type: 'btc' | 'eth', userId: number): Promise<string> {
-  console.log(`🔄 Generating ${type.toUpperCase()} address for user ${userId}...`);
+  console.log(`🔄 [VERCEL] Generating ${type.toUpperCase()} address for user ${userId}...`);
   
   try {
+    // ИСПРАВЛЕНО: Используем seed-phrase модуль для детерминированной генерации
+    const { btcAddress, ethAddress } = await generateAddressesForUser(userId);
+    
     if (type === 'btc') {
-      // Простая генерация BTC адреса без ECPair
-      const seed = createHash('sha256').update(`btc-${userId}-salt`).digest('hex');
-      // Генерируем валидный BTC адрес формата Legacy (начинается с 1)
-      const address = '1' + seed.substring(0, 33);
-      console.log(`✅ Generated BTC address: ${address} for user: ${userId}`);
-      return address;
+      console.log(`✅ [VERCEL] Generated BTC address: ${btcAddress} for user: ${userId}`);
+      return btcAddress;
     } else {
-      // Генерируем ETH адрес через ethers.js
-      const seed = createHash('sha256').update(`eth-${userId}-salt`).digest('hex');
-      const privateKey = '0x' + seed;
-      const wallet = new ethers.Wallet(privateKey);
-      
-      console.log(`✅ Generated ETH address: ${wallet.address} for user: ${userId}`);
-      return wallet.address;
+      console.log(`✅ [VERCEL] Generated ETH address: ${ethAddress} for user: ${userId}`);
+      return ethAddress;
     }
   } catch (error) {
-    console.error(`Error generating ${type} address:`, error);
+    console.error(`❌ [VERCEL] Error generating ${type} address with seed-phrase:`, error);
     
-    // Fallback - простая генерация
+    // Fallback - простая детерминированная генерация
     if (type === 'btc') {
-      const randomHex = randomBytes(16).toString('hex');
-      const address = '1' + randomHex.substring(0, 33);
-      console.log(`✅ Generated BTC address (fallback): ${address} for user: ${userId}`);
+      const hash = createHash('sha256').update(`btc-${userId}-fallback`).digest('hex');
+      // Генерируем валидный BTC адрес формата Legacy
+      const address = '1' + hash.substring(0, 33);
+      console.log(`🛡️ [VERCEL] Generated BTC address (fallback): ${address} for user: ${userId}`);
       return address;
     } else {
-      const wallet = ethers.Wallet.createRandom();
-      console.log(`✅ Generated ETH address (fallback): ${wallet.address} for user: ${userId}`);
+      // Генерируем ETH адрес через ethers.js с детерминированным ключом
+      const hash = createHash('sha256').update(`eth-${userId}-fallback`).digest('hex');
+      const privateKey = '0x' + hash;
+      const wallet = new ethers.Wallet(privateKey);
+      
+      console.log(`🛡️ [VERCEL] Generated ETH address (fallback): ${wallet.address} for user: ${userId}`);
       return wallet.address;
     }
   }

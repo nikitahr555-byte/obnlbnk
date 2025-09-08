@@ -87,23 +87,14 @@ export function getEthereumAddressFromMnemonic(mnemonic: string): string {
     const childKey = hdkey.derive("m/44'/60'/0'/0/0");
     
     try {
-      // Создаем кошелек из приватного ключа
-      const wallet = HDWallet.fromPrivateKey(Buffer.from(childKey.privateKey));
-      const address = `0x${wallet.getAddress().toString('hex')}`;
-      
-      // Форматируем адрес в правильном регистре (чексумма)
-      const checksumAddress = ethers.getAddress(address);
-      console.log(`✅ Generated ETH address from mnemonic: ${checksumAddress}`);
-      return checksumAddress;
-      
-    } catch (walletError) {
-      console.warn('HDWallet failed, using ethers.js fallback:', walletError);
-      
       // Fallback: Используем ethers.js напрямую
       const privateKeyHex = '0x' + childKey.privateKey.toString('hex');
       const wallet = new ethers.Wallet(privateKeyHex);
-      console.log(`⚠️ Using fallback ETH address: ${wallet.address}`);
+      console.log(`✅ Generated ETH address from mnemonic: ${wallet.address}`);
       return wallet.address;
+      
+    } catch (walletError) {
+      console.warn('ethers.js failed, using simple fallback:', walletError);
     }
     
     // Создаем Ethereum адрес напрямую из приватного ключа
