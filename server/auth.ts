@@ -43,32 +43,41 @@ export function setupAuth(app: Express) {
 
   // Middleware: проверка cookie и установка req.user для Vercel с fallback
   app.use(async (req, res, next) => {
-    if (IS_VERCEL && !req.user && req.cookies?.user_data) {
-      try {
-        const userData = JSON.parse(Buffer.from(req.cookies.user_data, 'base64').toString());
-        // Токен валиден 7 дней
-        if (Date.now() - userData.timestamp < 7 * 24 * 60 * 60 * 1000) {
-          try {
-            const user = await withDatabaseRetry(
-              () => storage.getUser(userData.id),
-              2,
-              'Auth middleware user lookup'
-            );
-            if (user && user.username === userData.username) {
-              req.user = user;
-            } else {
+    if (IS_VERCEL) {
+      console.log(`🔐 [VERCEL AUTH] ${req.method} ${req.path} - Cookie present: ${!!req.cookies?.user_data}, User set: ${!!req.user}`);
+      
+      if (!req.user && req.cookies?.user_data) {
+        try {
+          const userData = JSON.parse(Buffer.from(req.cookies.user_data, 'base64').toString());
+          console.log(`🔐 [VERCEL AUTH] Декодированные данные пользователя: ID=${userData.id}, Username=${userData.username}`);
+          
+          // Токен валиден 7 дней
+          if (Date.now() - userData.timestamp < 7 * 24 * 60 * 60 * 1000) {
+            try {
+              const user = await withDatabaseRetry(
+                () => storage.getUser(userData.id),
+                2,
+                'Auth middleware user lookup'
+              );
+              if (user && user.username === userData.username) {
+                req.user = user;
+                console.log(`✅ [VERCEL AUTH] Пользователь ${user.username} авторизован через cookie`);
+              } else {
+                console.log(`❌ [VERCEL AUTH] Пользователь не найден в БД или имя не совпадает`);
+                res.clearCookie('user_data');
+              }
+            } catch (dbError) {
+              console.error('❌ [VERCEL AUTH] DB error in auth middleware:', dbError);
               res.clearCookie('user_data');
             }
-          } catch (dbError) {
-            console.error('DB error in auth middleware:', dbError);
-            // Очищаем cookie если не можем проверить пользователя в БД
+          } else {
+            console.log(`❌ [VERCEL AUTH] Cookie устарел, очищаем`);
             res.clearCookie('user_data');
           }
-        } else {
+        } catch (parseError) {
+          console.error('❌ [VERCEL AUTH] Ошибка парсинга cookie:', parseError);
           res.clearCookie('user_data');
         }
-      } catch {
-        res.clearCookie('user_data');
       }
     }
     next();
@@ -118,7 +127,7 @@ export function setupAuth(app: Express) {
       // Cookie-based auth для Vercel
       if (IS_VERCEL) {
         const token = Buffer.from(JSON.stringify({ id: user.id, username: user.username, timestamp: Date.now() })).toString("base64");
-        res.cookie("user_data", token, { httpOnly: true, secure: true, maxAge: 7*24*60*60*1000, sameSite: "lax" });
+        res.cookie("user_data", token, { httpOnly: true, secure: true, maxAge: 7*24*60*60*1000, sameSite: "none" });
       }
 
       res.status(201).json(user);
@@ -136,7 +145,8 @@ export function setupAuth(app: Express) {
 
       if (IS_VERCEL) {
         const token = Buffer.from(JSON.stringify({ id: user.id, username: user.username, timestamp: Date.now() })).toString("base64");
-        res.cookie("user_data", token, { httpOnly: true, secure: true, maxAge: 7*24*60*60*1000, sameSite: "lax" });
+        res.cookie("user_data", token, { httpOnly: true, secure: true, maxAge: 7*24*60*60*1000, sameSite: "none" });
+        console.log(`✅ [VERCEL AUTH] Login successful - Cookie set for user: ${user.username} (ID: ${user.id})`);
         return res.json(user);
       } else {
         req.logIn(user, (loginErr: any) => {
