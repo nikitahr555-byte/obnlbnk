@@ -252,7 +252,7 @@ export default function HomePage() {
   };
 
   const cryptoCard = cards?.find(card => card.type === 'crypto');
-  const hasCryptoWallet = cryptoCard && cryptoCard.btcBalance && cryptoCard.ethBalance && cryptoCard.btcAddress;
+  const hasCryptoWallet = cryptoCard && cryptoCard.btcAddress && cryptoCard.ethAddress;
   
   // Проверяем, является ли пользователь регулятором
   const isRegulator = user?.is_regulator === true;
