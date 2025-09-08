@@ -380,7 +380,7 @@ export class DatabaseStorage implements IStorage {
     return this.withRetry(async () => {
       console.log(`🔄 [VERCEL] Создание дефолтных карт для пользователя ${userId}...`);
       
-      // Генерируем адреса с логированием для отладки
+      // Генерируем адреса с логированием для отладки  
       let btcAddress: string;
       let ethAddress: string;
       
@@ -400,23 +400,17 @@ export class DatabaseStorage implements IStorage {
         console.log(`🛡️ [VERCEL] Использованы fallback адреса: BTC=${btcAddress}, ETH=${ethAddress}`);
       }
 
-      // Создаем виртуальную карту (USD)
-      const usdCard = await this.createCard({
-        userId, type: 'usd', number: this.generateCardNumber(), expiry: this.generateExpiryDate(),
-        cvv: this.generateCVV(), balance: '1000', btcBalance: '0', ethBalance: '0', kichcoinBalance: '0',
+      // ВОЗВРАЩАЕМ ОРИГИНАЛЬНУЮ ЛОГИКУ: создаем только 2 карты как раньше
+      
+      // 1. Виртуальная карта (с балансом в долларах и кичкоинах)
+      const virtualCard = await this.createCard({
+        userId, type: 'virtual', number: this.generateCardNumber(), expiry: this.generateExpiryDate(),
+        cvv: this.generateCVV(), balance: '1000', btcBalance: '0', ethBalance: '0', kichcoinBalance: '100',
         btcAddress: null, ethAddress: null, tonAddress: null
       });
-      console.log(`✅ [VERCEL] Создана USD карта ${usdCard.id} для пользователя ${userId}`);
+      console.log(`✅ [VERCEL] Создана VIRTUAL карта ${virtualCard.id} для пользователя ${userId}`);
 
-      // Создаем гривневую карту (UAH)
-      const uahCard = await this.createCard({
-        userId, type: 'uah', number: this.generateCardNumber(), expiry: this.generateExpiryDate(),
-        cvv: this.generateCVV(), balance: '40000', btcBalance: '0', ethBalance: '0', kichcoinBalance: '0',
-        btcAddress: null, ethAddress: null, tonAddress: null
-      });
-      console.log(`✅ [VERCEL] Создана UAH карта ${uahCard.id} для пользователя ${userId}`);
-
-      // Создаем криптокарту
+      // 2. Криптокарта (с криптоадресами и кичкоинами)
       const cryptoCard = await this.createCard({
         userId, type: 'crypto', number: this.generateCardNumber(), expiry: this.generateExpiryDate(),
         cvv: this.generateCVV(), balance: '0', btcBalance: '0.001', ethBalance: '0.01', kichcoinBalance: '50',
@@ -424,7 +418,7 @@ export class DatabaseStorage implements IStorage {
       });
       console.log(`✅ [VERCEL] Создана CRYPTO карта ${cryptoCard.id} для пользователя ${userId} с адресами BTC=${btcAddress}, ETH=${ethAddress}`);
 
-      console.log(`🎉 [VERCEL] Все карты созданы для пользователя ${userId}! USD=${usdCard.id}, UAH=${uahCard.id}, CRYPTO=${cryptoCard.id}`);
+      console.log(`🎉 [VERCEL] Дефолтные карты созданы для пользователя ${userId}! VIRTUAL=${virtualCard.id}, CRYPTO=${cryptoCard.id}`);
     }, 'createDefaultCardsForUser');
   }
 
