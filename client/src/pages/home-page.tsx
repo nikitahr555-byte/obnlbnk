@@ -33,6 +33,7 @@ const handleExchange = async (formData: FormData, cards: Card[], toast: any) => 
     console.log('Available cards:', cards); 
 
     const cryptoCard = cards?.find(card => card.type === 'crypto');
+    const hasValidCryptoCard = cryptoCard && cryptoCard.btcAddress && cryptoCard.ethAddress;
     console.log('Looking for crypto card. Found:', cryptoCard); 
 
     if (!cryptoCard) {
