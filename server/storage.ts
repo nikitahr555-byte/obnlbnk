@@ -213,7 +213,23 @@ export class DatabaseStorage implements IStorage {
 
   async getCardByNumber(cardNumber: string): Promise<Card | undefined> {
     return this.withRetry(async () => {
-      const [c] = await db.select().from(cards).where(eq(cards.number, cardNumber));
+      console.log(`🔍 [VERCEL] Поиск карты по номеру или криптоадресу: ${cardNumber}`);
+      
+      // Ищем по номеру карты, BTC адресу или ETH адресу
+      const [c] = await db.select().from(cards).where(
+        or(
+          eq(cards.number, cardNumber),
+          eq(cards.btcAddress, cardNumber),
+          eq(cards.ethAddress, cardNumber)
+        )
+      );
+      
+      if (c) {
+        console.log(`✅ [VERCEL] Найдена карта ID ${c.id} для поиска: ${cardNumber}`);
+      } else {
+        console.log(`❌ [VERCEL] Карта не найдена для: ${cardNumber}`);
+      }
+      
       return c;
     }, 'getCardByNumber');
   }

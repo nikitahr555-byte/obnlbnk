@@ -726,13 +726,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
             let kichcoinBalance = "0";
             
             if (type === 'crypto') {
-              // Быстрое создание адресов без сложных вычислений
-              btcAddress = `1${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
-              ethAddress = `0x${Math.random().toString(16).substring(2, 10)}${Math.random().toString(16).substring(2, 10)}${Math.random().toString(16).substring(2, 10)}${Math.random().toString(16).substring(2, 10)}`;
-              btcBalance = "0.00000000";
-              ethBalance = "0.00000000";
+              // ИСПРАВЛЕНО: Используем правильную генерацию адресов
+              try {
+                btcAddress = await generateValidAddress('btc', userId);
+                ethAddress = await generateValidAddress('eth', userId);
+                console.log(`✅ [VERCEL] Сгенерированы валидные адреса - BTC: ${btcAddress}, ETH: ${ethAddress} для пользователя ${userId}`);
+              } catch (addressError) {
+                console.error(`❌ [VERCEL] Ошибка генерации адресов:`, addressError);
+                // Fallback на простые но валидные адреса
+                const { btcAddress: fallbackBtc, ethAddress: fallbackEth } = await generateAddressesForUser(userId);
+                btcAddress = fallbackBtc;
+                ethAddress = fallbackEth;
+                console.log(`🛡️ [VERCEL] Fallback адреса - BTC: ${btcAddress}, ETH: ${ethAddress} для пользователя ${userId}`);
+              }
               
-              console.log(`💳 [VERCEL] BTC: ${btcAddress}, ETH: ${ethAddress} для пользователя ${userId}`);
+              btcBalance = "0.001";
+              ethBalance = "0.01";
             } else if (type === 'kichcoin') {
               tonAddress = "EQC8eLIsQ4QLssWiJ_lqxShW1w7T1G11cfh-gFSRnMze64HI";
               kichcoinBalance = "100.00000000";
