@@ -42,12 +42,17 @@ async function verifyPassword(supplied: string, stored: string): Promise<boolean
 function extractUserFromCookie(req: VercelRequest): any {
   try {
     const cookies = req.headers.cookie || '';
+    console.log(`🍪 [VERCEL] Full headers:`, JSON.stringify(req.headers, null, 2));
+    console.log(`🍪 [VERCEL] Cookie header type: ${typeof req.headers.cookie}`);
+    console.log(`🍪 [VERCEL] Cookie header value: "${req.headers.cookie}"`);
     console.log(`🍪 [VERCEL] Checking cookies: ${cookies ? cookies.substring(0, 100) + '...' : 'No cookies found'}`);
+    console.log(`🍪 [VERCEL] All cookie names: ${cookies.split(';').map(c => c.trim().split('=')[0]).join(', ')}`);
     
     const userDataMatch = cookies.match(/user_data=([^;]+)/);
     
     if (!userDataMatch) {
       console.log('❌ [VERCEL] No user_data cookie found');
+      console.log(`🔍 [VERCEL] Available cookies: ${cookies || 'none'}`);
       return null;
     }
 
@@ -256,22 +261,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         
         // Улучшенная логика установки куки для Vercel
         const protocol = req.headers['x-forwarded-proto'] || (req.headers.host?.includes('vercel') ? 'https' : 'http');
-        const isHttps = protocol === 'https';
+        const isHttps = protocol === 'https' || req.headers.host?.includes('vercel');
         
         console.log(`🔍 [VERCEL] Request details: host=${req.headers.host}, proto=${req.headers['x-forwarded-proto']}, isHttps=${isHttps}`);
         
         const cookieOptions = [
           `user_data=${token}`,
           'HttpOnly',
+          'Secure', // Всегда Secure на Vercel
           'SameSite=None',
           'Max-Age=604800',
           'Path=/'
         ];
-        
-        // Добавляем Secure только если точно используем HTTPS
-        if (isHttps) {
-          cookieOptions.splice(2, 0, 'Secure');
-        }
         
         const cookieString = cookieOptions.join('; ');
         console.log(`🍪 [VERCEL] Setting cookie: ${cookieString}`);
@@ -335,22 +336,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         
         // Улучшенная логика установки куки для Vercel
         const protocol = req.headers['x-forwarded-proto'] || (req.headers.host?.includes('vercel') ? 'https' : 'http');
-        const isHttps = protocol === 'https';
+        const isHttps = protocol === 'https' || req.headers.host?.includes('vercel');
         
         console.log(`🔍 [VERCEL] Registration cookie - host=${req.headers.host}, proto=${req.headers['x-forwarded-proto']}, isHttps=${isHttps}`);
         
         const cookieOptions = [
           `user_data=${token}`,
           'HttpOnly',
+          'Secure', // Всегда Secure на Vercel
           'SameSite=None',
           'Max-Age=604800', 
           'Path=/'
         ];
-        
-        // Добавляем Secure только если точно используем HTTPS
-        if (isHttps) {
-          cookieOptions.splice(2, 0, 'Secure');
-        }
         
         const cookieString = cookieOptions.join('; ');
         console.log(`🍪 [VERCEL] Setting registration cookie: ${cookieString}`);
